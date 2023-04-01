@@ -29,7 +29,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: const Icon(Icons.arrow_back_ios),
                 ),

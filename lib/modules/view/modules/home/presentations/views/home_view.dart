@@ -47,7 +47,9 @@ class HomeView extends GetView<HomeController> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(Routes.notification);
+            },
             child: Image.asset(
               icBell,
               scale: 1.5,
