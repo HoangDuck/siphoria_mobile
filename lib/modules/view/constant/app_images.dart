@@ -16,3 +16,4 @@ const String icCustomer = 'assets/images/ic_customer.png';
 const String icHcmCity='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/DJI_0550-HDR-Pano.jpg/640px-DJI_0550-HDR-Pano.jpg';
 const String icFacebook ='assets/images/ic_facebook.png';
 const String icGoogle= 'assets/images/ic_google.png';
+const String icCart='assets/images/ic_cart.png';

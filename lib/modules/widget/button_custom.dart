@@ -1,11 +1,14 @@
 import 'package:final_project_hcmute/core/utils/utils.dart';
 import 'package:flutter/material.dart';
+
 class ButtonCustom extends StatelessWidget {
   Color? color;
   Color? borderColor;
   String text;
   Function(String value) onPress;
   double borderRadius;
+  double? height;
+  double? width;
   TextStyle? style;
   dynamic dataTranfer;
 
@@ -17,21 +20,24 @@ class ButtonCustom extends StatelessWidget {
       this.style,
       this.borderColor,
       this.borderRadius = 10.0,
-      this.dataTranfer})
+      this.dataTranfer,
+      this.height,
+      this.width})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         onPress(dataTranfer.toString());
       },
       child: Container(
+        width: width,
+        height: height,
         decoration: BoxDecoration(
-          border: Border.all(color: borderColor??Colors.grey),
-          borderRadius:
-              BorderRadius.circular(Utils.width(borderRadius)),
-          color: color??Colors.blue,
+          border: Border.all(color: borderColor ?? Colors.grey),
+          borderRadius: BorderRadius.circular(Utils.width(borderRadius)),
+          color: color ?? Colors.blue,
         ),
         child: Center(
           child: Text(
