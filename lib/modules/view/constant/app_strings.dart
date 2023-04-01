@@ -1,0 +1,10 @@
+const String txt_coming_soon="Tính năng đang được phát triển";
+const String txt_login='Đăng nhập';
+const String methodGet='GET';
+const String methodPost='POST';
+const String methodPut='PUT';
+const String methodDelete='DELETE';
+const String welcomeApp='Welcome to Siphoria';
+const String loginWithGmail='CONTINUE WITH GMAIL';
+const String loginWithGoogle='CONTINUE WITH GOOGLE';
+const String policyAndTerm='';
