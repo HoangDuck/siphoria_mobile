@@ -3,6 +3,8 @@ import 'package:final_project_hcmute/modules/view/modules/authentication/present
 import 'package:final_project_hcmute/modules/view/modules/home/presentations/views/home_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/notification_module/presentations/views/notification_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/onboard/on_board_view.dart';
+import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/bindings/search_hotel_binding.dart';
+import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/presentations/views/search_hotel_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
@@ -15,6 +17,7 @@ class Routes {
   static const loadingBoard = '/loadingBoard';
   static const authentication = '/authentication';
   static const notification = '/notification';
+  static const searchHotel = '/searchHotel';
 
   static final routes = [
     GetPage(
@@ -35,6 +38,11 @@ class Routes {
       name: Routes.notification,
       page: () => NotificationView(),
       binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: Routes.searchHotel,
+      page: () => SearchHotelView(),
+      binding: SearchHotelBinding(),
     )
   ];
 }

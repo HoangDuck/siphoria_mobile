@@ -1,0 +1,14 @@
+
+// ignore: one_member_abstracts
+import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/country_model.dart';
+import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/hotel_category_model.dart';
+import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/hotel_model.dart';
+
+import '../entities/province_model.dart';
+
+abstract class IHomeRepository {
+  Future<List<ProvinceModel>> getProvince(String searchText, int currentIndex);
+  Future<List<HotelCategoryModel>> getListHotelCategories();
+  Future<List<HotelModelHome>> getListPopularHotel();
+  Future<List<CountryModel>> getListCountry(String searchText, int currentIndex);
+}
