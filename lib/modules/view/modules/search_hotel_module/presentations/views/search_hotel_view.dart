@@ -237,8 +237,8 @@ class SearchHotelView extends GetView<SearchHotelController> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return itemHotelSearch(null,callBack: (data){
-                          Get.toNamed(Routes.home);
+                        return itemHotelSearch("1",callBack: (){
+                          Get.toNamed(Routes.hotelInfo);
                         });
                       }),
                 ),

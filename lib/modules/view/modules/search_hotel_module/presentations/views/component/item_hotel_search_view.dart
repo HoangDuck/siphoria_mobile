@@ -6,13 +6,9 @@ import 'package:flutter/material.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
 
-Widget itemHotelSearch(dynamic data,{Function(dynamic data)? callBack}){
+Widget itemHotelSearch(dynamic data,{required Function() callBack}){
   return GestureDetector(
-    onTap: (){
-      if(callBack!=null){
-        callBack(data);
-      }
-    },
+    onTap: callBack,
     child: Container(
       margin: EdgeInsets.symmetric(vertical:Utils.width(5),horizontal: Utils.width(17)),
       child: Column(

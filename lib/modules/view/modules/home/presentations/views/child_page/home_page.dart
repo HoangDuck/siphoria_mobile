@@ -167,7 +167,19 @@ Widget _homePage(BuildContext context) {
               "Khách sạn được yêu thích",
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: Utils.width(30)),
-            )
+            ),
+            Container(
+              margin: EdgeInsets.all(Utils.width(5)),
+              child: ListView.builder(
+                  itemCount: 5,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return itemHotelSearch("1",callBack: (){
+                      Get.toNamed(Routes.hotelInfo);
+                    });
+                  }),
+            ),
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:final_project_hcmute/core/utils/utils.dart';
 import 'package:final_project_hcmute/modules/view/modules/hotel_info_module/presentations/controllers/hotel_info_controller.dart';
-import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/presentations/controllers/search_hotel_controller.dart';
 import 'package:final_project_hcmute/modules/widget/text_custom.dart';
 import 'package:final_project_hcmute/routers/page_routes.dart';
 import 'package:flutter/material.dart';

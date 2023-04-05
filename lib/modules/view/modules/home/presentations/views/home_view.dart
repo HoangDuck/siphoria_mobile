@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../../../../core/utils/utils.dart';
 import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
+import '../../../search_hotel_module/presentations/views/component/item_hotel_search_view.dart';
 import '../controllers/home_controller.dart';
 import 'component/search_hotel.dart';
 
