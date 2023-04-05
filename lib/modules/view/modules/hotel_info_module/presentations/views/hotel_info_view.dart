@@ -1,4 +1,5 @@
 import 'package:final_project_hcmute/core/utils/utils.dart';
+import 'package:final_project_hcmute/modules/view/modules/hotel_info_module/presentations/controllers/hotel_info_controller.dart';
 import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/presentations/controllers/search_hotel_controller.dart';
 import 'package:final_project_hcmute/modules/widget/text_custom.dart';
 import 'package:final_project_hcmute/routers/page_routes.dart';
@@ -10,7 +11,7 @@ import '../../../../constant/app_colors.dart';
 import '../../../../constant/app_images.dart';
 import 'component/item_hotel_search_view.dart';
 
-class SearchHotelView extends GetView<SearchHotelController> {
+class HotelInfoView extends GetView<HotelInfoController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

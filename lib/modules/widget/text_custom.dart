@@ -33,20 +33,29 @@ class TextCustom extends StatelessWidget {
             callBack!(text);
           }
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(text,
+        child: icon != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(text,
+                      textAlign: textAlign,
+                      maxLines: maxLines,
+                      overflow: overflow,
+                      style: style.copyWith()),
+                  if (icon != null)
+                    SizedBox(
+                      width: Utils.width(5),
+                    ),
+                  if (icon != null) Icon(icon)
+                ],
+              )
+            : Text(
+                text,
                 textAlign: textAlign,
                 maxLines: maxLines,
                 overflow: overflow,
-                style: style.copyWith()),
-            if(icon!=null)
-              SizedBox(width: Utils.width(5),),
-            if(icon!=null)
-              Icon(icon)
-          ],
-        ),
+                style: style.copyWith(),
+              ),
       ),
     );
   }

@@ -9,6 +9,8 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import '../modules/view/modules/home/bindings/home_binding.dart';
+import '../modules/view/modules/hotel_info_module/bindings/hotel_info_binding.dart';
+import '../modules/view/modules/hotel_info_module/presentations/views/hotel_info_view.dart';
 import '../modules/view/modules/notification_module/bindings/notification_binding.dart';
 
 class Routes {
@@ -18,6 +20,7 @@ class Routes {
   static const authentication = '/authentication';
   static const notification = '/notification';
   static const searchHotel = '/searchHotel';
+  static const hotelInfo = '/hotelInfo';
 
   static final routes = [
     GetPage(
@@ -43,6 +46,11 @@ class Routes {
       name: Routes.searchHotel,
       page: () => SearchHotelView(),
       binding: SearchHotelBinding(),
+    ),
+    GetPage(
+      name: Routes.hotelInfo,
+      page: () => HotelInfoView(),
+      binding: HotelInfoBinding(),
     )
   ];
 }
