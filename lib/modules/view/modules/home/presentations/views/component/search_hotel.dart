@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../../../core/utils/utils.dart';
+import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/button_custom.dart';
 import '../../../../../../widget/text_field_custom.dart';
 import '../../../../../constant/app_images.dart';
@@ -166,7 +167,9 @@ Widget searchHotel(BuildContext context){
           height: Utils.width(50),
           child: ButtonCustom(
             text: "Tìm kiếm",
-            onPress: (text) {},
+            onPress: (text) {
+              Get.toNamed(Routes.searchHotel);
+            },
             color: Colors.blue,
             style: TextStyle(
                 color: Colors.white,

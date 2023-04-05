@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../core/utils/utils.dart';
+
 class TextCustom extends StatelessWidget {
   final String text;
   final TextStyle style;
@@ -10,6 +12,7 @@ class TextCustom extends StatelessWidget {
   TextOverflow overflow;
   bool visible;
   Function(String value)? callBack;
+  IconData? icon;
 
   TextCustom(this.text,
       {super.key,
@@ -18,7 +21,7 @@ class TextCustom extends StatelessWidget {
       this.overflow = TextOverflow.clip,
       this.style = const TextStyle(),
       this.visible = true,
-      this.callBack});
+      this.callBack,this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +33,20 @@ class TextCustom extends StatelessWidget {
             callBack!(text);
           }
         },
-        child: Text(text,
-            textAlign: textAlign,
-            maxLines: maxLines,
-            overflow: overflow,
-            style: style.copyWith()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(text,
+                textAlign: textAlign,
+                maxLines: maxLines,
+                overflow: overflow,
+                style: style.copyWith()),
+            if(icon!=null)
+              SizedBox(width: Utils.width(5),),
+            if(icon!=null)
+              Icon(icon)
+          ],
+        ),
       ),
     );
   }

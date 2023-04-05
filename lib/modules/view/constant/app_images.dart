@@ -17,3 +17,4 @@ const String icHcmCity='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e
 const String icFacebook ='assets/images/ic_facebook.png';
 const String icGoogle= 'assets/images/ic_google.png';
 const String icCart='assets/images/ic_cart.png';
+const String icHoChiMinhCity = 'https://bcp.cdnchinhphu.vn/334894974524682240/2023/1/2/tphcm-16726501373541473396704.jpg';
