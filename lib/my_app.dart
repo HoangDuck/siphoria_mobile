@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'core/logger/logger_utils.dart';
+import 'modules/view/constant/app_colors.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       logWriterCallback: Logger.write,
       initialRoute: Routes.initial,
       getPages: Routes.routes,
+      color: colorMainBackground,
     );
   }
 }

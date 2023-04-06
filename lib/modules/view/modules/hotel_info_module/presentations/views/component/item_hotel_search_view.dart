@@ -1,118 +1,107 @@
-import 'package:final_project_hcmute/core/utils/utils.dart';
-import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
-import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/presentations/views/component/sale_custom_clipper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../../core/utils/utils.dart';
+import '../../../../../../widget/button_custom.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
-
-Widget itemHotelSearch(dynamic data,{Function(dynamic data)? callBack}){
-  return GestureDetector(
-    onTap: (){
-      if(callBack!=null){
-        callBack(data);
-      }
-    },
-    child: Container(
-      margin: EdgeInsets.symmetric(vertical:Utils.width(5),horizontal: Utils.width(17)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            constraints: BoxConstraints(
-              maxHeight: Utils.height(250),
-              // minWidth: MediaQuery.of(context).size.width
-            ),
-            alignment: Alignment.center,
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(Utils.width(10)),
-                  child: Image.network(
-                    icImageHotelIntro,
-                    scale: 1.5,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: Utils.width(10),
-                  child: ClipPath(
-                    clipper: SaleOffClipper(),
-                    child: Container(
-                      width: Utils.width(50),
-                      height: Utils.height(70),
-                      color: colorRatingStar,
-                      child: const Center(
-                        child: Text(
-                          "50%",
-                          style: TextStyle(
-                              color: colorTextSaleOff,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+import 'image_view_component.dart';
+Widget itemHotelRoom(BuildContext context, dynamic data){
+  return Container(
+    margin: EdgeInsets.all(Utils.width(10)),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(Utils.width(10)),
+      color: Colors.white
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.all(Utils.width(10)),
+          child: TextCustom(
+            "Executive Suites",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: Utils.width(15),
+              fontWeight: FontWeight.bold,
+              color: colorTextPrice,
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(Utils.width(2)),
-            child: TextCustom(
-              "Hotel HotelLink - HCM Can Gio",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: Utils.width(17),
+        ),
+        imageViewWidget(),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: Utils.width(15)),
+          height: Utils.width(46),
+          child: ButtonCustom(
+            text: 'Xem chi tiết',
+            onPress: (text) {},
+            style: TextStyle(
+                fontSize: Utils.width(20),
                 fontWeight: FontWeight.bold,
-                color: colorTextBold,
+                color: colorTitleAmber),
+            color: Colors.white,
+            borderColor: colorTitleAmber,
+          ),
+        ),
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.all(Utils.width(10)),
+              child: TextCustom(
+                "Executive Suites",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: Utils.width(15),
+                  fontWeight: FontWeight.bold,
+                  color: colorTextPrice,
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.all(Utils.width(2)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .start,
-              crossAxisAlignment: CrossAxisAlignment
-                  .start,
-              children: const [
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal:Utils.width(2)),
-            child:TextCustom(
-              "20000 VND/night",
-              style: TextStyle(
-                  color: colorTextPrice,
-                  fontWeight: FontWeight.w600,
-                  fontSize: Utils.width(20),decoration: TextDecoration.lineThrough),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal:Utils.width(2)),
-            child:TextCustom(
-              "20000 VND/night",
-              style: TextStyle(
-                  color: appBarColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: Utils.width(25)),
-            ),
-          ),
-        ],
-      ),
+            Container(
+              margin: EdgeInsets.only(top: Utils.width(20)),
+              padding: EdgeInsets.symmetric(
+                  vertical: Utils.width(10)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                    color: Colors.grey,
+                    style: BorderStyle.solid,
+                    width: 0.80),
+              ),
+              alignment: Alignment.center,
+              child: StatefulBuilder(
+                  builder: (context,setState) {
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButton<dynamic>(
+                        value: 1,
+                        alignment: AlignmentDirectional.center,
+                        isDense: true,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.grey),
+                        onChanged: (value) {
+                        },
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(10)),
+                        items: [1,2,3]
+                            .map<DropdownMenuItem<dynamic>>((value) {
+                          return DropdownMenuItem<dynamic>(
+                            value: value,
+                            child: Text(value.toString()),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  }
+              ),
+            )
+          ],
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
+          child: const Divider(),
+        )
+      ],
     ),
   );
 }
