@@ -11,6 +11,7 @@ class ButtonCustom extends StatelessWidget {
   double? width;
   TextStyle? style;
   dynamic dataTranfer;
+  TextAlign alignment;
 
   ButtonCustom(
       {Key? key,
@@ -22,7 +23,8 @@ class ButtonCustom extends StatelessWidget {
       this.borderRadius = 10.0,
       this.dataTranfer,
       this.height,
-      this.width})
+      this.width,
+      this.alignment = TextAlign.start})
       : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class ButtonCustom extends StatelessWidget {
           child: Text(
             text,
             style: style,
+            textAlign: alignment,
           ),
         ),
       ),
