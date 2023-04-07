@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../domain/adapters/repository_adapter.dart';
+import '../../domain/entities/cart_item_model.dart';
 
 class HomeController extends GetxController{
   final IHomeRepository homeRepository;
@@ -14,6 +15,8 @@ class HomeController extends GetxController{
   RxInt onSelectedTabIndex=0.obs;
   RxList<ProvinceModel> listProvinces=<ProvinceModel>[].obs;
   Rx<PageController> pageController = PageController(initialPage: 0).obs;
+  RxInt totalNumberCartItem= 0.obs;
+  RxList<CartModel> listCart = <CartModel>[].obs;
 
   selectedPageIndex(int index){
     onSelectedTabIndex.value = index;

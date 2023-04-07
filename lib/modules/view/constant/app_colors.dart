@@ -12,3 +12,4 @@ const colorTextPrice = Color(0xFF2C3E50);
 const colorTextSaleOff = Color(0xFFF7F700);
 const colorMainBackground = Color(0xFFF5F6F8);
 const colorPriceRoom = Color(0xFF29C254);
+const colorCartItemBackground = Color(0xFFF4F9F7);
