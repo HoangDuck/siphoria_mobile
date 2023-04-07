@@ -61,18 +61,18 @@ Widget searchHotel(BuildContext context){
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children:  [
                   Text(
                     "Ngày đến",
                     style: TextStyle(
                         color: Colors.blueGrey,
                         fontWeight: FontWeight.w500,
-                        fontSize: 15),
+                        fontSize: Utils.width(10)),
                   ),
                   Text(
                     "Từ ngày",
                     style: TextStyle(
-                        color: Colors.blueGrey, fontSize: 20),
+                        color: Colors.blueGrey, fontSize: Utils.width(17)),
                   ),
                 ],
               ),
@@ -96,18 +96,18 @@ Widget searchHotel(BuildContext context){
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     "Ngày đi",
                     style: TextStyle(
                         color: Colors.blueGrey,
                         fontWeight: FontWeight.w500,
-                        fontSize: 15),
+                        fontSize: Utils.width(10)),
                   ),
                   Text(
                     "Đến ngày",
                     style: TextStyle(
-                        color: Colors.blueGrey, fontSize: 20),
+                        color: Colors.blueGrey, fontSize: Utils.width(17)),
                   ),
                 ],
               ),

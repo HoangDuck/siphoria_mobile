@@ -9,6 +9,7 @@ import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
 import '../../../search_hotel_module/presentations/views/component/item_hotel_search_view.dart';
 import '../controllers/home_controller.dart';
+import 'child_page/booking_page.dart';
 import 'child_page/profile_page.dart';
 import 'component/search_hotel.dart';
 
@@ -65,7 +66,7 @@ class HomeView extends GetView<HomeController> {
         children: [
           _homePage(context),
           _cartPage(context),
-          Container(),
+          myBooking(context),
           profilePage(context),
         ],
       ),
