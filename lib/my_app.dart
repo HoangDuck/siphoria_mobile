@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(fontFamily: 'Manrope'),
       enableLog: true,
       logWriterCallback: Logger.write,
       initialRoute: Routes.initial,
