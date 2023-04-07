@@ -12,6 +12,8 @@ import '../modules/view/modules/home/bindings/home_binding.dart';
 import '../modules/view/modules/hotel_info_module/bindings/hotel_info_binding.dart';
 import '../modules/view/modules/hotel_info_module/presentations/views/hotel_info_view.dart';
 import '../modules/view/modules/notification_module/bindings/notification_binding.dart';
+import '../modules/view/modules/payment_module/bindings/payment_binding.dart';
+import '../modules/view/modules/payment_module/presentations/views/payment_view.dart';
 
 class Routes {
   static const initial = Routes.home;
@@ -21,6 +23,7 @@ class Routes {
   static const notification = '/notification';
   static const searchHotel = '/searchHotel';
   static const hotelInfo = '/hotelInfo';
+  static const payment = '/payment';
 
   static final routes = [
     GetPage(
@@ -51,6 +54,11 @@ class Routes {
       name: Routes.hotelInfo,
       page: () => HotelInfoView(),
       binding: HotelInfoBinding(),
+    ),
+    GetPage(
+      name: Routes.payment,
+      page: () => PaymentView(),
+      binding: PaymentBinding(),
     )
   ];
 }

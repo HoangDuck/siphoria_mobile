@@ -56,8 +56,10 @@ Widget _cartPage(BuildContext context) {
                 ),
               ),
               ButtonCustom(
-                text: "Thanh toán",
-                onPress: (_) {},
+                text: "Tiếp tục",
+                onPress: (_) {
+                  Get.toNamed(Routes.payment);
+                },
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: Utils.width(25),
@@ -259,6 +261,36 @@ Widget _listItemCart(BuildContext context){
   );
 }
 
+Widget _itemRateplanDetail(dynamic data){
+  return Container(
+    margin: EdgeInsets.all(Utils.width(5)),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: Utils.width(5)),
+          child: Icon(
+            Icons.airport_shuttle_rounded,
+            color: colorTitleAmber,
+            size: Utils.width(25),
+          ),
+        ),
+        Expanded(
+          child: TextCustom(
+            "6 người lớn, 3 trẻ em",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: Utils.width(15),
+              color: colorTextPrice,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 Widget _emptyCart(){
   return Container(
     height: Utils.height(500),
@@ -310,34 +342,3 @@ Widget _emptyCart(){
   );
 }
 
-
-
-Widget _itemRateplanDetail(dynamic data){
-  return Container(
-    margin: EdgeInsets.all(Utils.width(5)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: Utils.width(5)),
-          child: Icon(
-            Icons.airport_shuttle_rounded,
-            color: colorTitleAmber,
-            size: Utils.width(25),
-          ),
-        ),
-        Expanded(
-          child: TextCustom(
-            "6 người lớn, 3 trẻ em",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: Utils.width(15),
-              color: colorTextPrice,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
