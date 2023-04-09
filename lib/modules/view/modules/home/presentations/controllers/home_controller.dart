@@ -1,7 +1,8 @@
 
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/province_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import '../../domain/adapters/repository_adapter.dart';
 import '../../domain/entities/cart_item_model.dart';
@@ -36,7 +37,29 @@ class HomeController extends GetxController{
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
+    initFirebaseMessage();
     await _getAPIDataTest();
+  }
+
+  initFirebaseMessage() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      Get.snackbar(
+        "GeeksforGeeks",
+        "Hello everyone",
+        icon: const Icon(Icons.person, color: Colors.white),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+      );
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      Get.snackbar(
+        "GeeksforGeeks",
+        "Hello everyone",
+        icon: const Icon(Icons.person, color: Colors.white),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+      );
+    });
   }
 
   @override
