@@ -2,7 +2,9 @@ import 'package:final_project_hcmute/core/utils/utils.dart';
 import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
 import 'package:final_project_hcmute/modules/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
 
@@ -79,7 +81,7 @@ Widget profilePage(BuildContext context) {
 
         },icon: Icons.password_rounded,color: colorTitleAmber),
         _itemButtonProfile("Lịch sử đặt phòng",onTap: (){
-
+          Get.toNamed(Routes.historyBooking);
         },color: colorTextPrice),
         _itemButtonProfile("Đăng xuất",onTap: (){
           // showMessageDialogIOS(context,description: "Hello");

@@ -17,3 +17,4 @@ const colorBackgroundMomo=Color(0xFFFDADD4);
 const colorBorderMomo = Color(0xFFAE2070);
 const colorBackgroundVNPay=Color(0xFF9AE5EF);
 const colorBorderVNPay = Color(0xFF005AAB);
+const colorItemHistoryBooking = Color(0xFFF8F9FB);
