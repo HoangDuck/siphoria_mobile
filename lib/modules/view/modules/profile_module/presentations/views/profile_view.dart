@@ -144,27 +144,8 @@ class ProfileView extends GetView<ProfileController> {
                             color: Colors.white),
                         child: TextFieldCustom(
                           controller: controller.phoneEditingController,
-                          // prefixIcon: const Icon(Icons.search,color: Colors.black,),
                           textAlignVertical: TextAlignVertical.top,
                           hintText: "Số điện thoại",
-                          hintTextStyle: const TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(Utils.width(7)),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              Utils.width(10),
-                            ),
-                            border: Border.all(color: Colors.grey),
-                            color: Colors.white),
-                        child: TextFieldCustom(
-                          controller: controller.codeEditingController,
-                          // prefixIcon: const Icon(Icons.search,color: Colors.black,),
-                          textAlignVertical: TextAlignVertical.top,
-                          hintText: "Mã giới thiệu",
                           hintTextStyle: const TextStyle(
                               color: Colors.blueGrey,
                               fontWeight: FontWeight.w500),

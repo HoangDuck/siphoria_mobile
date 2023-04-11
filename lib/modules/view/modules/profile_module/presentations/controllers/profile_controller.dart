@@ -6,5 +6,4 @@ class ProfileController extends GetxController{
   TextEditingController firstNameEditingController=TextEditingController();
   TextEditingController lastNameEditingController=TextEditingController();
   TextEditingController phoneEditingController=TextEditingController();
-  TextEditingController codeEditingController=TextEditingController();
 }
