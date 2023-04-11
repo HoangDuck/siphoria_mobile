@@ -18,6 +18,7 @@ class HomeController extends GetxController{
   Rx<PageController> pageController = PageController(initialPage: 0).obs;
   RxInt totalNumberCartItem= 0.obs;
   RxList<CartModel> listCart = <CartModel>[].obs;
+  RxList<String> listResort=<String>[].obs;
 
   selectedPageIndex(int index){
     onSelectedTabIndex.value = index;
@@ -33,11 +34,17 @@ class HomeController extends GetxController{
 
   }
 
+  initListResort(){
+    listResort.addAll(["Resort","Khu nghỉ dưỡng", "Villa"]);
+    listResort.refresh();
+  }
+
   @override
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
     initFirebaseMessage();
+    initListResort();
     await _getAPIDataTest();
   }
 

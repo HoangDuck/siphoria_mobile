@@ -101,7 +101,7 @@ Widget _homePage(BuildContext context) {
               () => Container(
                 height: Utils.width(200),
                 child: ListView.builder(
-                  itemCount: controller.listProvinces.length,
+                  itemCount: controller.listResort.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
@@ -123,7 +123,7 @@ Widget _homePage(BuildContext context) {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.network(
-                                  icHcmCity,
+                                  icResort,
                                   fit: BoxFit.cover,
                                 ),
                               )),
@@ -145,7 +145,7 @@ Widget _homePage(BuildContext context) {
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: Text(
-                                controller.listProvinces[index].name,
+                                controller.listResort[index],
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

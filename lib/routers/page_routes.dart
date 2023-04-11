@@ -4,6 +4,7 @@ import 'package:final_project_hcmute/modules/view/modules/history_booking/presen
 import 'package:final_project_hcmute/modules/view/modules/home/presentations/views/home_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/notification_module/presentations/views/notification_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/onboard/on_board_view.dart';
+import 'package:final_project_hcmute/modules/view/modules/profile_module/presentations/views/profile_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/bindings/search_hotel_binding.dart';
 import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/presentations/views/search_hotel_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -18,6 +19,7 @@ import '../modules/view/modules/hotel_info_module/presentations/views/hotel_info
 import '../modules/view/modules/notification_module/bindings/notification_binding.dart';
 import '../modules/view/modules/payment_module/bindings/payment_binding.dart';
 import '../modules/view/modules/payment_module/presentations/views/payment_view.dart';
+import '../modules/view/modules/profile_module/binding/profile_binding.dart';
 
 class Routes {
   static const initial = Routes.home;
@@ -30,6 +32,7 @@ class Routes {
   static const payment = '/payment';
   static const historyBooking = '/historyBooking';
   static const bookingDetail = '/bookingDetail';
+  static const profile = '/profile';
 
   static final routes = [
     GetPage(
@@ -75,6 +78,11 @@ class Routes {
       name: Routes.bookingDetail,
       page: () => BookingDetailView(),
       binding: BookingDetailBinding(),
+    ),
+    GetPage(
+      name: Routes.profile,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
     )
   ];
 }

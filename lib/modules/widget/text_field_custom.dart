@@ -9,6 +9,7 @@ class TextFieldCustom extends StatefulWidget {
   Widget? prefixIcon;
   TextStyle? hintTextStyle;
   bool isSecureText;
+  TextAlignVertical textAlignVertical;
 
   TextFieldCustom(
       {Key? key,
@@ -18,7 +19,8 @@ class TextFieldCustom extends StatefulWidget {
       this.suffixIcon,
       this.prefixIcon,
       this.hintTextStyle,
-      this.isSecureText = false})
+      this.isSecureText = false,
+      this.textAlignVertical = TextAlignVertical.center})
       : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      textAlignVertical: TextAlignVertical.center,
+      textAlignVertical: widget.textAlignVertical,
       onChanged: (text){
         if(widget.callBack != null){
           widget.callBack!(text);

@@ -75,7 +75,7 @@ Widget profilePage(BuildContext context) {
           ),
         ),
         _itemButtonProfile("Thông tin cá nhân",onTap: (){
-
+          Get.toNamed(Routes.profile);
         }),
         _itemButtonProfile("Thay đổi mật khẩu",onTap: (){
 
