@@ -9,6 +9,8 @@ import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/pr
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
+import '../modules/view/modules/booking_details/binding/booking_detail_binding.dart';
+import '../modules/view/modules/booking_details/presentations/views/booking_detail_view.dart';
 import '../modules/view/modules/history_booking/bindings/history_booking_binding.dart';
 import '../modules/view/modules/home/bindings/home_binding.dart';
 import '../modules/view/modules/hotel_info_module/bindings/hotel_info_binding.dart';
@@ -27,6 +29,7 @@ class Routes {
   static const hotelInfo = '/hotelInfo';
   static const payment = '/payment';
   static const historyBooking = '/historyBooking';
+  static const bookingDetail = '/bookingDetail';
 
   static final routes = [
     GetPage(
@@ -67,6 +70,11 @@ class Routes {
       name: Routes.historyBooking,
       page: () => HistoryBookingView(),
       binding: HistoryBookingBinding(),
+    ),
+    GetPage(
+      name: Routes.bookingDetail,
+      page: () => BookingDetailView(),
+      binding: BookingDetailBinding(),
     )
   ];
 }

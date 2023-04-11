@@ -2,6 +2,7 @@ import 'package:final_project_hcmute/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
 import '../../controllers/home_controller.dart';
@@ -77,9 +78,9 @@ Widget _itemMyBooking() {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Icon(Icons.calendar_today_outlined),
+            Icon(Icons.calendar_today_outlined,size: Utils.width(16),),
             SizedBox(
-              width: Utils.width(10),
+              width: Utils.width(5),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -93,7 +94,7 @@ Widget _itemMyBooking() {
                       fontSize: Utils.width(10)),
                 ),
                 Text(
-                  "Từ ngày",
+                  "03 Thg 04, 2023",
                   style: TextStyle(
                     color: colorTextPrice,
                     fontWeight: FontWeight.w500,
@@ -103,11 +104,11 @@ Widget _itemMyBooking() {
               ],
             ),
             SizedBox(
-              width: Utils.width(10),
+              width: Utils.width(7),
             ),
-            const Icon(Icons.calendar_today_outlined),
+            Icon(Icons.calendar_today_outlined,size: Utils.width(16),),
             SizedBox(
-              width: Utils.width(10),
+              width: Utils.width(5),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -121,7 +122,7 @@ Widget _itemMyBooking() {
                       fontSize: Utils.width(10)),
                 ),
                 Text(
-                  "Đến ngày",
+                  "06 Thg 04, 2023",
                   style: TextStyle(
                     color: colorTextPrice,
                     fontWeight: FontWeight.w500,
@@ -131,11 +132,11 @@ Widget _itemMyBooking() {
               ],
             ),
             SizedBox(
-              width: Utils.width(10),
+              width: Utils.width(7),
             ),
-            const Icon(Icons.emoji_people_rounded),
+            Icon(Icons.emoji_people_rounded,size: Utils.width(20),),
             SizedBox(
-              width: Utils.width(10),
+              width: Utils.width(5),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -169,7 +170,7 @@ Widget _itemMyBooking() {
             TextCustom(
               "Xem chi tiết",
               callBack: (text){
-
+                Get.toNamed(Routes.bookingDetail);
               },
               textAlign: TextAlign.end,
               style: TextStyle(
