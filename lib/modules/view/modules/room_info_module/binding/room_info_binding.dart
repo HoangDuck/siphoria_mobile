@@ -9,5 +9,4 @@ class RoomInfoBinding extends Bindings{
           () => RoomInfoController(),
     );
   }
-
 }

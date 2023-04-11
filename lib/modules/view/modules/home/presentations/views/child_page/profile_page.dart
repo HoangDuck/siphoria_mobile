@@ -78,7 +78,7 @@ Widget profilePage(BuildContext context) {
           Get.toNamed(Routes.profile);
         }),
         _itemButtonProfile("Thay đổi mật khẩu",onTap: (){
-
+          Get.toNamed(Routes.forgotPass);
         },icon: Icons.password_rounded,color: colorTitleAmber),
         _itemButtonProfile("Lịch sử đặt phòng",onTap: (){
           Get.toNamed(Routes.historyBooking);
