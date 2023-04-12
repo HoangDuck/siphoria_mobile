@@ -1,6 +1,7 @@
 import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
 import 'package:final_project_hcmute/modules/view/modules/authentication/presentations/controllers/authentication_controller.dart';
 import 'package:final_project_hcmute/modules/widget/button_custom.dart';
+import 'package:final_project_hcmute/routers/page_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -156,7 +157,9 @@ class AuthenticationView extends GetView<AuthenticationController> {
                   height: Utils.width(46),
                   child: ButtonCustom(
                     text: 'Đăng ký',
-                    onPress: (text) {},
+                    onPress: (text) {
+                      Get.toNamed(Routes.register);
+                    },
                     style: TextStyle(
                         fontSize: Utils.width(20),
                         fontWeight: FontWeight.bold,

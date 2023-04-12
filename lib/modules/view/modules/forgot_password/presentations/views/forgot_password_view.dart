@@ -7,7 +7,6 @@ import '../../../../../widget/button_custom.dart';
 import '../../../../../widget/text_custom.dart';
 import '../../../../../widget/text_field_custom.dart';
 import '../../../../constant/app_colors.dart';
-import '../../../../constant/app_images.dart';
 
 class ForgotPasswordView extends GetView<ForgotPasswordController>{
   @override

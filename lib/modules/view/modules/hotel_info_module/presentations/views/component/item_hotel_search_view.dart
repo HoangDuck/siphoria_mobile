@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../../../core/utils/utils.dart';
+import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/button_custom.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
@@ -35,7 +37,9 @@ Widget itemHotelRoom(BuildContext context, dynamic data) {
           height: Utils.width(46),
           child: ButtonCustom(
             text: 'Xem chi tiết',
-            onPress: (text) {},
+            onPress: (text) {
+              Get.toNamed(Routes.roomDetail);
+            },
             style: TextStyle(
                 fontSize: Utils.width(20),
                 fontWeight: FontWeight.bold,
