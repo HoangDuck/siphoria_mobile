@@ -1,5 +1,6 @@
 import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
 import 'package:final_project_hcmute/modules/view/modules/authentication/presentations/controllers/authentication_controller.dart';
+import 'package:final_project_hcmute/modules/view/modules/home/presentations/controllers/home_controller.dart';
 import 'package:final_project_hcmute/modules/widget/button_custom.dart';
 import 'package:final_project_hcmute/routers/page_routes.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import '../../../../../../core/utils/utils.dart';
+import '../../../../../widget/custom_dialog.dart';
 import '../../../../../widget/text_field_custom.dart';
 import '../../../../constant/app_colors.dart';
 
@@ -142,7 +144,20 @@ class AuthenticationView extends GetView<AuthenticationController> {
                   height: Utils.width(46),
                   child: ButtonCustom(
                     text: 'Đăng nhập',
-                    onPress: (text) {},
+                    onPress: (text) async {
+                      showLoadingDialog(context);
+                      await controller.authenticationData();
+                      Get.back();
+                      if(controller.isSuccessLogin.value){
+                        showMessageDialogIOS(context,description: "Đăng nhập thành công",onPress: (){
+                          Get.back();Get.back();
+                        });
+                      }else{
+                        showMessageDialogIOS(context,description: "Đăng nhập thất bại",onPress: (){
+                          Get.back();
+                        });
+                      }
+                    },
                     style: TextStyle(
                         fontSize: Utils.width(20),
                         fontWeight: FontWeight.bold,

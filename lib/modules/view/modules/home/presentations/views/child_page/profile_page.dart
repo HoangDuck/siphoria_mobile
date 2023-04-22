@@ -1,3 +1,4 @@
+import 'package:final_project_hcmute/core/services/local_storage.dart';
 import 'package:final_project_hcmute/core/utils/utils.dart';
 import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
 import 'package:final_project_hcmute/modules/widget/custom_dialog.dart';
@@ -7,8 +8,10 @@ import 'package:get/get.dart';
 import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
+import '../../controllers/home_controller.dart';
 
 Widget profilePage(BuildContext context) {
+  HomeController controller = Get.find<HomeController>();
   return SingleChildScrollView(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +87,17 @@ Widget profilePage(BuildContext context) {
           Get.toNamed(Routes.historyBooking);
         },color: colorTextPrice),
         _itemButtonProfile("Đăng xuất",onTap: (){
-          // showMessageDialogIOS(context,description: "Hello");
+          showMessageDialogIOS(context,description: "Bạn thực sự muốn đăng xuất?",onPress: () async {
+            SecureStorage secureStorage = SecureStorage();
+            await secureStorage.deleteAccessToken();
+            await secureStorage.deleteAccessToken();
+            controller.accessToken='';
+            controller.refreshToken='';
+            Get.back();
+          },onPressX: (){
+            Get.back();
+            controller.selectedPageIndex(0);
+          },enableCancel: true);
         },color: appBarColor),
       ],
     ),

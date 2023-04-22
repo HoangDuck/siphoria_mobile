@@ -53,7 +53,6 @@ class HomeProvider extends GetConnect implements IHomeProvider{
   Future<Response<List<CountryModel>>> getCountryList(String searchText, int currentIndex) {
     httpClient.baseUrl = 'https://hotels4.p.rapidapi.com';
     httpClient.defaultDecoder = CountryModel.listFromJson;
-    // TODO: implement getCountryList
     return get('/v2/get-meta-data',headers: {
       'X-RapidAPI-Key': 'c5871a9689mshc9cdff683cbaa0ap13ed6ejsna7ffee71a28c',
       'X-RapidAPI-Host': 'hotels4.p.rapidapi.com'

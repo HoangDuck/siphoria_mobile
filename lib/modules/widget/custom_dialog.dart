@@ -3,9 +3,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/utils/utils.dart';
+import 'loading_widget.dart';
+
+showLoadingDialog(BuildContext context,{int timeout=10}) => showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      Future.delayed(Duration(seconds: 60), () {
+        try {
+          Navigator.of(context).pop(true);
+        } catch (e) {
+          print(e.toString());
+        }
+      });
+      return WillPopScope(onWillPop: () async => false, child: LoadingWidget());
+    });
+
 
 showMessageDialogIOS(BuildContext context,
-    { String title ='',
+    { String title ='Thông báo',
       String description = '',
       Function()? onPress,
       Function? onPressX,
@@ -26,7 +42,7 @@ showMessageDialogIOS(BuildContext context,
                       ? TextCustom(title,
                       textAlign: TextAlign.center,
                       style:
-                      TextStyle(fontSize: Utils.width(34)))
+                      TextStyle(fontSize: Utils.width(15)))
                       : const CupertinoActivityIndicator(),
                   content: childContent ?? (description.isEmpty
                       ? Container()
@@ -34,7 +50,7 @@ showMessageDialogIOS(BuildContext context,
                     margin: const EdgeInsets.only(top: 10),
                     child: TextCustom(
                       description,
-                      style: TextStyle(fontSize: Utils.width(32)),
+                      style: TextStyle(fontSize: Utils.width(17)),
                       textAlign: TextAlign.center,
                     ),
                   )),

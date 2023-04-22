@@ -1,3 +1,4 @@
+import 'package:final_project_hcmute/modules/widget/custom_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -161,7 +162,20 @@ class ProfileView extends GetView<ProfileController> {
                         width: MediaQuery.of(context).size.width,
                         child: ButtonCustom(
                           text: 'Cập nhật',
-                          onPress: (text) {},
+                          onPress: (text) async {
+                            showLoadingDialog(context);
+                            var result = await controller.updateUserProfileData();
+                            Get.back();
+                            if(result){
+                              showMessageDialogIOS(context,description: "Cập nhật thành công",onPress: () async {
+                                Get.back();
+                              });
+                            }else{
+                              showMessageDialogIOS(context,description: "Cập nhật thất bại",onPress: () async {
+                                Get.back();
+                              });
+                            }
+                          },
                           style: TextStyle(
                               fontSize: Utils.width(20),
                               fontWeight: FontWeight.bold,

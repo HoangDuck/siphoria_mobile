@@ -1,9 +1,11 @@
 
+import 'package:final_project_hcmute/core/services/local_storage.dart';
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/province_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../routers/page_routes.dart';
 import '../../domain/adapters/repository_adapter.dart';
 import '../../domain/entities/cart_item_model.dart';
 
@@ -20,9 +22,22 @@ class HomeController extends GetxController{
   RxList<CartModel> listCart = <CartModel>[].obs;
   RxList<String> listResort=<String>[].obs;
 
+  String accessToken = '';
+  String refreshToken = '';
+
   selectedPageIndex(int index){
-    onSelectedTabIndex.value = index;
-    pageController.value.animateToPage(index,duration:const Duration(milliseconds: 300), curve: Curves.easeIn);
+    if(index==3 && accessToken.isEmpty){
+      Get.toNamed(Routes.authentication);
+    }else{
+      onSelectedTabIndex.value = index;
+      pageController.value.animateToPage(index,duration:const Duration(milliseconds: 300), curve: Curves.easeIn);
+    }
+  }
+
+  _getToken()async {
+    SecureStorage secureStorage=SecureStorage();
+    accessToken = (await secureStorage.accessToken)!;
+    refreshToken = (await secureStorage.refreshToken)!;
   }
 
   _getAPIDataTest() async {
@@ -43,6 +58,7 @@ class HomeController extends GetxController{
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
+    _getToken();
     initFirebaseMessage();
     initListResort();
     await _getAPIDataTest();
