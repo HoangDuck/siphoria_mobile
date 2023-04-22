@@ -167,10 +167,12 @@ class ProfileView extends GetView<ProfileController> {
                             var result = await controller.updateUserProfileData();
                             Get.back();
                             if(result){
+                              // ignore: use_build_context_synchronously
                               showMessageDialogIOS(context,description: "Cập nhật thành công",onPress: () async {
                                 Get.back();
                               });
                             }else{
+                              // ignore: use_build_context_synchronously
                               showMessageDialogIOS(context,description: "Cập nhật thất bại",onPress: () async {
                                 Get.back();
                               });
