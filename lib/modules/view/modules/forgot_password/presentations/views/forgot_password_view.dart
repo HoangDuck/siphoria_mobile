@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/utils/utils.dart';
 import '../../../../../widget/button_custom.dart';
+import '../../../../../widget/custom_dialog.dart';
 import '../../../../../widget/text_custom.dart';
 import '../../../../../widget/text_field_custom.dart';
 import '../../../../constant/app_colors.dart';
@@ -87,7 +88,11 @@ class ForgotPasswordView extends GetView<ForgotPasswordController>{
                         width: MediaQuery.of(context).size.width,
                         child: ButtonCustom(
                           text: 'Thay đổi mật khẩu',
-                          onPress: (text) {},
+                          onPress: (text) {
+                            showLoadingDialog(context);
+                            controller.sendEmailResetPasswordData();
+                            Get.back();
+                          },
                           style: TextStyle(
                               fontSize: Utils.width(20),
                               fontWeight: FontWeight.bold,

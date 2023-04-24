@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:final_project_hcmute/modules/view/modules/profile_module/domain/entities/update_user_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ class ProfileController extends GetxController {
   TextEditingController firstNameEditingController = TextEditingController();
   TextEditingController lastNameEditingController = TextEditingController();
   TextEditingController phoneEditingController = TextEditingController();
+  RxString avatarUrl = ''.obs;
 
   @override
   void onInit() {
@@ -26,6 +29,9 @@ class ProfileController extends GetxController {
       firstNameEditingController.text = userProfile.firstName;
       lastNameEditingController.text = userProfile.lastName;
       phoneEditingController.text = userProfile.phone;
+      var jsonString = userProfile.avatar;
+      var userAvatarDecode = jsonDecode(jsonString);
+      avatarUrl.value=userAvatarDecode.first['url'];
       refresh();
     }
   }

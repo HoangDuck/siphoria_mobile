@@ -71,13 +71,15 @@ class ProfileView extends GetView<ProfileController> {
                             child: ClipRRect(
                               borderRadius:
                                   BorderRadius.circular(Utils.width(100)),
-                              child: Image.network(
-                                icHoChiMinhCity,
+                              child: Obx(()=>Image.network(
+                                controller.avatarUrl.value == ''
+                                    ? icHoChiMinhCity
+                                    : controller.avatarUrl.value,
                                 scale: 5,
                                 width: Utils.width(150),
                                 height: Utils.width(150),
                                 fit: BoxFit.cover,
-                              ),
+                              ),),
                             ),
                           ),
                           Positioned.fill(

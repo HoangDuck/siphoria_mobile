@@ -149,13 +149,22 @@ class AuthenticationView extends GetView<AuthenticationController> {
                       await controller.authenticationData();
                       Get.back();
                       if(controller.isSuccessLogin.value){
-                        showMessageDialogIOS(context,description: "Đăng nhập thành công",onPress: (){
-                          Get.back();Get.back();
-                        });
+                        Get.snackbar(
+                          "Siphoria",
+                            "Đăng nhập thành công",
+                          icon: const Icon(Icons.person, color: Colors.white),
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        Get.back();Get.back();
                       }else{
-                        showMessageDialogIOS(context,description: "Đăng nhập thất bại",onPress: (){
-                          Get.back();
-                        });
+                        Get.snackbar(
+                          "Siphoria",
+                          "Đăng nhập thất bại",
+                          icon: const Icon(Icons.person, color: Colors.white),
+                          backgroundColor: appBarColor,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        Get.back();Get.back();
                       }
                     },
                     style: TextStyle(
