@@ -16,6 +16,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
 
   @override
   AuthenticationController controller = Get.find<AuthenticationController>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
