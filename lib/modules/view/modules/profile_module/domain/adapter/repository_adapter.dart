@@ -8,5 +8,4 @@ import '../entities/update_user_profile_model.dart';
 abstract class IUserProfileRepository {
   Future<UserProfileModel> getUserProfile();
   Future<UserProfileModel> updateUserProfileData(UpdateUserProfileModel data);
-  // Future<UserProfileModel> updateUserProfileData(UpdateUserProfileModel data);
 }
