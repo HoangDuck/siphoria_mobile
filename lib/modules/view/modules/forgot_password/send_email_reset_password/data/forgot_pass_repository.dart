@@ -17,14 +17,12 @@ class ForgotPasswordRepository implements IForgotPasswordRepository {
   final IForgotPasswordProvider provider;
 
   @override
-  Future sendEmailResetPass(String email) async {
+  Future<bool> sendEmailResetPass(String email) async {
     final response = await provider.sendEmailResetPassword(email);
     if (response.status.hasError) {
-      return Future.error(response.statusText!);
+      return false;
     } else {
-      return response;
+      return true;
     }
   }
-
-
 }

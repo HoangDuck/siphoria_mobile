@@ -10,7 +10,11 @@ class ForgotPasswordController extends GetxController{
   TextEditingController emailEditingController=TextEditingController();
 
   sendEmailResetPasswordData() async {
-    var token = await forgotPasswordRepository.sendEmailResetPass(emailEditingController.text);
-
+    var result = await forgotPasswordRepository.sendEmailResetPass(emailEditingController.text);
+    if(result){
+      Get.snackbar("Xác nhận thành công", "Đã gửi quý khách email có mã OTP");
+    }else{
+      Get.snackbar("Thao tác thất bại", "Quý khách vui lòng thử lại");
+    }
   }
 }

@@ -5,3 +5,4 @@ const String forgotPasswordUrl = '/api/auth/forgot';
 const String resetPasswordUrl = '/api/auth/reset';
 const String userProfileUrl = '/api/users/details';
 const String updateUserProfileUrl = '/api/users/update-profile';
+const String changePasswordUrl = '/api/auth/change-pwd';

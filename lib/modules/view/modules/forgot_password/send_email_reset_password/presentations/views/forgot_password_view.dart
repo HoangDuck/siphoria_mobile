@@ -1,13 +1,15 @@
-import 'package:final_project_hcmute/modules/view/modules/forgot_password/presentations/controllers/forgot_password_controller.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 
-import '../../../../../../core/utils/utils.dart';
-import '../../../../../widget/button_custom.dart';
-import '../../../../../widget/custom_dialog.dart';
-import '../../../../../widget/text_custom.dart';
-import '../../../../../widget/text_field_custom.dart';
-import '../../../../constant/app_colors.dart';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../../../../core/utils/utils.dart';
+import '../../../../../../widget/button_custom.dart';
+import '../../../../../../widget/custom_dialog.dart';
+import '../../../../../../widget/text_custom.dart';
+import '../../../../../../widget/text_field_custom.dart';
+import '../../../../../constant/app_colors.dart';
+import '../controllers/forgot_password_controller.dart';
 
 class ForgotPasswordView extends GetView<ForgotPasswordController>{
   @override
@@ -38,7 +40,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController>{
                     ),
                     Expanded(
                       child: TextCustom(
-                        "Thay đổi mật khẩu",
+                        "Quên mật khẩu",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: Utils.width(20),
@@ -87,7 +89,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController>{
                         height: Utils.width(46),
                         width: MediaQuery.of(context).size.width,
                         child: ButtonCustom(
-                          text: 'Thay đổi mật khẩu',
+                          text: 'Đặt lại mật khẩu',
                           onPress: (text) {
                             showLoadingDialog(context);
                             controller.sendEmailResetPasswordData();

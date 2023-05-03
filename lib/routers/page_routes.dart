@@ -1,6 +1,7 @@
 import 'package:final_project_hcmute/modules/view/modules/authentication/bindings/authentication_binding.dart';
 import 'package:final_project_hcmute/modules/view/modules/authentication/presentations/views/authentication_view.dart';
-import 'package:final_project_hcmute/modules/view/modules/forgot_password/presentations/views/forgot_password_view.dart';
+import 'package:final_project_hcmute/modules/view/modules/forgot_password/change_password/binding/change_password_binding.dart';
+import 'package:final_project_hcmute/modules/view/modules/forgot_password/change_password/presentations/views/change_password_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/history_booking/presentations/views/history_booking_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/home/presentations/views/home_view.dart';
 import 'package:final_project_hcmute/modules/view/modules/notification_module/presentations/views/notification_view.dart';
@@ -16,7 +17,8 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import '../modules/view/modules/booking_details/binding/booking_detail_binding.dart';
 import '../modules/view/modules/booking_details/presentations/views/booking_detail_view.dart';
-import '../modules/view/modules/forgot_password/binding/forgot_password_binding.dart';
+import '../modules/view/modules/forgot_password/send_email_reset_password/binding/forgot_password_binding.dart';
+import '../modules/view/modules/forgot_password/send_email_reset_password/presentations/views/forgot_password_view.dart';
 import '../modules/view/modules/history_booking/bindings/history_booking_binding.dart';
 import '../modules/view/modules/home/bindings/home_binding.dart';
 import '../modules/view/modules/hotel_info_module/bindings/hotel_info_binding.dart';
@@ -42,6 +44,7 @@ class Routes {
   static const register = '/register';
   static const forgotPass = '/forgotPass';
   static const roomDetail = '/roomDetail';
+  static const changePassword = '/changePassword';
 
   static final routes = [
     GetPage(
@@ -107,6 +110,11 @@ class Routes {
       name: Routes.roomDetail,
       page: () => RoomInfoView(),
       binding: RoomInfoBinding(),
+    ),
+    GetPage(
+      name: Routes.changePassword,
+      page: () => ChangePasswordView(),
+      binding: ChangePasswordBinding(),
     )
   ];
 }

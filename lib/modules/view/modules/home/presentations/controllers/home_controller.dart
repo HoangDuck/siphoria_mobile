@@ -25,6 +25,9 @@ class HomeController extends GetxController{
   String accessToken = '';
   String refreshToken = '';
 
+  DateTime? startDate;
+  DateTime? endDate;
+
   selectedPageIndex(int index){
     if(index==3 && accessToken.isEmpty){
       Get.toNamed(Routes.authentication);

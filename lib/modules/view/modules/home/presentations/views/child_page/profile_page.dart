@@ -81,7 +81,7 @@ Widget profilePage(BuildContext context) {
           Get.toNamed(Routes.profile);
         }),
         _itemButtonProfile("Thay đổi mật khẩu",onTap: (){
-          Get.toNamed(Routes.forgotPass);
+          Get.toNamed(Routes.changePassword);
         },icon: Icons.password_rounded,color: colorTitleAmber),
         _itemButtonProfile("Lịch sử đặt phòng",onTap: (){
           Get.toNamed(Routes.historyBooking);
@@ -94,9 +94,10 @@ Widget profilePage(BuildContext context) {
             controller.accessToken='';
             controller.refreshToken='';
             Get.back();
+            controller.selectedPageIndex(0);
+
           },onPressX: (){
             Get.back();
-            controller.selectedPageIndex(0);
           },enableCancel: true);
         },color: appBarColor),
       ],

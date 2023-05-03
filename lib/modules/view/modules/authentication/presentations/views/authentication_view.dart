@@ -2,6 +2,7 @@ import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
 import 'package:final_project_hcmute/modules/view/modules/authentication/presentations/controllers/authentication_controller.dart';
 import 'package:final_project_hcmute/modules/view/modules/home/presentations/controllers/home_controller.dart';
 import 'package:final_project_hcmute/modules/widget/button_custom.dart';
+import 'package:final_project_hcmute/modules/widget/text_custom.dart';
 import 'package:final_project_hcmute/routers/page_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -134,7 +135,14 @@ class AuthenticationView extends GetView<AuthenticationController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(child: Container(),),
-                      Text('Quên mật khẩu?',style: TextStyle(color: Colors.black,fontSize: Utils.width(15)),)
+                      TextCustom(
+                        'Quên mật khẩu?',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: Utils.width(15)),
+                        callBack: (text){
+                          Get.toNamed(Routes.forgotPass);
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -145,17 +153,15 @@ class AuthenticationView extends GetView<AuthenticationController> {
                   child: ButtonCustom(
                     text: 'Đăng nhập',
                     onPress: (text) async {
-                      showLoadingDialog(context);
                       await controller.authenticationData();
-                      Get.back();
                       if(controller.isSuccessLogin.value){
+                        Get.back();Get.back();
                         Get.snackbar(
                           "Siphoria",
                             "Đăng nhập thành công",
                           icon: const Icon(Icons.person, color: Colors.white),
                           snackPosition: SnackPosition.TOP,
                         );
-                        Get.back();Get.back();
                       }else{
                         Get.snackbar(
                           "Siphoria",
