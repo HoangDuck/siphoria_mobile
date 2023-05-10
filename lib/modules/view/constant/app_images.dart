@@ -20,5 +20,5 @@ const String icCart='assets/images/ic_cart.png';
 const String icMomo='assets/images/ic_momo.jpg';
 const String icPaypal='assets/images/ic_vnpay.png';
 const String icHoChiMinhCity = 'https://bcp.cdnchinhphu.vn/334894974524682240/2023/1/2/tphcm-16726501373541473396704.jpg';
-const String icImageHotelIntro ='https://files.beowulfchain.com/test/properties/2BYsL0FGACPyK3tb5prbOEJzbS7/p-2HtNYVZgS5NcflcJiwWSyxeydAV.jpg';
+const String icImageHotelIntro ='https://dimg04.c-ctrip.com/images/0221h12000ateylhkCB2A.jpg';
 const String icResort = 'https://crystabaya.com/_assets/sec2img7.46a28df5.jpg';

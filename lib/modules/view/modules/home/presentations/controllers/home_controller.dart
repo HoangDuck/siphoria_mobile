@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../routers/page_routes.dart';
+import '../../../../constant/app_images.dart';
 import '../../domain/adapters/repository_adapter.dart';
 import '../../domain/entities/cart_item_model.dart';
 
@@ -27,13 +28,20 @@ class HomeController extends GetxController{
 
   DateTime? startDate;
   DateTime? endDate;
+  RxString fullName="Tài khoản".obs;
+  RxString avatar=icHoChiMinhCity.obs;
+  RxString rank='Đồng'.obs;
 
   selectedPageIndex(int index){
-    if(index==3 && accessToken.isEmpty){
+    if(index!=0 && accessToken.isEmpty){
       Get.toNamed(Routes.authentication);
     }else{
+      if(index == 3) {
+        getUserProfileData();
+      }
       onSelectedTabIndex.value = index;
-      pageController.value.animateToPage(index,duration:const Duration(milliseconds: 300), curve: Curves.easeIn);
+      pageController.value.animateToPage(index,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
     }
   }
 
@@ -53,7 +61,7 @@ class HomeController extends GetxController{
   }
 
   initListResort(){
-    listResort.addAll(["Resort","Khu nghỉ dưỡng", "Villa"]);
+    listResort.addAll(["Khách sạn","Khu nghỉ dưỡng", "Villa","Nhà nghỉ"]);
     listResort.refresh();
   }
 
@@ -65,6 +73,15 @@ class HomeController extends GetxController{
     initFirebaseMessage();
     initListResort();
     await _getAPIDataTest();
+  }
+
+  getUserProfileData() async {
+    var userProfile = await homeRepository.getUserProfile();
+    if (userProfile.id != '') {
+      fullName.value = userProfile.fullName;
+      avatar.value = userProfile.avatar;
+      refresh();
+    }
   }
 
   initFirebaseMessage() {

@@ -182,7 +182,27 @@ class RegisterView extends GetView<RegisterController>{
                   height: Utils.width(46),
                   child: ButtonCustom(
                     text: 'Đăng ký',
-                    onPress: (text) {},
+                    onPress: (text) async {
+                      await controller.registerData();
+                      if(controller.isSuccessLogin.value){
+                        Get.back();Get.back();
+                        Get.snackbar(
+                          "Siphoria",
+                          "Đăng ký thành công",
+                          icon: const Icon(Icons.person, color: Colors.white),
+                          snackPosition: SnackPosition.TOP,
+                        );
+                      }else{
+                        Get.snackbar(
+                          "Siphoria",
+                          "Đăng ký thất bại",
+                          icon: const Icon(Icons.person, color: Colors.white),
+                          backgroundColor: appBarColor,
+                          snackPosition: SnackPosition.TOP,
+                        );
+                        Get.back();Get.back();
+                      }
+                    },
                     style: TextStyle(
                         fontSize: Utils.width(20),
                         fontWeight: FontWeight.bold,

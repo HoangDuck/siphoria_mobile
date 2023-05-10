@@ -8,6 +8,7 @@ class TextFieldCustom extends StatefulWidget {
   Widget? suffixIcon;
   Widget? prefixIcon;
   TextStyle? hintTextStyle;
+  FocusNode? focusNode;
   bool isSecureText;
   TextAlignVertical textAlignVertical;
 
@@ -16,6 +17,7 @@ class TextFieldCustom extends StatefulWidget {
       required this.controller,
       this.callBack,
       this.hintText,
+        this.focusNode,
       this.suffixIcon,
       this.prefixIcon,
       this.hintTextStyle,
@@ -33,6 +35,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
     return TextField(
       controller: widget.controller,
       textAlignVertical: widget.textAlignVertical,
+      focusNode: widget.focusNode,
       onChanged: (text){
         if(widget.callBack != null){
           widget.callBack!(text);

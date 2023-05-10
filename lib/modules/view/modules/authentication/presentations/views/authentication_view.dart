@@ -161,6 +161,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
                           "Siphoria",
                             "Đăng nhập thành công",
                           icon: const Icon(Icons.person, color: Colors.white),
+                          backgroundColor: colorPriceRoom,
                           snackPosition: SnackPosition.TOP,
                         );
                       }else{

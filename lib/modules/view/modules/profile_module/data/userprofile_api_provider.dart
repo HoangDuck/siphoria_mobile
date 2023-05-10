@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 abstract class IUserProfileProvider {
   Future<Response<UserProfileModel>> getProfile();
   Future<Response<UserProfileModel>> updateUserProfileProfile(UpdateUserProfileModel model);
+  Future<Response<UserProfileModel>> updateUserProfileAvatar(FormData data);
 }
 
 class UserProfileProvider extends GetConnect
@@ -40,6 +41,18 @@ class UserProfileProvider extends GetConnect
       'last_name': model.lastName,
       'phone': model.phone
     },headers: {
+      'Authorization':'Bearer ${controller.accessToken}'
+    });
+  }
+
+  @override
+  Future<Response<UserProfileModel>> updateUserProfileAvatar(FormData data) {
+    // TODO: implement updateUserProfileAvatar
+    HomeController controller = Get.find<HomeController>();
+    // TODO: implement signIn
+    httpClient.defaultDecoder = httpClient.defaultDecoder =
+        (value) => UserProfileModel.fromJson(value['data'] as Map<String, dynamic>);
+    return patch(updateUserProfileUrl,data,headers: {
       'Authorization':'Bearer ${controller.accessToken}'
     });
   }

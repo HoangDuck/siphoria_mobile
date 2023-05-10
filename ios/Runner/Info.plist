@@ -51,5 +51,9 @@
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>... explain why the app uses the microphone here ...</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>... explain why the app uses the microphone here ...</string>
+	<key>NSCameraUsageDescription</key>
+	<string>... explain why the app uses the microphone here ...</string>
 </dict>
 </plist>

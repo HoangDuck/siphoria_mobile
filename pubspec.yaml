@@ -52,6 +52,8 @@ dependencies:
   flutter_native_splash: ^2.2.18
   flutter_secure_storage: ^8.0.0
   custom_date_range_picker: ^1.0.10
+  image_picker: ^0.8.7+4
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

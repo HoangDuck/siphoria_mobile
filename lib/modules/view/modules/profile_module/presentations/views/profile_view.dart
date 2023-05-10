@@ -57,46 +57,51 @@ class ProfileView extends GetView<ProfileController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: colorTitleAmber,
-                                  width: Utils.width(5)),
-                              borderRadius: BorderRadius.circular(
-                                Utils.width(100),
+                      GestureDetector(
+                        onTap:(){
+                          controller.changeAvatar();
+                        },
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: colorTitleAmber,
+                                    width: Utils.width(5)),
+                                borderRadius: BorderRadius.circular(
+                                  Utils.width(100),
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(Utils.width(100)),
+                                child: Obx(()=>Image.network(
+                                  controller.avatarUrl.value == ''
+                                      ? icHoChiMinhCity
+                                      : controller.avatarUrl.value,
+                                  scale: 5,
+                                  width: Utils.width(150),
+                                  height: Utils.width(150),
+                                  fit: BoxFit.cover,
+                                ),),
                               ),
                             ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(Utils.width(100)),
-                              child: Obx(()=>Image.network(
-                                controller.avatarUrl.value == ''
-                                    ? icHoChiMinhCity
-                                    : controller.avatarUrl.value,
-                                scale: 5,
-                                width: Utils.width(150),
-                                height: Utils.width(150),
-                                fit: BoxFit.cover,
-                              ),),
-                            ),
-                          ),
-                          Positioned.fill(
-                            bottom: 0,
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                padding: EdgeInsets.all(Utils.width(10)),
-                                decoration: BoxDecoration(
-                                    color: colorButtonCart,
-                                    borderRadius:
-                                        BorderRadius.circular(Utils.width(30))),
-                                child: const Icon(Icons.camera_alt),
+                            Positioned.fill(
+                              bottom: 0,
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Container(
+                                  padding: EdgeInsets.all(Utils.width(10)),
+                                  decoration: BoxDecoration(
+                                      color: colorButtonCart,
+                                      borderRadius:
+                                          BorderRadius.circular(Utils.width(30))),
+                                  child: const Icon(Icons.camera_alt),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: Utils.width(15),

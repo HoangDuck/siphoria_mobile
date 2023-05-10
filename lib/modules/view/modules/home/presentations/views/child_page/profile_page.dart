@@ -35,14 +35,14 @@ Widget profilePage(BuildContext context) {
                 ),
               ],
             ),
-            child: Row(
+            child: Obx(()=>Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(Utils.width(50)),
                   child: Image.network(
-                    icHoChiMinhCity,
+                    controller.avatar.value,
                     scale: 5,
                     width: Utils.width(70),
                     height: Utils.width(70),
@@ -57,56 +57,57 @@ Widget profilePage(BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextCustom(
-                      "Hoàng Hữu Đức",
+                      controller.fullName.value,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Utils.width(20),
                       ),
                     ),
                     TextCustom(
-                      "Hạng thành viên: Bạc",
+                      "Hạng thành viên: ${controller.rank}",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: Utils.width(17),
-                        color: colorTitleAmber
-                      ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: Utils.width(17),
+                          color: colorTitleAmber),
                     ),
                   ],
                 )
               ],
-            ),
+            ),),
           ),
         ),
-        _itemButtonProfile("Thông tin cá nhân",onTap: (){
+        _itemButtonProfile("Thông tin cá nhân", onTap: () {
           Get.toNamed(Routes.profile);
         }),
-        _itemButtonProfile("Thay đổi mật khẩu",onTap: (){
+        _itemButtonProfile("Thay đổi mật khẩu", onTap: () {
           Get.toNamed(Routes.changePassword);
-        },icon: Icons.password_rounded,color: colorTitleAmber),
-        _itemButtonProfile("Lịch sử đặt phòng",onTap: (){
+        }, icon: Icons.password_rounded, color: colorTitleAmber),
+        _itemButtonProfile("Lịch sử đặt phòng", onTap: () {
           Get.toNamed(Routes.historyBooking);
-        },color: colorTextPrice),
-        _itemButtonProfile("Đăng xuất",onTap: (){
-          showMessageDialogIOS(context,description: "Bạn thực sự muốn đăng xuất?",onPress: () async {
+        }, color: colorTextPrice),
+        _itemButtonProfile("Đăng xuất", onTap: () {
+          showMessageDialogIOS(context,
+              description: "Bạn thực sự muốn đăng xuất?", onPress: () async {
             SecureStorage secureStorage = SecureStorage();
             await secureStorage.deleteAccessToken();
             await secureStorage.deleteAccessToken();
-            controller.accessToken='';
-            controller.refreshToken='';
+            controller.accessToken = '';
+            controller.refreshToken = '';
             Get.back();
             controller.selectedPageIndex(0);
-
-          },onPressX: (){
+          }, onPressX: () {
             Get.back();
-          },enableCancel: true);
-        },color: appBarColor),
+          }, enableCancel: true);
+        }, color: appBarColor),
       ],
     ),
   );
 }
 
 Widget _itemButtonProfile(String title,
-    {IconData icon = Icons.account_circle_rounded, required Function() onTap, Color color=colorTextPrice}) {
+    {IconData icon = Icons.account_circle_rounded,
+    required Function() onTap,
+    Color color = colorTextPrice}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(

@@ -1,8 +1,11 @@
 import 'package:final_project_hcmute/modules/widget/text_custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/utils/utils.dart';
+import '../view/constant/app_colors.dart';
 import 'loading_widget.dart';
 
 showLoadingDialog(BuildContext context,{int timeout=10}) => showDialog(
@@ -70,3 +73,52 @@ showMessageDialogIOS(BuildContext context,
                 onWillPop: () async => false),
           );
         });
+
+
+Widget actionChooseImageSheet({Function? chooseImageGallery}) {
+  return CupertinoActionSheet(
+    title: TextCustom(
+      "Chọn hình ảnh",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          fontSize: Utils.width(19), color: colorBorderVNPay),
+    ),
+    message: TextCustom(
+      "Chọn hành động bất kỳ",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+          fontSize: Utils.width(15), color: colorBorderVNPay),
+    ),
+    actions: <Widget>[
+      CupertinoActionSheetAction(
+        isDefaultAction: true,
+        onPressed: () {
+          Get.back();
+        },
+        child: TextCustom("Máy ảnh",
+            style: TextStyle(
+                fontSize: Utils.width(17),
+                color: colorBorderVNPay)),
+      ),
+      CupertinoActionSheetAction(
+        isDestructiveAction: true,
+        onPressed: () {
+          chooseImageGallery!();
+        },
+        child: TextCustom("Thư viện",
+            style: TextStyle(
+                fontSize: Utils.width(17),
+                color: appBarColor)),
+      )
+    ],
+    cancelButton: CupertinoActionSheetAction(
+      child: TextCustom("Huỷ",
+          style: TextStyle(
+              fontSize: Utils.width(17),
+              color: colorBorderVNPay)),
+      onPressed: () {
+        Get.back();
+      },
+    ),
+  );
+}

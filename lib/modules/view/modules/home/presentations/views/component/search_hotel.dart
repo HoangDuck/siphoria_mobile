@@ -1,11 +1,13 @@
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../../core/utils/utils.dart';
 import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/button_custom.dart';
 import '../../../../../../widget/text_field_custom.dart';
+import '../../../../../constant/app_colors.dart';
 import '../../../../../constant/app_images.dart';
 import '../../controllers/home_controller.dart';
 
@@ -30,13 +32,37 @@ Widget searchHotel(BuildContext context){
               ),
               border: Border.all(color: Colors.grey),
               color: Colors.white),
-          child: TextFieldCustom(
-            controller: controller.locationEditController,
-            prefixIcon: const Icon(Icons.search,color: Colors.black,),
-            hintText: "Bạn sẽ đến đâu",
-            hintTextStyle: const TextStyle(
-                color: Colors.blueGrey,
-                fontWeight: FontWeight.w500),
+          child: Container(
+            margin: EdgeInsets.only(left: Utils.width(10)),
+            child: Autocomplete(
+              fieldViewBuilder: (context,controller,focus,onFieldSubmitted){
+                return TextFieldCustom(
+                  controller: controller,
+                  focusNode: focus,
+                  prefixIcon: const Icon(Icons.search,color: Colors.black,),
+                  hintText: "Bạn sẽ đến đâu",
+                  hintTextStyle: const TextStyle(
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.w500),
+                  callBack: (value){
+                    onFieldSubmitted();
+                  },
+                );
+              },
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const Iterable<String>.empty();
+                }
+                return controller.listProvinces.value.where((option) {
+                  return option.name
+                      .toLowerCase()
+                      .contains(textEditingValue.text.toLowerCase());
+                });
+              },
+              onSelected: (selection) {
+                debugPrint('You just selected ${selection}');
+              },
+            ),
           ),
         ),
         GestureDetector(
@@ -49,7 +75,7 @@ Widget searchHotel(BuildContext context){
               endDate: controller.endDate,
               startDate: controller.startDate,
               backgroundColor: Colors.white,
-              primaryColor: Colors.green,
+              primaryColor: appBarColor,
               onApplyClick: (start, end) {
                 controller.endDate = end;
                 controller.startDate = start;
@@ -76,31 +102,40 @@ Widget searchHotel(BuildContext context){
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(Icons.calendar_today_outlined),
-                SizedBox(
-                  width: Utils.width(10),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
-                    Text(
-                      "Ngày đến",
-                      style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w500,
-                          fontSize: Utils.width(10)),
+                Expanded(child: Row(
+                  children:[
+                    SizedBox(
+                      width: Utils.width(10),
                     ),
-                    Text(
-                      "Từ ngày",
-                      style: TextStyle(
-                          color: Colors.blueGrey, fontSize: Utils.width(17)),
+                    const Icon(Icons.calendar_today_outlined),
+                    SizedBox(
+                      width: Utils.width(10),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  width: Utils.width(10),
-                ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:  [
+                        Text(
+                          "Ngày đến",
+                          style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: Utils.width(13)),
+                        ),
+                        Text(
+                        controller.startDate != null
+                            ? DateFormat("dd/MM/yyyy").format(DateFormat("yyyy-MM-dd HH:mm").parse(controller.startDate.toString())).toString()
+                            : "Từ ngày",
+                        style: TextStyle(
+                              color: Colors.blueGrey, fontSize: Utils.width(15)),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: Utils.width(10),
+                    ),
+                  ]
+                )),
                 const VerticalDivider(
                   width: 10,
                   thickness: 1,
@@ -108,31 +143,38 @@ Widget searchHotel(BuildContext context){
                   endIndent: 0,
                   color: Colors.red,
                 ),
-                SizedBox(
-                  width: Utils.width(10),
-                ),
-                const Icon(Icons.calendar_today_outlined),
-                SizedBox(
-                  width: Utils.width(10),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Ngày đi",
-                      style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w500,
-                          fontSize: Utils.width(10)),
+                Expanded(child: Row(
+                  children:[
+                    SizedBox(
+                      width: Utils.width(10),
                     ),
-                    Text(
-                      "Đến ngày",
-                      style: TextStyle(
-                          color: Colors.blueGrey, fontSize: Utils.width(17)),
+                    const Icon(Icons.calendar_today_outlined),
+                    SizedBox(
+                      width: Utils.width(10),
                     ),
-                  ],
-                ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Ngày đi",
+                          style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: Utils.width(13)),
+                        ),
+                        Text(
+                          controller.endDate != null
+                              ? DateFormat("dd/MM/yyyy").format(DateFormat("yyyy-MM-dd HH:mm").parse(controller.endDate.toString())).toString()
+                              : "Từ ngày",
+                          style: TextStyle(
+                              color: Colors.blueGrey, fontSize: Utils.width(15)),
+                        ),
+                      ],
+                    ),
+                  ]
+                )),
+
               ],
             ),
           ),
@@ -143,6 +185,7 @@ Widget searchHotel(BuildContext context){
               right: Utils.width(15),
               bottom: Utils.width(15)),
           padding: EdgeInsets.all(Utils.width(10)),
+          alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 Utils.width(10),
@@ -153,12 +196,15 @@ Widget searchHotel(BuildContext context){
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                width: Utils.width(10),
+              ),
               Image.asset(
                 icCustomer,
                 scale: 1.8,
               ),
               SizedBox(
-                width: Utils.width(10),
+                width: Utils.width(20),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,

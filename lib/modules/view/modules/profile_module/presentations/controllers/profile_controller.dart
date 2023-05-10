@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:final_project_hcmute/modules/view/modules/profile_module/domain/entities/update_user_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../../../widget/custom_dialog.dart';
 import '../../domain/adapter/repository_adapter.dart';
 
 class ProfileController extends GetxController {
@@ -15,6 +18,7 @@ class ProfileController extends GetxController {
   TextEditingController lastNameEditingController = TextEditingController();
   TextEditingController phoneEditingController = TextEditingController();
   RxString avatarUrl = ''.obs;
+  final ImagePicker picker = ImagePicker();
 
   @override
   void onInit() {
@@ -23,15 +27,25 @@ class ProfileController extends GetxController {
     getUserProfileData();
   }
 
+  changeAvatar() async {
+    showCupertinoModalPopup(
+        context: Get.context!, builder: (context) => actionChooseImageSheet(chooseImageGallery: () async {
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      FormData formData = FormData({
+        'images': MultipartFile(File(image!.path), filename: image!.name)
+      });
+      debugPrint(image!.path);
+    }));
+
+  }
+
   getUserProfileData() async {
     var userProfile = await userProfileRepository.getUserProfile();
     if (userProfile.id != '') {
       firstNameEditingController.text = userProfile.firstName;
       lastNameEditingController.text = userProfile.lastName;
       phoneEditingController.text = userProfile.phone;
-      var jsonString = userProfile.avatar;
-      var userAvatarDecode = jsonDecode(jsonString);
-      avatarUrl.value=userAvatarDecode.first['url'];
+      avatarUrl.value=userProfile.avatar;
       refresh();
     }
   }

@@ -8,6 +8,7 @@ import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/h
 
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/province_model.dart';
 import 'package:final_project_hcmute/modules/view/modules/profile_module/domain/entities/user_profile_model.dart';
+import 'package:get/get_connect/http/src/multipart/form_data.dart';
 
 import '../domain/adapter/repository_adapter.dart';
 import '../domain/entities/update_user_profile_model.dart';
@@ -35,6 +36,17 @@ class UserProfileRepository implements IUserProfileRepository {
   Future<UserProfileModel> updateUserProfileData(UpdateUserProfileModel data) async {
     // TODO: implement updateUserProfileData
     final response = await provider.updateUserProfileProfile(data);
+    if (response.status.hasError) {
+      return Future.error(response.statusText!);
+    } else {
+      return response.body!;
+    }
+  }
+
+  @override
+  Future<UserProfileModel> updateUserProfileAvatar(FormData data) async {
+    // TODO: implement updateUserProfileAvatar
+    final response = await provider.updateUserProfileAvatar(data);
     if (response.status.hasError) {
       return Future.error(response.statusText!);
     } else {

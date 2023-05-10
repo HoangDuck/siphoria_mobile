@@ -6,10 +6,10 @@ PODS:
   - Firebase/Messaging (10.7.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.7.0)
-  - firebase_core (2.10.0):
+  - firebase_core (2.11.0):
     - Firebase/CoreOnly (= 10.7.0)
     - Flutter
-  - firebase_messaging (14.4.1):
+  - firebase_messaging (14.5.0):
     - Firebase/Messaging (= 10.7.0)
     - firebase_core
     - Flutter
@@ -62,6 +62,8 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.11.1):
     - GoogleUtilities/Logger
+  - image_picker_ios (0.0.1):
+    - Flutter
   - just_audio (0.0.1):
     - Flutter
   - nanopb (2.30909.0):
@@ -92,6 +94,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -126,6 +129,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   path_provider_foundation:
@@ -144,8 +149,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
-  firebase_core: 18d44f087248303a4a8f05d0099a000c46e3c77a
-  firebase_messaging: 90b11d16c537444a39e50b818ebe1a51ec0e38c2
+  firebase_core: dee76ded6c693fdb38b8ea39aef7129e32e587a3
+  firebase_messaging: 67fbcdaf6a7c81849590e542eff2409dc49d9fa5
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreInternal: fa2899eb1f340054858d289e5a0fb935a0a74e52
   FirebaseInstallations: b2a05a3fe707df764345d68685534d07d0664af3
@@ -156,9 +161,10 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 8378d1fa8ac49753ea6ce70d65a7cb70ce5f66e6
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
