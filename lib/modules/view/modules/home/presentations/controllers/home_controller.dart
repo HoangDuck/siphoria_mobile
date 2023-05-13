@@ -18,6 +18,7 @@ class HomeController extends GetxController{
   TextEditingController locationEditController=TextEditingController();
   RxInt onSelectedTabIndex=0.obs;
   RxList<ProvinceModel> listProvinces=<ProvinceModel>[].obs;
+  List<String> listNameCity = [];
   Rx<PageController> pageController = PageController(initialPage: 0).obs;
   RxInt totalNumberCartItem= 0.obs;
   RxList<CartModel> listCart = <CartModel>[].obs;
@@ -31,6 +32,10 @@ class HomeController extends GetxController{
   RxString fullName="Tài khoản".obs;
   RxString avatar=icHoChiMinhCity.obs;
   RxString rank='Đồng'.obs;
+  RxString placeSearch = ''.obs;
+
+  RxInt totalNumberRoom= 1.obs;
+  RxInt totalNumberCustomer= 1.obs;
 
   selectedPageIndex(int index){
     if(index!=0 && accessToken.isEmpty){
@@ -47,14 +52,21 @@ class HomeController extends GetxController{
 
   _getToken()async {
     SecureStorage secureStorage=SecureStorage();
-    accessToken = (await secureStorage.accessToken)!;
-    refreshToken = (await secureStorage.refreshToken)!;
+    try{
+      accessToken = (await secureStorage.accessToken)!;
+      refreshToken = (await secureStorage.refreshToken)!;
+    }catch(e){
+      debugPrint(e.toString());
+    }
   }
 
   _getAPIDataTest() async {
     var tempProvinces = await homeRepository.getProvince('',0);
     if(tempProvinces.isNotEmpty){
       listProvinces.addAll(tempProvinces);
+      for(int index=0;index<tempProvinces.length;index++){
+        listNameCity.add(listProvinces[index].name);
+      }
       listProvinces.refresh();
     }
 
@@ -73,6 +85,13 @@ class HomeController extends GetxController{
     initFirebaseMessage();
     initListResort();
     await _getAPIDataTest();
+  }
+
+  _checkNavigateToCart(){
+    var isNavigateToCart = Get.arguments;
+    if(isNavigateToCart!=null && isNavigateToCart){
+      selectedPageIndex(1);
+    }
   }
 
   getUserProfileData() async {
@@ -108,6 +127,7 @@ class HomeController extends GetxController{
   @override
   void onReady() {
     super.onReady();
+    _checkNavigateToCart();
     print("Ready");
   }
 }

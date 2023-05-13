@@ -53,14 +53,13 @@ Widget searchHotel(BuildContext context){
                 if (textEditingValue.text == '') {
                   return const Iterable<String>.empty();
                 }
-                return controller.listProvinces.value.where((option) {
-                  return option.name
-                      .toLowerCase()
+                return controller.listNameCity.where((option) {
+                  return option.toLowerCase()
                       .contains(textEditingValue.text.toLowerCase());
                 });
               },
               onSelected: (selection) {
-                debugPrint('You just selected ${selection}');
+                controller.placeSearch.value = selection;
               },
             ),
           ),
@@ -179,52 +178,57 @@ Widget searchHotel(BuildContext context){
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(
-              left: Utils.width(15),
-              right: Utils.width(15),
-              bottom: Utils.width(15)),
-          padding: EdgeInsets.all(Utils.width(10)),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                Utils.width(10),
-              ),
-              border: Border.all(color: Colors.grey),
-              color: Colors.white),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: Utils.width(10),
-              ),
-              Image.asset(
-                icCustomer,
-                scale: 1.8,
-              ),
-              SizedBox(
-                width: Utils.width(20),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Khách - Số lượng phòng",
-                    style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15),
-                  ),
-                  Text(
-                    "1 người, 1 phòng",
-                    style: TextStyle(
-                        color: Colors.blueGrey, fontSize: 20),
-                  ),
-                ],
-              ),
-            ],
+        GestureDetector(
+          onTap:(){
+
+          },
+          child: Container(
+            margin: EdgeInsets.only(
+                left: Utils.width(15),
+                right: Utils.width(15),
+                bottom: Utils.width(15)),
+            padding: EdgeInsets.all(Utils.width(10)),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  Utils.width(10),
+                ),
+                border: Border.all(color: Colors.grey),
+                color: Colors.white),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: Utils.width(10),
+                ),
+                Image.asset(
+                  icCustomer,
+                  scale: 1.8,
+                ),
+                SizedBox(
+                  width: Utils.width(20),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      "Khách - Số lượng phòng",
+                      style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15),
+                    ),
+                    Text(
+                      "1 người, 1 phòng",
+                      style: TextStyle(
+                          color: Colors.blueGrey, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         Container(

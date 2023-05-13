@@ -20,75 +20,75 @@ Widget _homePage(BuildContext context) {
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: Utils.width(30)),
             ),
-            // Obx(
-            //   () => SizedBox(
-            //     height: Utils.width(200),
-            //     child: ListView.builder(
-            //       itemCount: 6/*controller.listProvinces.length*/,
-            //       scrollDirection: Axis.horizontal,
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return Container(
-            //           margin: EdgeInsets.all(Utils.width(10)),
-            //           decoration: BoxDecoration(
-            //               borderRadius: BorderRadius.circular(
-            //                 Utils.width(30),
-            //               ),
-            //               color: Colors.white),
-            //           child: Stack(
-            //             children: [
-            //               Container(
-            //                   height: Utils.width(200),
-            //                   width: Utils.width(150),
-            //                   decoration: BoxDecoration(
-            //                       borderRadius:
-            //                           BorderRadius.circular(Utils.width(30)),
-            //                       color: Colors.white),
-            //                   child: ClipRRect(
-            //                     borderRadius: BorderRadius.circular(15),
-            //                     child: Image.network(
-            //                       icHcmCity,
-            //                       fit: BoxFit.cover,
-            //                     ),
-            //                   )),
-            //               Positioned(
-            //                 top: 0,
-            //                 bottom: 0,
-            //                 right: 0,
-            //                 left: 0,
-            //                 child: ClipRRect(
-            //                   borderRadius:
-            //                       BorderRadius.circular(Utils.width(15)),
-            //                   child: Container(
-            //                     decoration: BoxDecoration(
-            //                       borderRadius:
-            //                           BorderRadius.circular(Utils.width(30)),
-            //                     ),
-            //                     child: Container(
-            //                       color: Colors.black.withOpacity(0.2),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //               Positioned.fill(
-            //                 bottom: Utils.width(10),
-            //                 child: Align(
-            //                   alignment: Alignment.bottomCenter,
-            //                   child: Text(
-            //                     controller.listProvinces[index].name,
-            //                     style: const TextStyle(
-            //                         color: Colors.white,
-            //                         fontWeight: FontWeight.bold,
-            //                         fontSize: 15),
-            //                   ),
-            //                 ),
-            //               )
-            //             ],
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
+            Obx(
+              () => SizedBox(
+                height: Utils.width(200),
+                child: ListView.builder(
+                  itemCount: controller.listProvinces.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.all(Utils.width(10)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Utils.width(30),
+                          ),
+                          color: Colors.white),
+                      child: Stack(
+                        children: [
+                          Container(
+                              height: Utils.width(200),
+                              width: Utils.width(150),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(Utils.width(30)),
+                                  color: Colors.white),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.network(
+                                  icHcmCity,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                          Positioned(
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(Utils.width(15)),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(Utils.width(30)),
+                                ),
+                                child: Container(
+                                  color: Colors.black.withOpacity(0.2),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned.fill(
+                            bottom: Utils.width(10),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                controller.listProvinces[index].name,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
             SizedBox(
               height: Utils.width(30),
             ),
@@ -163,23 +163,24 @@ Widget _homePage(BuildContext context) {
             SizedBox(
               height: Utils.width(30),
             ),
-            Text(
-              "Khách sạn được yêu thích",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: Utils.width(30)),
-            ),
-            Container(
-              margin: EdgeInsets.all(Utils.width(5)),
-              child: ListView.builder(
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return itemHotelSearch("1",callBack: (){
-                      Get.toNamed(Routes.hotelInfo);
-                    });
-                  }),
-            ),
+            // Text(
+            //   "Khách sạn được yêu thích",
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.bold, fontSize: Utils.width(30)),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.all(Utils.width(5)),
+            //   child: ListView.builder(
+            //       itemCount: 5,
+            //       shrinkWrap: true,
+            //       physics: const NeverScrollableScrollPhysics(),
+            //       itemBuilder: (context, index) {
+            //         // return itemHotelSearch("1",callBack: (){
+            //         //   Get.toNamed(Routes.hotelInfo);
+            //         // });
+            //         return Container();
+            //       }),
+            // ),
           ],
         ),
       ),

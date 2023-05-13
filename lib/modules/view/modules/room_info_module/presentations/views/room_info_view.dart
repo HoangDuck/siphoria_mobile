@@ -3,12 +3,15 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/utils/utils.dart';
-import '../../../../../widget/button_custom.dart';
 import '../../../../../widget/text_custom.dart';
 import '../../../../constant/app_colors.dart';
 import '../controllers/room_info_controller.dart';
 
 class RoomInfoView extends GetView<RoomInfoController>{
+  @override
+  RoomInfoController controller = Get.find<RoomInfoController>();
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,7 +61,7 @@ class RoomInfoView extends GetView<RoomInfoController>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextCustom(
-                          "Executive Suites",
+                          controller.data.name,
                           style: TextStyle(
                             color: colorTextPrice,
                             fontWeight: FontWeight.bold,
@@ -67,7 +70,7 @@ class RoomInfoView extends GetView<RoomInfoController>{
                         ),
                         SizedBox(height: Utils.width(10),),
                         TextCustom(
-                          "1 giường Queen. Kích thước phòng 15 m2 / 161 ft2. Quang cảnh ngoài trời. Vòi hoa sen. Wifi miễn phí",
+                          controller.data.description,
                           style: TextStyle(
                             color: colorTextPrice,
                             fontSize: Utils.width(15),
@@ -80,7 +83,7 @@ class RoomInfoView extends GetView<RoomInfoController>{
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(Utils.width(10)),
                             child: Image.network(
-                              icHoChiMinhCity,
+                              controller.data.photos.split(";").first,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -88,7 +91,7 @@ class RoomInfoView extends GetView<RoomInfoController>{
                         SizedBox(
                           height: Utils.width(60),
                           child: ListView.builder(
-                            itemCount: 5,
+                            itemCount: controller.data.photos.split(";").length,
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
@@ -103,7 +106,7 @@ class RoomInfoView extends GetView<RoomInfoController>{
                                     borderRadius:
                                         BorderRadius.circular(Utils.width(10)),
                                     child: Image.network(
-                                      icHoChiMinhCity,
+                                      controller.data.photos.split(";")[index],
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -114,20 +117,17 @@ class RoomInfoView extends GetView<RoomInfoController>{
                         ),
                         SizedBox(height: Utils.width(10),),
                         TextCustom(
-                          "Tiện ích phòng tắm",
+                          "Phong cảnh",
                           style: TextStyle(
                             color: colorTextPrice,
                             fontWeight: FontWeight.w500,
                             fontSize: Utils.width(18),
                           ),
                         ),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return _itemRateplanDetail("1");
-                            }),
+                        for (var k in controller.data.roomTypeViews.toJson().keys) ...{
+                          if(controller.data.roomTypeViews.toJson()[k].toString()=='true')
+                            _itemRateplanDetail(k),
+                        },
                         SizedBox(height: Utils.width(10),),
                         TextCustom(
                           "Tiện ích phòng",
@@ -137,13 +137,10 @@ class RoomInfoView extends GetView<RoomInfoController>{
                             fontSize: Utils.width(18),
                           ),
                         ),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return _itemRateplanDetail("1");
-                            }),
+                        for (var k in controller.data.roomTypeFacility.toJson().keys) ...{
+                          if(controller.data.roomTypeFacility.toJson()[k].toString()=='true')
+                            _itemRateplanDetail(k),
+                        },
                         SizedBox(height: Utils.width(10),),
                       ],
                     ),
@@ -167,14 +164,14 @@ class RoomInfoView extends GetView<RoomInfoController>{
           Container(
             margin: EdgeInsets.symmetric(horizontal: Utils.width(5)),
             child: Icon(
-              Icons.airport_shuttle_rounded,
-              color: colorTitleAmber,
+              Icons.check,
+              color: colorTextPrice,
               size: Utils.width(25),
             ),
           ),
           Expanded(
             child: TextCustom(
-              "6 người lớn, 3 trẻ em",
+              data,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: Utils.width(15),

@@ -6,3 +6,6 @@ const String resetPasswordUrl = '/api/auth/reset';
 const String userProfileUrl = '/api/users/details';
 const String updateUserProfileUrl = '/api/users/update-profile';
 const String changePasswordUrl = '/api/auth/change-pwd';
+const String getListHotelUrl = '/api/hotels/search';
+const String getListRoomTypeUrl = '/api/rooms/search';
+const String addToCartUrl = '/api/users/add-to-cart';

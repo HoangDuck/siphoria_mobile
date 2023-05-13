@@ -6,12 +6,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
 import '../../../../constant/app_images.dart';
 import '../../../search_hotel_module/presentations/views/component/overview_hotel_info.dart';
 import 'component/item_hotel_search_view.dart';
 
 class HotelInfoView extends GetView<HotelInfoController> {
+
+  @override
+  HotelInfoController controller = Get.find<HotelInfoController>();
+
+  HotelInfoView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,11 +39,11 @@ class HotelInfoView extends GetView<HotelInfoController> {
                       left: 0,
                       bottom: Utils.width(50),
                       child: CarouselSlider(
-                          items: [1, 2, 3, 4, 5].map((i) {
+                          items: controller.hotelData.hotelPhotos.split(";").map((value) {
                             return Builder(
                               builder: (BuildContext context) {
                                 return Image.network(
-                                  icHoChiMinhCity,
+                                  value==''?icHoChiMinhCity:value,
                                   scale: 1,
                                   fit: BoxFit.cover,
                                 );
@@ -94,7 +101,9 @@ class HotelInfoView extends GetView<HotelInfoController> {
                             ),
                             Expanded(child: Container()),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(Routes.home);
+                              },
                               child: Container(
                                 padding: EdgeInsets.all(Utils.width(5)),
                                 decoration: BoxDecoration(
@@ -110,7 +119,9 @@ class HotelInfoView extends GetView<HotelInfoController> {
                             Stack(
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.offAndToNamed(Routes.home,arguments: true);
+                                  },
                                   child: Container(
                                     padding: EdgeInsets.all(Utils.width(5)),
                                     decoration: BoxDecoration(
@@ -124,22 +135,26 @@ class HotelInfoView extends GetView<HotelInfoController> {
                                 Positioned(
                                   top: 0,
                                   right: 0,
-                                  child: Container(
-                                    width: Utils.width(18),
-                                    height: Utils.width(18),
-                                    padding: EdgeInsets.all(Utils.width(5)),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(80),
-                                        color: Colors.red),
-                                    alignment: Alignment.center,
-                                    child: TextCustom(
-                                      "2",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: Utils.width(7),
+                                  child: Obx(()=>Visibility(
+                                    visible: controller.totalCart.value > 0,
+                                    child: Container(
+                                      width: Utils.width(18),
+                                      height: Utils.width(18),
+                                      padding: EdgeInsets.all(Utils.width(5)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(80),
+                                          color: Colors.red),
+                                      alignment: Alignment.center,
+                                      child: TextCustom(
+                                        controller.totalCart.value.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: Utils.width(7),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  )),
                                 )
                               ],
                             ),
@@ -148,31 +163,31 @@ class HotelInfoView extends GetView<HotelInfoController> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 0,
-                    top: Utils.height(88),
-                    child: Container(
-                      padding: EdgeInsets.all(Utils.width(10)),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          padding: EdgeInsets.all(Utils.width(5)),
-                          decoration: BoxDecoration(
-                              color: colorButtonCart.withOpacity(0.7),
-                              borderRadius:
-                                  BorderRadius.circular(Utils.width(30))),
-                          child: const Icon(Icons.image),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   right: 0,
+                  //   top: Utils.height(88),
+                  //   child: Container(
+                  //     padding: EdgeInsets.all(Utils.width(10)),
+                  //     child: GestureDetector(
+                  //       onTap: () {},
+                  //       child: Container(
+                  //         padding: EdgeInsets.all(Utils.width(5)),
+                  //         decoration: BoxDecoration(
+                  //             color: colorButtonCart.withOpacity(0.7),
+                  //             borderRadius:
+                  //                 BorderRadius.circular(Utils.width(30))),
+                  //         child: const Icon(Icons.image),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned(
                     left: Utils.width(10),
                     right: Utils.width(10),
                     bottom: 0,
                     child: Container(
                       padding: const EdgeInsets.all(7),
-                      height: Utils.height(115),
+                      height: Utils.height(125),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                             Utils.width(10),
@@ -185,7 +200,7 @@ class HotelInfoView extends GetView<HotelInfoController> {
                           Container(
                             margin: EdgeInsets.all(Utils.width(2)),
                             child: TextCustom(
-                              "Hotel HotelLink - HCM Can Gio",
+                              controller.hotelData.name,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontSize: Utils.width(17),
@@ -202,7 +217,7 @@ class HotelInfoView extends GetView<HotelInfoController> {
                                 child: Container(
                                   margin: EdgeInsets.all(Utils.width(2)),
                                   child: TextCustom(
-                                    "9VHH+CQ7, Duyên Hải, Cần Giờ, Thành phố Hồ Chí Minh, Vietnam",
+                                    controller.hotelData.rawAddress,
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontSize: Utils.width(15),
@@ -229,12 +244,22 @@ class HotelInfoView extends GetView<HotelInfoController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Icon(Icons.star, color: colorRatingStar),
-                                Icon(Icons.star, color: colorRatingStar),
-                                Icon(Icons.star, color: colorRatingStar),
-                                Icon(Icons.star, color: colorRatingStar),
-                                Icon(Icons.star, color: colorRatingStar),
+                              children: [
+                                if(controller.hotelData.rating>=1)
+                                  const Icon(Icons.star,
+                                      color: colorRatingStar),
+                                if(controller.hotelData.rating>=2)
+                                  const Icon(Icons.star,
+                                      color: colorRatingStar),
+                                if(controller.hotelData.rating>=3)
+                                  const Icon(Icons.star,
+                                      color: colorRatingStar),
+                                if(controller.hotelData.rating>=4)
+                                  const Icon(Icons.star,
+                                      color: colorRatingStar),
+                                if(controller.hotelData.rating>=5)
+                                  const Icon(Icons.star,
+                                      color: colorRatingStar),
                               ],
                             ),
                           ),
@@ -251,20 +276,7 @@ class HotelInfoView extends GetView<HotelInfoController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    overviewHotelInfo(content: '''<div class="overhtml"><h2>
-                    <strong>Đề xuất dân công được quyền đấu giá biển số của 63 tỉnh thành</strong>
-                    </h2><p> Thứ trưởng Công an Nguyễn Văn Long cho biết quyết định xây dựng cho
-                     phép công dân Việt Nam có quyền đấu giá biển số của tất cả các địa phương.</p>
-                     <p> <i>Tại phiên họp chuyên đề luật tháng 9 chiều 22/9, <strong>100% thành</strong> 
-                     viên Ban Thường vụ Quốc hội có mặt đồng ý bổ sung vào chương trình xây dựng luật,
-                      pháp lệnh năm 2022 nội dung xem xét dự thảo quyết định Quốc hội</i></p><p> 
-                      <strong>về các quyền lựa chọn thí nghiệm sử dụng biển số thông qua đấu giá.</strong>
-                      </p><p> Thảo luận trước đó về tờ trình của Chính phủ, Chủ nhiệm Chính ngân sách Nguyễn 
-                      Phú Cường đề nghị xác định một số nội dung như "người dân ở tỉnh này đã được sang khác 
-                      tham gia đấu giá biển số không ? ”.</p><p> Ban biên tập cũng cần giải thích thêm tại sao 
-                      lại chia nguồn lệ phí từ đấu giá <strong>là 70%</strong> cho ngân sách Trung ương và <strong>30%
-                      </strong> cho biển số địa phương.</p><p> 
-                      <a href="https://vnexpress.net/de-xuat-cong-dan-duoc-quyen-dau-gia-bien-so-xe-cua-63-tinh-thanh-4514509.html">Link báo</a></p></div>'''),
+                    overviewHotelInfo(content: controller.hotelData.overview),
                     Container(
                       margin: EdgeInsets.all(Utils.width(10)),
                       child: TextCustom(
@@ -277,13 +289,16 @@ class HotelInfoView extends GetView<HotelInfoController> {
                         ),
                       ),
                     ),
-                    ListView.builder(
-                        itemCount: 3,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return itemHotelRoom(context,"1");
-                        }),
+                    Obx(
+                      () => ListView.builder(
+                          itemCount: controller.listRoomTypeData.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return itemHotelRoom(
+                                context, controller.listRoomTypeData[index]);
+                          }),
+                    ),
                   ],
                 ),
               ),

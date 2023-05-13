@@ -3,10 +3,11 @@ import 'package:final_project_hcmute/modules/view/constant/app_images.dart';
 import 'package:final_project_hcmute/modules/view/modules/search_hotel_module/presentations/views/component/sale_custom_clipper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../../core/models/hotel_model.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
 
-Widget itemHotelSearch(dynamic data,{required Function() callBack}){
+Widget itemHotelSearch(Hotel data,{required Function() callBack}){
   return GestureDetector(
     onTap: callBack,
     child: Container(
@@ -26,7 +27,9 @@ Widget itemHotelSearch(dynamic data,{required Function() callBack}){
                 ClipRRect(
                   borderRadius: BorderRadius.circular(Utils.width(10)),
                   child: Image.network(
-                    icImageHotelIntro,
+                    data.hotelPhotos.isEmpty
+                        ? icImageHotelIntro
+                        : data.hotelPhotos.split(";").first,
                     scale: 1.5,
                     fit: BoxFit.cover,
                   ),
@@ -34,18 +37,21 @@ Widget itemHotelSearch(dynamic data,{required Function() callBack}){
                 Positioned(
                   top: 0,
                   right: Utils.width(10),
-                  child: ClipPath(
-                    clipper: SaleOffClipper(),
-                    child: Container(
-                      width: Utils.width(50),
-                      height: Utils.height(70),
-                      color: colorRatingStar,
-                      child: const Center(
-                        child: Text(
-                          "50%",
-                          style: TextStyle(
-                              color: colorTextSaleOff,
-                              fontWeight: FontWeight.bold),
+                  child: Visibility(
+                    visible: (data.discountHotel??0)!= 0,
+                    child: ClipPath(
+                      clipper: SaleOffClipper(),
+                      child: Container(
+                        width: Utils.width(50),
+                        height: Utils.height(70),
+                        color: colorRatingStar,
+                        child: Center(
+                          child: Text(
+                            "${data.discountHotel??'0'}%",
+                            style: const TextStyle(
+                                color: colorTextSaleOff,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
@@ -57,7 +63,7 @@ Widget itemHotelSearch(dynamic data,{required Function() callBack}){
           Container(
             margin: EdgeInsets.all(Utils.width(2)),
             child: TextCustom(
-              "Hotel HotelLink - HCM Can Gio",
+              data.name,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: Utils.width(17),
@@ -73,34 +79,40 @@ Widget itemHotelSearch(dynamic data,{required Function() callBack}){
                   .start,
               crossAxisAlignment: CrossAxisAlignment
                   .start,
-              children: const [
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
-                Icon(Icons.star,
-                    color: colorRatingStar),
+              children: [
+                if(data.rating>=1)
+                  const Icon(Icons.star,
+                      color: colorRatingStar),
+                if(data.rating>=2)
+                  const Icon(Icons.star,
+                      color: colorRatingStar),
+                if(data.rating>=3)
+                  const Icon(Icons.star,
+                      color: colorRatingStar),
+                if(data.rating>=4)
+                  const Icon(Icons.star,
+                      color: colorRatingStar),
+                if(data.rating>=5)
+                  const Icon(Icons.star,
+                      color: colorRatingStar),
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal:Utils.width(2)),
-            child:TextCustom(
-              "20000 VND/night",
-              style: TextStyle(
-                  color: colorTextPrice,
-                  fontWeight: FontWeight.w600,
-                  fontSize: Utils.width(20),decoration: TextDecoration.lineThrough),
+          if(data.discountHotel>0)
+            Container(
+              margin: EdgeInsets.symmetric(horizontal:Utils.width(2)),
+              child:TextCustom(
+                "${data.priceHotel} VND/night",
+                style: TextStyle(
+                    color: colorTextPrice,
+                    fontWeight: FontWeight.w600,
+                    fontSize: Utils.width(20),decoration: TextDecoration.lineThrough),
+              ),
             ),
-          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal:Utils.width(2)),
             child:TextCustom(
-              "20000 VND/night",
+              "${data.discountHotel > 0 ? data.discountPrice : data.priceHotel} VND/night",
               style: TextStyle(
                   color: appBarColor,
                   fontWeight: FontWeight.w600,

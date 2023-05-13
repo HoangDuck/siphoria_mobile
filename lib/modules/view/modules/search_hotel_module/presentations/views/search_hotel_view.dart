@@ -8,9 +8,13 @@ import 'package:get/get.dart';
 
 import '../../../../constant/app_colors.dart';
 import '../../../../constant/app_images.dart';
+import '../../../home/presentations/controllers/home_controller.dart';
 import 'component/item_hotel_search_view.dart';
 
 class SearchHotelView extends GetView<SearchHotelController> {
+  HomeController homeController = Get.find<HomeController>();
+  @override
+  SearchHotelController controller = Get.find<SearchHotelController>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -101,7 +105,10 @@ class SearchHotelView extends GetView<SearchHotelController> {
                             Stack(
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    homeController.selectedPageIndex(1);
+                                    Get.back();
+                                  },
                                   child: Container(
                                     padding: EdgeInsets.all(Utils.width(5)),
                                     decoration: BoxDecoration(
@@ -116,23 +123,26 @@ class SearchHotelView extends GetView<SearchHotelController> {
                                 Positioned(
                                   top: 0,
                                   right: 0,
-                                  child: Container(
-                                    width: Utils.width(18),
-                                    height: Utils.width(18),
-                                    padding: EdgeInsets.all(Utils.width(5)),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(80),
-                                        color: Colors.red),
-                                    alignment: Alignment.center,
-                                    child: TextCustom(
-                                      "2",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: Utils.width(7),
+                                  child: Obx(()=>Visibility(
+                                    visible: controller.homeController.totalNumberCartItem.value > 0,
+                                    child: Container(
+                                      width: Utils.width(18),
+                                      height: Utils.width(18),
+                                      padding: EdgeInsets.all(Utils.width(5)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(80),
+                                          color: Colors.red),
+                                      alignment: Alignment.center,
+                                      child: TextCustom(
+                                        controller.totalCart.value.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: Utils.width(7),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  )),
                                 )
                               ],
                             ),
@@ -151,26 +161,26 @@ class SearchHotelView extends GetView<SearchHotelController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            TextCustom(
-                              "Hồ Chí Minh (356)",
+                            Obx(()=>TextCustom(
+                              "${controller.city.value} (${controller.numberOfHotels.value})",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: Utils.width(25),
                                 fontWeight: FontWeight.bold,
                                 color: colorTextBold,
                               ),
-                            ),
+                            )),
                           ],
                         ),
-                        TextCustom(
-                          "Th 4, 5 thg 4 - Th 5, 6 thg 4 x 2 khách",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: Utils.width(15),
-                            fontWeight: FontWeight.bold,
-                            color: colorTextBold,
-                          ),
-                        ),
+                        Obx(() => TextCustom(
+                              "${controller.startDate.value} - ${controller.endDate.value} x ${controller.totalCustomer.value} khách",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: Utils.width(15),
+                                fontWeight: FontWeight.bold,
+                                color: colorTextBold,
+                              ),
+                            )),
                       ],
                     ),
                   ),
@@ -190,16 +200,16 @@ class SearchHotelView extends GetView<SearchHotelController> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(
-                            flex: 2,
-                            child: TextCustom(
-                              "Lọc",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontWeight: FontWeight.w500),
-                              icon: Icons.keyboard_arrow_down,
-                            ),
-                          ),
-                          const VerticalDivider(),
+                          // Expanded(
+                          //   flex: 2,
+                          //   child: TextCustom(
+                          //     "Lọc",
+                          //     textAlign: TextAlign.center,
+                          //     style: const TextStyle(fontWeight: FontWeight.w500),
+                          //     icon: Icons.keyboard_arrow_down,
+                          //   ),
+                          // ),
+                          // const VerticalDivider(),
                           Expanded(
                             flex: 2,
                             child: TextCustom(
@@ -232,15 +242,15 @@ class SearchHotelView extends GetView<SearchHotelController> {
               child:SingleChildScrollView(
                 child: Container(
                   margin: EdgeInsets.all(Utils.width(5)),
-                  child: ListView.builder(
-                      itemCount: 5,
+                  child: Obx(()=>ListView.builder(
+                      itemCount: controller.listHotelData.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return itemHotelSearch("1",callBack: (){
-                          Get.toNamed(Routes.hotelInfo);
+                        return itemHotelSearch(controller.listHotelData[index],callBack: (){
+                          Get.toNamed(Routes.hotelInfo,arguments: controller.listHotelData[index]);
                         });
-                      }),
+                      })),
                 ),
               ),
             ),

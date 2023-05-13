@@ -1,12 +1,17 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../../../../core/models/hotel_details_model.dart';
 import '../../../../../../../core/utils/utils.dart';
+import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/button_custom.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
+import '../../controllers/hotel_info_controller.dart';
 
-Widget itemRateplanView(BuildContext context){
+Widget itemRateplanView(BuildContext context,RoomType data,RatePlan dataRatePlan){
+  HotelInfoController controller = Get.find<HotelInfoController>();
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,10 +23,10 @@ Widget itemRateplanView(BuildContext context){
           Container(
             margin: EdgeInsets.all(Utils.width(10)),
             child: TextCustom(
-              "Executive Suites",
+              "${data.name} \n${dataRatePlan.name}",
               textAlign: TextAlign.start,
               style: TextStyle(
-                fontSize: Utils.width(17),
+                fontSize: Utils.width(15),
                 fontWeight: FontWeight.bold,
                 color: colorTextPrice,
               ),
@@ -33,7 +38,7 @@ Widget itemRateplanView(BuildContext context){
               top: Utils.width(20),
               right: Utils.width(20),
             ),
-            padding: EdgeInsets.symmetric(vertical: Utils.width(10)),
+            padding: EdgeInsets.all(Utils.width(10)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               border: Border.all(
@@ -42,41 +47,20 @@ Widget itemRateplanView(BuildContext context){
                   width: 0.80),
             ),
             alignment: Alignment.center,
-            child: StatefulBuilder(builder: (context, setState) {
-              return DropdownButtonHideUnderline(
-                child: DropdownButton<dynamic>(
-                  value: 1,
-                  alignment: AlignmentDirectional.center,
-                  isDense: true,
-                  icon: const Icon(Icons.arrow_drop_down,
-                      color: colorTitleAmber),
-                  elevation: 10,
-                  style: const TextStyle(
-                      color: colorTitleAmber, fontWeight: FontWeight.bold),
-                  onChanged: (value) {},
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  items: [1, 2, 3].map<DropdownMenuItem<dynamic>>((value) {
-                    return DropdownMenuItem<dynamic>(
-                      value: value,
-                      child: Container(
-                        padding: EdgeInsets.only(left: Utils.width(10)),
-                        child: Text("$value Phòng"),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              );
-            }),
+            child: Text(
+              "${controller.totalNumberRoom} Phòng",
+              style: const TextStyle(
+                  color: colorTitleAmber, fontWeight: FontWeight.bold),
+            ),
           )
         ],
       ),
-      ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return _itemRateplanDetail("1");
-          }),
+      if(dataRatePlan.freeBreakfast)
+        _itemRateplanDetail("Được ăn sáng"),
+      if(dataRatePlan.freeLunch)
+        _itemRateplanDetail("Được ăn trưa"),
+      if(dataRatePlan.freeDinner)
+        _itemRateplanDetail("Được ăn tối"),
       Container(
         margin: EdgeInsets.only(top: Utils.width(5)),
         child: Row(
@@ -90,7 +74,9 @@ Widget itemRateplanView(BuildContext context){
               child: ButtonCustom(
                 text: 'Thêm vào giỏ hàng',
                 alignment: TextAlign.center,
-                onPress: (text) {},
+                onPress: (text) {
+                  controller.addToCart(data,dataRatePlan);
+                },
                 style: TextStyle(
                     fontSize: Utils.width(15),
                     color: colorTitleAmber),
@@ -105,7 +91,9 @@ Widget itemRateplanView(BuildContext context){
               child: ButtonCustom(
                 text: 'Đặt ngay',
                 alignment: TextAlign.center,
-                onPress: (text) {},
+                onPress: (text) {
+                  Get.toNamed(Routes.payment);
+                },
                 style: TextStyle(
                     fontSize: Utils.width(15),
                     color: Colors.white),
@@ -134,38 +122,38 @@ Widget itemRateplanView(BuildContext context){
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: Utils.width(10)),
-                    child:TextCustom(
-                      "20000 VND",
-                      style: TextStyle(
-                          color: colorTextPrice,
-                          fontWeight: FontWeight.w600,
-                          fontSize: Utils.width(15),decoration: TextDecoration.lineThrough),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(left: Utils.width(5)),
-                      child: TextCustom(
-                        "- 10%",
-                        style: TextStyle(
-                            color: appBarColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: Utils.width(12)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   crossAxisAlignment: CrossAxisAlignment.end,
+              //   children: [
+              //     Container(
+              //       margin: EdgeInsets.only(left: Utils.width(10)),
+              //       child:TextCustom(
+              //         "20000 VND",
+              //         style: TextStyle(
+              //             color: colorTextPrice,
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: Utils.width(15),decoration: TextDecoration.lineThrough),
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         margin: EdgeInsets.only(left: Utils.width(5)),
+              //         child: TextCustom(
+              //           "- 10%",
+              //           style: TextStyle(
+              //               color: appBarColor,
+              //               fontWeight: FontWeight.w600,
+              //               fontSize: Utils.width(12)),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
-                child: TextCustom(
-                  "20000 VND",
+                child: TextCustom(//${data.ratePlans.first.ratePackages.first.price}
+                  "${controller.calculateAveragePriceRatePlan(dataRatePlan)} VND",
                   style: TextStyle(
                       color: colorPriceRoom,
                       fontWeight: FontWeight.w600,
@@ -193,68 +181,91 @@ Widget itemRateplanView(BuildContext context){
                     margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
                     child: const Divider(),
                   ),
-                  ListView.builder(
+                  Obx(()=>ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 3,
+                      itemCount: controller.totalDays.value,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: Utils.width(10),
-                              vertical: Utils.width(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              TextCustom(
-                                "06 tháng 4, 2023",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: Utils.width(15),
-                                  fontWeight: FontWeight.bold,
-                                  color: colorTextPrice,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextCustom(
-                                    "- 10%",
-                                    style: TextStyle(
-                                        color: appBarColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: Utils.width(10)),
-                                  ),
-                                  TextCustom(
-                                    "20000 VND",
-                                    style: TextStyle(
-                                        color: colorTextPrice,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: Utils.width(10),
-                                        decoration: TextDecoration.lineThrough),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: Utils.width(5),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: Utils.width(10)),
-                                child: TextCustom(
-                                  "20000 VND",
+                        try{
+                          var tempRatePackagePrice = dataRatePlan.ratePackages
+                                .where((element) {
+                                  debugPrint(controller.format.parse(element
+                                      .availabilityAt
+                                      .toUtc()
+                                      .toIso8601String()).toString());
+                                  debugPrint(controller.startDateTime
+                                      .add(Duration(days: index)).toString());
+                                  return controller.format.parse(element
+                                          .availabilityAt
+                                          .toUtc()
+                                          .toIso8601String()) ==
+                                      controller.startDateTime
+                                          .add(Duration(days: index));
+                                })
+                                .first
+                                .price;
+                            dataRatePlan.totalPrice += tempRatePackagePrice;
+                          return Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: Utils.width(10),
+                                vertical: Utils.width(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                TextCustom(
+                                  controller.calculateDayRatePackage(controller.startDateTime.add(Duration(days: index))),
+                                  textAlign: TextAlign.start,
                                   style: TextStyle(
-                                      color: colorPriceRoom,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: Utils.width(15)),
+                                    fontSize: Utils.width(15),
+                                    fontWeight: FontWeight.bold,
+                                    color: colorTextPrice,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                                Expanded(child: Container()),
+                                // Column(
+                                //   mainAxisAlignment: MainAxisAlignment.start,
+                                //   crossAxisAlignment: CrossAxisAlignment.start,
+                                //   children: [
+                                //     TextCustom(
+                                //       "- 10%",
+                                //       style: TextStyle(
+                                //           color: appBarColor,
+                                //           fontWeight: FontWeight.w600,
+                                //           fontSize: Utils.width(10)),
+                                //     ),
+                                //     TextCustom(
+                                //       "20000 VND",
+                                //       style: TextStyle(
+                                //           color: colorTextPrice,
+                                //           fontWeight: FontWeight.w600,
+                                //           fontSize: Utils.width(10),
+                                //           decoration: TextDecoration.lineThrough),
+                                //     ),
+                                //   ],
+                                // ),
+                                SizedBox(
+                                  width: Utils.width(5),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: Utils.width(10)),
+                                  child: TextCustom(
+                                    "$tempRatePackagePrice VND",
+                                    style: TextStyle(
+                                        color: colorPriceRoom,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: Utils.width(15)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }catch(e){
+                          debugPrint(e.toString());
+                          return Container();
+                        }
+                      }),),
                 ],
               ),
             ),
@@ -285,7 +296,7 @@ Widget itemRateplanView(BuildContext context){
           Container(
             margin: EdgeInsets.all(Utils.width(10)),
             child: TextCustom(
-              "20000 VND",
+              "${dataRatePlan.totalPrice} VND",
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontSize: Utils.width(20),
@@ -314,14 +325,14 @@ Widget _itemRateplanDetail(dynamic data){
         Container(
           margin: EdgeInsets.symmetric(horizontal: Utils.width(5)),
           child: Icon(
-            Icons.airport_shuttle_rounded,
-            color: colorTitleAmber,
+            Icons.check,
+            color: colorTextPrice,
             size: Utils.width(25),
           ),
         ),
         Expanded(
           child: TextCustom(
-            "6 người lớn, 3 trẻ em",
+            data,
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: Utils.width(15),
