@@ -9,3 +9,4 @@ const String changePasswordUrl = '/api/auth/change-pwd';
 const String getListHotelUrl = '/api/hotels/search';
 const String getListRoomTypeUrl = '/api/rooms/search';
 const String addToCartUrl = '/api/users/add-to-cart';
+const String getListCartItemUrl = '/api/users/carts';

@@ -82,10 +82,10 @@ class RoomInfoView extends GetView<RoomInfoController>{
                           height: Utils.height(250),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(Utils.width(10)),
-                            child: Image.network(
-                              controller.data.photos.split(";").first,
+                            child: Obx(()=>Image.network(
+                              controller.previewImage.value,
                               fit: BoxFit.cover,
-                            ),
+                            ),),
                           ),
                         ),
                         SizedBox(
@@ -97,7 +97,7 @@ class RoomInfoView extends GetView<RoomInfoController>{
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: (){
-
+                                  controller.previewImage.value = controller.data.photos.split(";")[index];
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(Utils.width(5)),

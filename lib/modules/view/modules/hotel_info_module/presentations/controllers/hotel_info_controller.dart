@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:final_project_hcmute/core/services/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../../core/models/hotel_details_model.dart';
 import '../../../../../../core/models/hotel_model.dart';
+import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
 import '../../../home/presentations/controllers/home_controller.dart';
 import '../../domain/adapters/repository_adapter.dart';
@@ -62,35 +63,43 @@ class HotelInfoController extends GetxController{
   }
 
   addToCart(RoomType data,RatePlan dataRatePlan) async {
-    var result = await hotelInfoRepository.addToCart({
-      'from_date': startDateTime
-          .toString(),
-      'to_date': endDateTime
-          .toString(),
-      'number_of_adults': homeController.totalNumberCustomer.value,
-      'number_of_children': homeController.totalNumberCustomer.value,
-      'number_of_rooms': totalNumberRoom.value,
-      'rate_plan_id':dataRatePlan.id,
-      'room_type_id':data.id,
-      'hotel_id':data.hotelId
-    });
-    if(result){
-      homeController.totalNumberCartItem.value++;
-      totalCart.value++;
-      Get.snackbar(
+    try{
+      var result = await hotelInfoRepository.addToCart({
+        'from_date': startDateTime
+            .toString(),
+        'to_date': endDateTime
+            .toString(),
+        'number_of_adults': homeController.totalNumberCustomer.value,
+        'number_of_children': homeController.totalNumberCustomer.value,
+        'number_of_rooms': totalNumberRoom.value,
+        'rate_plan_id':dataRatePlan.id,
+        'room_type_id':data.id,
+        'hotel_id':data.hotelId
+      });
+      if(result){
+        homeController.totalNumberCartItem.value++;
+        totalCart.value++;
+        Get.snackbar(
           "Giỏ hàng", "Thêm giỏ hàng thành công",
-        icon: const Icon(Icons.person, color: Colors.white),
-        backgroundColor: colorPriceRoom,
-        snackPosition: SnackPosition.TOP,
-      );
-    }else{
-      Get.snackbar(
-        "Giỏ hàng", "Thêm giỏ hàng thất bại",
-        icon: const Icon(Icons.person, color: Colors.white),
-        backgroundColor: colorRatingStar,
-        snackPosition: SnackPosition.TOP,
-      );
+          icon: const Icon(Icons.person, color: Colors.white),
+          backgroundColor: colorPriceRoom,
+          snackPosition: SnackPosition.TOP,
+        );
+      }else{
+        Get.snackbar(
+          "Giỏ hàng", "Thêm giỏ hàng thất bại",
+          icon: const Icon(Icons.person, color: Colors.white),
+          backgroundColor: colorRatingStar,
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+    }catch(e){
+      SecureStorage secureStorage = SecureStorage();
+      secureStorage.deleteAccessToken();
+      secureStorage.deleteRefreshToken();
+      Get.toNamed(Routes.authentication);
     }
+
   }
 
 }

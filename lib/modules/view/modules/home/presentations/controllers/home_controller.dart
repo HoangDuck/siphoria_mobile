@@ -16,6 +16,7 @@ class HomeController extends GetxController{
   HomeController({required this.homeRepository});
 
   TextEditingController locationEditController=TextEditingController();
+  RxBool isLocationEditEmpty = false.obs;
   RxInt onSelectedTabIndex=0.obs;
   RxList<ProvinceModel> listProvinces=<ProvinceModel>[].obs;
   List<String> listNameCity = [];
@@ -29,6 +30,7 @@ class HomeController extends GetxController{
 
   DateTime? startDate;
   DateTime? endDate;
+  RxBool isDateRangeEditEmpty = false.obs;
   RxString fullName="Tài khoản".obs;
   RxString avatar=icHoChiMinhCity.obs;
   RxString rank='Đồng'.obs;
@@ -36,6 +38,7 @@ class HomeController extends GetxController{
 
   RxInt totalNumberRoom= 1.obs;
   RxInt totalNumberCustomer= 1.obs;
+  RxInt totalNumberCustomerChildren = 0.obs;
 
   selectedPageIndex(int index){
     if(index!=0 && accessToken.isEmpty){
@@ -60,13 +63,29 @@ class HomeController extends GetxController{
     }
   }
 
+  _getListCartItem() async {
+    var listCartModel = await homeRepository.getListCartItem();
+    if(listCartModel.isNotEmpty){
+      listCart.addAll(listCartModel);
+      totalNumberCartItem.value = listCart.length;
+      listCart.refresh();
+      totalNumberCartItem.refresh();
+    }
+  }
+
   _getAPIDataTest() async {
     var tempProvinces = await homeRepository.getProvince('',0);
+    List<ProvinceModel> tempListFavoriteProvince = [];
     if(tempProvinces.isNotEmpty){
       listProvinces.addAll(tempProvinces);
       for(int index=0;index<tempProvinces.length;index++){
         listNameCity.add(listProvinces[index].name);
+        if(',1,79,48,92,56,'.contains(',${listProvinces[index].code.toString()},')){
+          tempListFavoriteProvince.add(listProvinces[index]);
+        }
       }
+      listProvinces.clear();
+      listProvinces.addAll(tempListFavoriteProvince);
       listProvinces.refresh();
     }
 
@@ -85,6 +104,13 @@ class HomeController extends GetxController{
     initFirebaseMessage();
     initListResort();
     await _getAPIDataTest();
+    await _getListCartItem();
+  }
+
+
+  @override
+  void onClose() {
+    pageController.close();
   }
 
   _checkNavigateToCart(){
@@ -95,11 +121,18 @@ class HomeController extends GetxController{
   }
 
   getUserProfileData() async {
-    var userProfile = await homeRepository.getUserProfile();
-    if (userProfile.id != '') {
-      fullName.value = userProfile.fullName;
-      avatar.value = userProfile.avatar;
-      refresh();
+    try{
+      var userProfile = await homeRepository.getUserProfile();
+      if (userProfile.id != '') {
+        fullName.value = userProfile.fullName;
+        avatar.value = userProfile.avatar;
+        refresh();
+      }
+    } catch (e){
+      SecureStorage secureStorage = SecureStorage();
+      secureStorage.deleteAccessToken();
+      secureStorage.deleteRefreshToken();
+      Get.toNamed(Routes.authentication);
     }
   }
 
@@ -122,6 +155,11 @@ class HomeController extends GetxController{
         backgroundColor: Colors.green,
       );
     });
+  }
+
+  validateSearch(){
+    isLocationEditEmpty.value = /*locationEditController.text.isEmpty && */placeSearch.isEmpty;
+    isDateRangeEditEmpty.value = startDate == null || endDate == null;
   }
 
   @override

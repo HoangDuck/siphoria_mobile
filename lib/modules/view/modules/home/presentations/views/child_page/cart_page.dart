@@ -6,7 +6,7 @@ Widget _cartPage(BuildContext context) {
     children: [
       Expanded(
         child: SingleChildScrollView(
-          child: Obx(() => controller.totalNumberCartItem.value != 0
+          child: Obx(() => controller.totalNumberCartItem.value == 0
               ? _emptyCart()
               : _listItemCart(context)),
         ),
@@ -91,7 +91,7 @@ Widget _listItemCart(BuildContext context){
       ],
     ),
     child: ListView.builder(
-        itemCount: /*controller.listCart.length*/1,
+        itemCount: controller.listCart.length,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
@@ -292,6 +292,7 @@ Widget _itemRateplanDetail(dynamic data){
 }
 
 Widget _emptyCart(){
+  HomeController controller = Get.find<HomeController>();
   return Container(
     height: Utils.height(500),
     margin: EdgeInsets.all(Utils.width(10)),
@@ -326,7 +327,9 @@ Widget _emptyCart(){
         ),
         ButtonCustom(
           text: "Đặt chỗ ngay",
-          onPress: (_) {},
+          onPress: (_) {
+            controller.selectedPageIndex(0);
+          },
           color: colorTitleAmber,
           borderRadius: 30,
           borderColor: Colors.transparent,

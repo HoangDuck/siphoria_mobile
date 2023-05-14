@@ -1,4 +1,5 @@
 import 'package:custom_date_range_picker/custom_date_range_picker.dart';
+import 'package:final_project_hcmute/modules/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,9 +11,9 @@ import '../../../../../../widget/text_field_custom.dart';
 import '../../../../../constant/app_colors.dart';
 import '../../../../../constant/app_images.dart';
 import '../../controllers/home_controller.dart';
+import '../number_customer_view.dart';
 
-Widget searchHotel(BuildContext context){
-
+Widget searchHotel(BuildContext context) {
   HomeController controller = Get.find<HomeController>();
   return Container(
     margin: EdgeInsets.all(Utils.width(10)),
@@ -24,27 +25,32 @@ Widget searchHotel(BuildContext context){
         color: Colors.white),
     child: Column(
       children: [
-        Container(
+        Obx(()=>Container(
           margin: EdgeInsets.all(Utils.width(15)),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 Utils.width(10),
               ),
-              border: Border.all(color: Colors.grey),
+              border: Border.all(
+                  color: controller.isDateRangeEditEmpty.value
+                      ? colorRatingStar
+                      : Colors.grey),
               color: Colors.white),
           child: Container(
             margin: EdgeInsets.only(left: Utils.width(10)),
             child: Autocomplete(
-              fieldViewBuilder: (context,controller,focus,onFieldSubmitted){
+              fieldViewBuilder: (context, controller, focus, onFieldSubmitted) {
                 return TextFieldCustom(
                   controller: controller,
                   focusNode: focus,
-                  prefixIcon: const Icon(Icons.search,color: Colors.black,),
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Colors.black,
+                  ),
                   hintText: "Bạn sẽ đến đâu",
                   hintTextStyle: const TextStyle(
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.w500),
-                  callBack: (value){
+                      color: Colors.blueGrey, fontWeight: FontWeight.w500),
+                  callBack: (value) {
                     onFieldSubmitted();
                   },
                 );
@@ -54,7 +60,8 @@ Widget searchHotel(BuildContext context){
                   return const Iterable<String>.empty();
                 }
                 return controller.listNameCity.where((option) {
-                  return option.toLowerCase()
+                  return option
+                      .toLowerCase()
                       .contains(textEditingValue.text.toLowerCase());
                 });
               },
@@ -63,9 +70,9 @@ Widget searchHotel(BuildContext context){
               },
             ),
           ),
-        ),
+        ),),
         GestureDetector(
-          onTap:(){
+          onTap: () {
             showCustomDateRangePicker(
               context,
               dismissible: true,
@@ -85,7 +92,7 @@ Widget searchHotel(BuildContext context){
               },
             );
           },
-          child: Container(
+          child: Obx(()=>Container(
             margin: EdgeInsets.only(
                 left: Utils.width(15),
                 right: Utils.width(15),
@@ -95,92 +102,97 @@ Widget searchHotel(BuildContext context){
                 borderRadius: BorderRadius.circular(
                   Utils.width(10),
                 ),
-                border: Border.all(color: Colors.grey),
+                border: Border.all(
+                    color: controller.isDateRangeEditEmpty.value
+                        ? colorRatingStar
+                        : Colors.grey),
                 color: Colors.white),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(child: Row(
-                  children:[
-                    SizedBox(
-                      width: Utils.width(10),
-                    ),
-                    const Icon(Icons.calendar_today_outlined),
-                    SizedBox(
-                      width: Utils.width(10),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:  [
-                        Text(
-                          "Ngày đến",
-                          style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: Utils.width(13)),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Row(children: [
+                        SizedBox(
+                          width: Utils.width(10),
                         ),
-                        Text(
-                        controller.startDate != null
-                            ? DateFormat("dd/MM/yyyy").format(DateFormat("yyyy-MM-dd HH:mm").parse(controller.startDate.toString())).toString()
-                            : "Từ ngày",
-                        style: TextStyle(
-                              color: Colors.blueGrey, fontSize: Utils.width(15)),
+                        const Icon(Icons.calendar_today_outlined),
+                        SizedBox(
+                          width: Utils.width(10),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: Utils.width(10),
-                    ),
-                  ]
-                )),
-                const VerticalDivider(
-                  width: 10,
-                  thickness: 1,
-                  indent: 20,
-                  endIndent: 0,
-                  color: Colors.red,
-                ),
-                Expanded(child: Row(
-                  children:[
-                    SizedBox(
-                      width: Utils.width(10),
-                    ),
-                    const Icon(Icons.calendar_today_outlined),
-                    SizedBox(
-                      width: Utils.width(10),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ngày đi",
-                          style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: Utils.width(13)),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Ngày đến",
+                              style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: Utils.width(13)),
+                            ),
+                            Text(
+                              controller.startDate != null
+                                  ? DateFormat("dd/MM/yyyy")
+                                  .format(DateFormat("yyyy-MM-dd HH:mm")
+                                  .parse(controller.startDate.toString()))
+                                  .toString()
+                                  : "Từ ngày",
+                              style: TextStyle(
+                                  color: Colors.blueGrey, fontSize: Utils.width(15)),
+                            ),
+                          ],
                         ),
-                        Text(
-                          controller.endDate != null
-                              ? DateFormat("dd/MM/yyyy").format(DateFormat("yyyy-MM-dd HH:mm").parse(controller.endDate.toString())).toString()
-                              : "Từ ngày",
-                          style: TextStyle(
-                              color: Colors.blueGrey, fontSize: Utils.width(15)),
+                      ])),
+                  const VerticalDivider(
+                    width: 10,
+                    thickness: 1,
+                    indent: 0,
+                    endIndent: 0,
+                    color: colorTextPrice,
+                  ),
+                  Expanded(
+                      child: Row(children: [
+                        SizedBox(
+                          width: Utils.width(10),
                         ),
-                      ],
-                    ),
-                  ]
-                )),
-
-              ],
+                        const Icon(Icons.calendar_today_outlined),
+                        SizedBox(
+                          width: Utils.width(10),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Ngày đi",
+                              style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: Utils.width(13)),
+                            ),
+                            Text(
+                              controller.endDate != null
+                                  ? DateFormat("dd/MM/yyyy")
+                                  .format(DateFormat("yyyy-MM-dd HH:mm")
+                                  .parse(controller.endDate.toString()))
+                                  .toString()
+                                  : "Từ ngày",
+                              style: TextStyle(
+                                  color: Colors.blueGrey, fontSize: Utils.width(15)),
+                            ),
+                          ],
+                        ),
+                      ])),
+                ],
+              ),
             ),
-          ),
+          ),),
         ),
         GestureDetector(
-          onTap:(){
-
+          onTap: () {
+            Get.to(NumberCustomerView());
           },
           child: Container(
             margin: EdgeInsets.only(
@@ -212,19 +224,20 @@ Widget searchHotel(BuildContext context){
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Khách - Số lượng phòng",
                       style: TextStyle(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.w500,
                           fontSize: 15),
                     ),
-                    Text(
-                      "1 người, 1 phòng",
-                      style: TextStyle(
-                          color: Colors.blueGrey, fontSize: 20),
-                    ),
+                    Obx(()=>Text(
+                      "${controller.totalNumberCustomer.value} người, ${controller.totalNumberRoom.value} phòng",
+                      style:
+                      const TextStyle(color: Colors.blueGrey, fontSize: 20),
+                    ),),
+
                   ],
                 ),
               ],
@@ -241,7 +254,22 @@ Widget searchHotel(BuildContext context){
           child: ButtonCustom(
             text: "Tìm kiếm",
             onPress: (text) {
-              Get.toNamed(Routes.searchHotel);
+              controller.validateSearch();
+              if (!(controller.isDateRangeEditEmpty.value ||
+                  controller.isLocationEditEmpty.value)) {
+                Get.toNamed(Routes.searchHotel);
+              } else {
+                var tempNotifyValidate = '';
+                if (controller.isDateRangeEditEmpty.value) {
+                  tempNotifyValidate = 'Bạn vui lòng chọn ngày tháng cần đặt!';
+                }
+                if (controller.isLocationEditEmpty.value) {
+                  tempNotifyValidate = 'Bạn vui lòng chọn địa điểm cần đến!';
+                }
+                showMessageDialogIOS(context, description: tempNotifyValidate,onPress: (){
+                  Get.back();
+                });
+              }
             },
             color: Colors.blue,
             style: TextStyle(

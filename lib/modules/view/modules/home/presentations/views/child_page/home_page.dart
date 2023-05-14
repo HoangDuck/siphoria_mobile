@@ -75,6 +75,7 @@ Widget _homePage(BuildContext context) {
                               alignment: Alignment.bottomCenter,
                               child: Text(
                                 controller.listProvinces[index].name,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

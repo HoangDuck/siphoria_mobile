@@ -12,6 +12,7 @@ import '../../controllers/hotel_info_controller.dart';
 
 Widget itemRateplanView(BuildContext context,RoomType data,RatePlan dataRatePlan){
   HotelInfoController controller = Get.find<HotelInfoController>();
+  calculateTotalPriceItemRatePlan(controller, data, dataRatePlan);
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,19 +21,20 @@ Widget itemRateplanView(BuildContext context,RoomType data,RatePlan dataRatePlan
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            margin: EdgeInsets.all(Utils.width(10)),
-            child: TextCustom(
-              "${data.name} \n${dataRatePlan.name}",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: Utils.width(15),
-                fontWeight: FontWeight.bold,
-                color: colorTextPrice,
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.all(Utils.width(10)),
+              child: TextCustom(
+                "${data.name} - ${dataRatePlan.name}",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontSize: Utils.width(15),
+                  fontWeight: FontWeight.bold,
+                  color: colorTextPrice,
+                ),
               ),
             ),
           ),
-          Expanded(child: Container()),
           Container(
             margin: EdgeInsets.only(
               top: Utils.width(20),
@@ -313,6 +315,36 @@ Widget itemRateplanView(BuildContext context,RoomType data,RatePlan dataRatePlan
       ),
     ],
   );
+}
+
+calculateTotalPriceItemRatePlan(HotelInfoController controller,RoomType data,RatePlan dataRatePlan){
+  dataRatePlan.totalPrice = 0;
+  for(int index=0;index<controller.totalDays.value;index++){
+    try{
+      var tempRatePackagePrice = dataRatePlan.ratePackages
+          .where((element) {
+        debugPrint(controller.format.parse(element
+            .availabilityAt
+            .toUtc()
+            .toIso8601String()).toString());
+        debugPrint(controller.startDateTime
+            .add(Duration(days: index)).toString());
+        return controller.format.parse(element
+            .availabilityAt
+            .toUtc()
+            .toIso8601String()) ==
+            controller.startDateTime
+                .add(Duration(days: index));
+      })
+          .first
+          .price;
+      dataRatePlan.totalPrice += tempRatePackagePrice;
+    }catch(e){
+      dataRatePlan.totalPrice += 0;
+    }
+    dataRatePlan.totalPrice *= controller.totalNumberRoom.value;
+  }
+
 }
 
 Widget _itemRateplanDetail(dynamic data){

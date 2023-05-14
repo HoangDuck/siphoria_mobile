@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/country_model.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/services/api_constant.dart';
 import '../../profile_module/domain/entities/user_profile_model.dart';
+import '../domain/entities/cart_item_model.dart';
 import '../domain/entities/hotel_category_model.dart';
 import '../domain/entities/hotel_model.dart';
 import '../domain/entities/province_model.dart';
@@ -16,6 +15,7 @@ abstract class IHomeProvider {
   Future<Response<List<HotelCategoryModel>>> getListHotelCategories();
   Future<Response<List<HotelModelHome>>> getListPopularHotel(String searchText, int currentIndex);
   Future<Response<List<CountryModel>>> getCountryList(String searchText, int currentIndex);
+  Future<Response<List<CartModel>>> getListCartItem();
 }
 
 class HomeProvider extends GetConnect implements IHomeProvider{
@@ -69,10 +69,23 @@ class HomeProvider extends GetConnect implements IHomeProvider{
     HomeController controller = Get.find<HomeController>();
     // TODO: implement signIn
     httpClient.baseUrl =baseUrl;
-    httpClient.defaultDecoder = httpClient.defaultDecoder =
+    httpClient.defaultDecoder =
         (value) => UserProfileModel.fromJson(value['data'] as Map<String, dynamic>);
     return get(userProfileUrl,headers: {
       'Authorization':'Bearer ${controller.accessToken}'
+    });
+  }
+
+  @override
+  Future<Response<List<CartModel>>> getListCartItem() {
+    HomeController controller = Get.find<HomeController>();
+    // TODO: implement getListCartItem
+    httpClient.baseUrl =baseUrl;
+    httpClient.defaultDecoder = (value){
+       return cartModelFromJson(value);
+    };
+    return get(getListCartItemUrl,headers: {
+        'Authorization':'Bearer ${controller.accessToken}'
     });
   }
 }
