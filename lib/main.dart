@@ -12,6 +12,7 @@ bool enableUseAPI=false;
 Future main() async {
   WidgetsBinding widgetsBinding =WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp();
   final FirebaseOptions firebaseOptions = (Platform.isIOS || Platform.isMacOS)
       ? const FirebaseOptions(
         appId: '1:792369039500:ios:8871b8024994295da793a9',

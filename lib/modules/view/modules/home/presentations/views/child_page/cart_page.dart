@@ -36,18 +36,18 @@ Widget _cartPage(BuildContext context) {
                 children: [
                   Expanded(
                       child: TextCustom(
-                    "Tổng cộng (0 điểm):",
+                    "Tổng cộng:",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Utils.height(17)),
                   )),
-                  TextCustom(
-                    "0 VND",
+                  Obx(()=>TextCustom(
+                    "${controller.totalCostCart.value} VND",
                     style: TextStyle(
                         color: colorTitleAmber,
                         fontWeight: FontWeight.bold,
                         fontSize: Utils.height(25)),
-                  )
+                  )),
                 ],
               ),
               Expanded(
@@ -90,15 +90,16 @@ Widget _listItemCart(BuildContext context){
         ),
       ],
     ),
-    child: ListView.builder(
-        itemCount: controller.listCart.length,
+    child: Obx(()=>ListView.builder(
+        itemCount: controller.listHotelCart.length,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
+        itemBuilder: (context, indexHotel) {
           return Container(
+            margin: EdgeInsets.symmetric(vertical: Utils.width(5)),
             decoration: BoxDecoration(
-              color: colorCartItemBackground,
-              borderRadius: BorderRadius.circular(Utils.width(5))
+                color: colorCartItemBackground,
+                borderRadius: BorderRadius.circular(Utils.width(5))
             ),
             child: Theme(
               data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -107,7 +108,7 @@ Widget _listItemCart(BuildContext context){
                 maintainState: true,
                 // tilePadding: EdgeInsets.only(bottom: 0),
                 title: TextCustom(
-                  "The Shine 2 Hotel & Apartment",
+                  controller.listHotelCart[indexHotel].toString().split("#").last,
                   style: TextStyle(
                     fontSize: Utils.width(15),
                     fontWeight: FontWeight.bold,
@@ -116,148 +117,23 @@ Widget _listItemCart(BuildContext context){
                 ),
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
-                    child: const Divider(color: Colors.black26,),
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context,index){
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: Utils.width(10),horizontal: Utils.width(10)),
-                      padding: EdgeInsets.symmetric(vertical: Utils.width(10),horizontal: Utils.width(10)),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: colorTextPrice.withOpacity(0.1)),
-                        borderRadius: BorderRadius.circular(Utils.width(5)),
+                      margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
+                      child: const Divider(
+                        color: Colors.black26,
                       ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              TextCustom(
-                                "Superior Single Room",
-                                style: TextStyle(
-                                  fontSize: Utils.width(15),
-                                  fontWeight: FontWeight.bold,
-                                  color: colorTextPrice,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              GestureDetector(
-                                onTap: (){
-
-                                },
-                                child: const Icon(
-                                      Icons.delete,
-                                      color: colorRatingStar,
-                                    ),
-                              )
-                                ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
-                            child: const Divider(color: Colors.black26,),
-                          ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 3,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: Utils.width(10),
-                                      vertical: Utils.width(10)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(Utils.width(5)),
-                                        child: Image.network(icImageHotelIntro,scale: 50,),
-                                      ),
-                                      SizedBox(width: Utils.width(5),),
-                                      TextCustom(
-                                        "06 tháng 4, 2023",
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          fontSize: Utils.width(12),
-                                          fontWeight: FontWeight.bold,
-                                          color: colorTextPrice,
-                                        ),
-                                      ),
-                                      Expanded(child: Container()),
-                                      Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: Utils.width(10)),
-                                        child: TextCustom(
-                                          "20000 VND",
-                                          style: TextStyle(
-                                              color: colorTextPrice,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: Utils.width(15)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 3,
-                              itemBuilder: (context, index) {
-                                return _itemRateplanDetail("1");
-                              }),
-                        ],
-                      ),
-                    );
-                  }),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.symmetric(
-                        vertical: Utils.width(10), horizontal: Utils.width(10)),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(Utils.width(5)),
-                          bottomRight: Radius.circular(Utils.width(5))),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TextCustom(
-                          "Tổng giá phòng",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: Utils.width(17),
-                            fontWeight: FontWeight.bold,
-                            color: colorTextPrice,
-                          ),
-                        ),
-                        Expanded(child: Container()),
-                        TextCustom(
-                          "20000 VND",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: Utils.width(20),
-                            fontWeight: FontWeight.bold,
-                            color: appBarColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                    listCartItem(
+                        context,
+                        controller.listCart
+                            .where((p0) =>
+                                p0.hotelId ==
+                                    controller.listHotelCart[indexHotel].toString().split("#").first,)
+                            .toList())
+                  ],
               ),
             ),
           );
-        }),
+        }),),
   );
 }
 
@@ -271,14 +147,14 @@ Widget _itemRateplanDetail(dynamic data){
         Container(
           margin: EdgeInsets.symmetric(horizontal: Utils.width(5)),
           child: Icon(
-            Icons.airport_shuttle_rounded,
-            color: colorTitleAmber,
+            Icons.check,
+            color: colorTextPrice,
             size: Utils.width(25),
           ),
         ),
         Expanded(
           child: TextCustom(
-            "6 người lớn, 3 trẻ em",
+            Utils.getStringDefine(data),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: Utils.width(15),
@@ -288,6 +164,148 @@ Widget _itemRateplanDetail(dynamic data){
         ),
       ],
     ),
+  );
+}
+
+Widget listCartItem(BuildContext context,List<CartModel> listCart){
+  HomeController controller = Get.find<HomeController>();
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      ListView.builder(
+          shrinkWrap: true,
+          itemCount: listCart.length,
+          padding: EdgeInsets.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context,index){
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: Utils.width(10),horizontal: Utils.width(10)),
+              padding: EdgeInsets.symmetric(vertical: Utils.width(10),horizontal: Utils.width(10)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: colorTextPrice.withOpacity(0.1)),
+                borderRadius: BorderRadius.circular(Utils.width(5)),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextCustom(
+                        listCart[index].roomType.name,
+                        style: TextStyle(
+                          fontSize: Utils.width(15),
+                          fontWeight: FontWeight.bold,
+                          color: colorTextPrice,
+                        ),
+                      ),
+                      Expanded(child: Container()),
+                      GestureDetector(
+                        onTap: () async {
+                          await controller.deleteCartItem(listCart[index].id);
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          color: colorRatingStar,
+                        ),
+                      )
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
+                    child: const Divider(color: Colors.black26,),
+                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listCart[index].details.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index2) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: Utils.width(10),
+                              vertical: Utils.width(10)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(Utils.width(5)),
+                                child: Image.network(icImageHotelIntro,scale: 50,),
+                              ),
+                              SizedBox(width: Utils.width(5),),
+                              TextCustom(
+                                Utils.convertDateTimeDDMMYYYY(
+                                        listCart[index].details[index2].dayOff),
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: Utils.width(12),
+                                  fontWeight: FontWeight.bold,
+                                  color: colorTextPrice,
+                                ),
+                              ),
+                              Expanded(child: Container()),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: Utils.width(10)),
+                                child: TextCustom(
+                                  "${listCart[index].details[index2].price} VND",
+                                  style: TextStyle(
+                                      color: colorTextPrice,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: Utils.width(15)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                  for (var k in listCart[index].ratePlans.toJson().keys) ...{
+                    if(listCart[index].ratePlans.toJson()[k].toString()=='true'&& k !='activate')
+                      _itemRateplanDetail(k),
+                  },
+                ],
+              ),
+            );
+          }),
+      Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(
+            vertical: Utils.width(10), horizontal: Utils.width(10)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(Utils.width(5)),
+              bottomRight: Radius.circular(Utils.width(5))),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextCustom(
+              "Tổng giá phòng",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: Utils.width(17),
+                fontWeight: FontWeight.bold,
+                color: colorTextPrice,
+              ),
+            ),
+            Expanded(child: Container()),
+            TextCustom(
+              "${controller.calculateTotalCostPerHotel(listCart)} VND",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontSize: Utils.width(20),
+                fontWeight: FontWeight.bold,
+                color: appBarColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
   );
 }
 

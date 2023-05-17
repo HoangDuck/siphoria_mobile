@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../routers/page_routes.dart';
+import '../../../../constant/app_colors.dart';
 import '../../../../constant/app_images.dart';
 import '../../domain/adapters/repository_adapter.dart';
 import '../../domain/entities/cart_item_model.dart';
@@ -24,6 +25,7 @@ class HomeController extends GetxController{
   RxInt totalNumberCartItem= 0.obs;
   RxList<CartModel> listCart = <CartModel>[].obs;
   RxList<String> listResort=<String>[].obs;
+  RxList<String> listHotelCart = <String>[].obs;
 
   String accessToken = '';
   String refreshToken = '';
@@ -39,6 +41,7 @@ class HomeController extends GetxController{
   RxInt totalNumberRoom= 1.obs;
   RxInt totalNumberCustomer= 1.obs;
   RxInt totalNumberCustomerChildren = 0.obs;
+  RxDouble totalCostCart = 0.0.obs;
 
   selectedPageIndex(int index){
     if(index!=0 && accessToken.isEmpty){
@@ -63,12 +66,63 @@ class HomeController extends GetxController{
     }
   }
 
+  deleteCartItem(String idCart) async {
+    try{
+      var result = await homeRepository.deleteCartItem(idCart);
+      if(result){
+        totalNumberCartItem.value--;
+        listCart.removeWhere((element) => element.id == idCart);
+        for(var element in listCart){
+          totalCostCart.value += element.totalPrice;
+        }
+        listCart.refresh();
+        Get.snackbar(
+          "Giỏ hàng", "Xoá khỏi giỏ hàng thành công",
+          icon: const Icon(Icons.person, color: Colors.white),
+          backgroundColor: colorPriceRoom,
+          snackPosition: SnackPosition.TOP,
+        );
+      }else{
+        Get.snackbar(
+          "Giỏ hàng", "Xoá khỏi giỏ hàng thất bại",
+          icon: const Icon(Icons.person, color: Colors.white),
+          backgroundColor: colorRatingStar,
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+    }catch(e){
+      SecureStorage secureStorage = SecureStorage();
+      secureStorage.deleteAccessToken();
+      secureStorage.deleteRefreshToken();
+      Get.toNamed(Routes.authentication);
+    }
+  }
+
+  calculateTotalCostPerHotel(List<CartModel> listCart){
+    var totalCost = 0;
+    for(var element in listCart){
+      totalCost += element.totalPrice;
+    }
+    return totalCost;
+  }
+
   _getListCartItem() async {
+    listCart.clear();
     var listCartModel = await homeRepository.getListCartItem();
     if(listCartModel.isNotEmpty){
+      for(var element in listCartModel){
+        totalCostCart.value += element.totalPrice;
+      }
       listCart.addAll(listCartModel);
       totalNumberCartItem.value = listCart.length;
       listCart.refresh();
+      for (var element in listCart) {
+        listHotelCart.add('${element.hotel.id}#${element.hotel.name}');
+      }
+      var tempNewHotelList = listHotelCart.toSet().toList();
+      listHotelCart.clear();
+      listHotelCart.addAll(tempNewHotelList);
+      listHotelCart.refresh();
       totalNumberCartItem.refresh();
     }
   }

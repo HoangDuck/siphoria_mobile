@@ -77,4 +77,15 @@ class HomeRepository implements IHomeRepository {
       return response.body!;
     }
   }
+
+  @override
+  Future<bool> deleteCartItem(String idCart) async {
+    // TODO: implement deleteCartItem
+    final response = await provider.deleteCartItem(idCart);
+    if (response.status.hasError) {
+      return Future.error(response.statusText!);
+    } else {
+      return response.body!;
+    }
+  }
 }

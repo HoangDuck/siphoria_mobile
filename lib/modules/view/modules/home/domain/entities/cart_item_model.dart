@@ -20,6 +20,7 @@ class CartModel {
   DateTime endAt;
   int totalDay;
   String ratePlanId;
+  RatePlans ratePlans;
   String userId;
   String roomTypeId;
   RoomType roomType;
@@ -39,6 +40,7 @@ class CartModel {
     required this.endAt,
     required this.totalDay,
     required this.ratePlanId,
+    required this.ratePlans,
     required this.userId,
     required this.roomTypeId,
     required this.roomType,
@@ -59,6 +61,7 @@ class CartModel {
     endAt: DateTime.parse(json["end_at"]),
     totalDay: json["total_day"],
     ratePlanId: json["rate_plan_id"],
+    ratePlans: RatePlans.fromJson(json["rate_plans"]),
     userId: json["user_id"],
     roomTypeId: json["room_type_id"],
     roomType: RoomType.fromJson(json["room_type"]),
@@ -79,6 +82,7 @@ class CartModel {
     "end_at": endAt.toIso8601String(),
     "total_day": totalDay,
     "rate_plan_id": ratePlanId,
+    "rate_plans": ratePlans.toJson(),
     "user_id": userId,
     "room_type_id": roomTypeId,
     "room_type": roomType.toJson(),
@@ -243,6 +247,66 @@ class Hotel {
     "price_hotel": priceHotel,
     "discount_price": discountPrice,
     "discount_hotel": discountHotel,
+  };
+}
+
+class RatePlans {
+  String id;
+  String name;
+  String typeRatePlan;
+  int status;
+  bool activate;
+  DateTime createdAt;
+  DateTime updatedAt;
+  bool freeBreakfast;
+  bool freeLunch;
+  bool freeDinner;
+  String roomTypeId;
+  dynamic ratePackages;
+
+  RatePlans({
+    required this.id,
+    required this.name,
+    required this.typeRatePlan,
+    required this.status,
+    required this.activate,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.freeBreakfast,
+    required this.freeLunch,
+    required this.freeDinner,
+    required this.roomTypeId,
+    this.ratePackages,
+  });
+
+  factory RatePlans.fromJson(Map<String, dynamic> json) => RatePlans(
+    id: json["id"],
+    name: json["name"],
+    typeRatePlan: json["type_rate_plan"],
+    status: json["status"],
+    activate: json["activate"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+    freeBreakfast: json["free_breakfast"],
+    freeLunch: json["free_lunch"],
+    freeDinner: json["free_dinner"],
+    roomTypeId: json["room_type_id"],
+    ratePackages: json["rate_packages"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "type_rate_plan": typeRatePlan,
+    "status": status,
+    "activate": activate,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+    "free_breakfast": freeBreakfast,
+    "free_lunch": freeLunch,
+    "free_dinner": freeDinner,
+    "room_type_id": roomTypeId,
+    "rate_packages": ratePackages,
   };
 }
 

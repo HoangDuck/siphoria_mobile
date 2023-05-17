@@ -364,14 +364,14 @@ class PaymentView extends GetView<PaymentController>{
           Container(
             margin: EdgeInsets.symmetric(horizontal: Utils.width(5)),
             child: Icon(
-              Icons.airport_shuttle_rounded,
-              color: colorTitleAmber,
+              Icons.check,
+              color: colorTextPrice,
               size: Utils.width(25),
             ),
           ),
           Expanded(
             child: TextCustom(
-              "6 người lớn, 3 trẻ em",
+              data,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: Utils.width(15),

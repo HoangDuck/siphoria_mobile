@@ -15,4 +15,5 @@ abstract class IHomeRepository {
   Future<List<HotelModelHome>> getListPopularHotel();
   Future<List<CountryModel>> getListCountry(String searchText, int currentIndex);
   Future<List<CartModel>> getListCartItem();
+  Future<bool> deleteCartItem(String idCart);
 }

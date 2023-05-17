@@ -16,6 +16,7 @@ abstract class IHomeProvider {
   Future<Response<List<HotelModelHome>>> getListPopularHotel(String searchText, int currentIndex);
   Future<Response<List<CountryModel>>> getCountryList(String searchText, int currentIndex);
   Future<Response<List<CartModel>>> getListCartItem();
+  Future<Response<bool>> deleteCartItem(String idCart);
 }
 
 class HomeProvider extends GetConnect implements IHomeProvider{
@@ -87,5 +88,18 @@ class HomeProvider extends GetConnect implements IHomeProvider{
     return get(getListCartItemUrl,headers: {
         'Authorization':'Bearer ${controller.accessToken}'
     });
+  }
+
+  @override
+  Future<Response<bool>> deleteCartItem(String idCart) async {
+    HomeController controller = Get.find<HomeController>();
+    // TODO: implement deleteCartItem
+    httpClient.defaultDecoder = httpClient.defaultDecoder = (value) => resultBoolDeCode(value);
+    return await delete('$deleteCartItemUrl/$idCart',headers: {
+      'Authorization':'Bearer ${controller.accessToken}'
+    });
+  }
+  bool resultBoolDeCode(dynamic data){
+    return data['data'].toString().toLowerCase()=='true';
   }
 }

@@ -3,11 +3,13 @@ import 'package:final_project_hcmute/modules/widget/button_custom.dart';
 import 'package:final_project_hcmute/modules/widget/text_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../core/utils/utils.dart';
 import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
 import '../../../search_hotel_module/presentations/views/component/item_hotel_search_view.dart';
+import '../../domain/entities/cart_item_model.dart';
 import '../controllers/home_controller.dart';
 import 'child_page/booking_page.dart';
 import 'child_page/profile_page.dart';
