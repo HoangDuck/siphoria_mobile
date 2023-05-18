@@ -14,7 +14,7 @@ import androidx.annotation.NonNull
 class MainActivity: FlutterFragmentActivity() {
     private var amount = "10000"
     private val fee = "0"
-    var environment = 1 //developer default
+    var environment = 0 //developer default
 
     private val merchantName = "SIPHORIA"
     private val merchantCode = "MOMOQDD420220927"
@@ -29,6 +29,7 @@ class MainActivity: FlutterFragmentActivity() {
             resultMethod = result
             when (call.method) {
                 "openMomo" -> {
+                    AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
                     requestPayment()
                 }
 
@@ -38,13 +39,15 @@ class MainActivity: FlutterFragmentActivity() {
 
     //Get token through MoMo app
     private fun requestPayment() {
-        if(environment == 0){
-            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEBUG);
-        }else if(environment == 1){
-            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
-        }else if(environment == 2){
-            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.PRODUCTION);
-        }
+//        if(environment == 0){
+//            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
+//        }
+        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
+//        else if(environment == 1){
+//            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
+//        }else if(environment == 2){
+//            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.PRODUCTION);
+//        }
         AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT)
         AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN)
 //        if (edAmount.getText().toString() != null && edAmount.getText().toString().trim().length() !== 0) amount = edAmount.getText().toString().trim()
@@ -53,17 +56,17 @@ class MainActivity: FlutterFragmentActivity() {
 //        //client Required
         eventValue.put("merchantname", merchantName) //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
         eventValue.put("merchantcode", merchantCode) //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
-        eventValue.put("amount", 20000) //Kiểu integer
+        eventValue.put("amount", "20000") //Kiểu integer
         eventValue.put("orderId", "orderId123456789") //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
         eventValue.put("orderLabel", "Mã đơn hàng") //gán nhãn
 
         //client Optional - bill info
         eventValue.put("merchantnamelabel", "Dịch vụ") //gán nhãn
-        eventValue.put("fee", 20000) //Kiểu integer
+        eventValue.put("fee",  "0") //Kiểu integer
         eventValue.put("description", description) //mô tả đơn hàng - short description
 
         //client extra data
-        eventValue.put("requestId", "merchantCode" + "merchant_billId_" + System.currentTimeMillis())
+        eventValue.put("requestId", merchantCode + "merchant_billId_" + System.currentTimeMillis())
         eventValue.put("partnerCode", "MOMOQDD420220927")
         //Example extra data
         val objExtraData = JSONObject()

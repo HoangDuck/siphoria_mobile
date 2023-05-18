@@ -73,5 +73,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.github.momodevelopment:androidsdkV2.2:1.1'
+//    implementation 'com.github.momodevelopment:androidsdkV2.2:1.1'
+    implementation 'com.github.momo-wallet:mobile-sdk:1.0.7'
 }
