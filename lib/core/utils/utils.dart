@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -9,6 +10,7 @@ class Utils {
   static double screenWidthDesignSize = 1080;
   static double screenHeightDesignSize = 2160; //Pixel 3XL
 
+  static const platform = MethodChannel('flutter.native/helper');
   static double width(double value) {
     return (screenWidthSize * value) / screenWidthDesignSize;
   }

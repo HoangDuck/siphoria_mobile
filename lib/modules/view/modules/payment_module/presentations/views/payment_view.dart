@@ -88,7 +88,9 @@ class PaymentView extends GetView<PaymentController>{
                   ),
                   ButtonCustom(
                     text: "Thanh toán",
-                    onPress: (_) {},
+                    onPress: (_) async {
+                      await Utils.platform.invokeMethod('openMomo');
+                    },
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: Utils.width(25),
