@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../../../../core/utils/utils.dart';
 import '../../../../../widget/text_field_custom.dart';
 import '../../../../constant/app_colors.dart';
+import '../../../home/presentations/controllers/home_controller.dart';
 
 class AuthenticationView extends GetView<AuthenticationController> {
 
@@ -20,6 +21,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
+          Get.delete<HomeController>();
           Get.offAndToNamed(Routes.home);
 
           return false;
@@ -37,6 +39,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      Get.delete<HomeController>();
                       Get.offAndToNamed(Routes.home);
                     },
                     child: const Icon(Icons.arrow_back_ios),
@@ -159,6 +162,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
                       onPress: (text) async {
                         await controller.authenticationData();
                         if(controller.isSuccessLogin.value){
+                          Get.delete<HomeController>();
                           Get.offAndToNamed(Routes.home);
                           Get.snackbar(
                             "Siphoria",

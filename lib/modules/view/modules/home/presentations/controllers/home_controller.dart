@@ -108,22 +108,28 @@ class HomeController extends GetxController{
 
   _getListCartItem() async {
     listCart.clear();
-    var listCartModel = await homeRepository.getListCartItem();
-    if(listCartModel.isNotEmpty){
-      for(var element in listCartModel){
-        totalCostCart.value += element.totalPrice;
+    try{
+      var listCartModel = await homeRepository.getListCartItem();
+      if(listCartModel.isNotEmpty){
+        for(var element in listCartModel){
+          totalCostCart.value += element.totalPrice;
+        }
+        listCart.addAll(listCartModel);
+        totalNumberCartItem.value = listCart.length;
+        listCart.refresh();
+        for (var element in listCart) {
+          listHotelCart.add('${element.hotel.id}#${element.hotel.name}');
+        }
+        var tempNewHotelList = listHotelCart.toSet().toList();
+        listHotelCart.clear();
+        listHotelCart.addAll(tempNewHotelList);
+        listHotelCart.refresh();
+        totalNumberCartItem.refresh();
       }
-      listCart.addAll(listCartModel);
-      totalNumberCartItem.value = listCart.length;
-      listCart.refresh();
-      for (var element in listCart) {
-        listHotelCart.add('${element.hotel.id}#${element.hotel.name}');
-      }
-      var tempNewHotelList = listHotelCart.toSet().toList();
-      listHotelCart.clear();
-      listHotelCart.addAll(tempNewHotelList);
-      listHotelCart.refresh();
-      totalNumberCartItem.refresh();
+    }catch(e){
+      SecureStorage secureStorage = SecureStorage();
+      secureStorage.deleteAccessToken();
+      secureStorage.deleteRefreshToken();
     }
   }
 

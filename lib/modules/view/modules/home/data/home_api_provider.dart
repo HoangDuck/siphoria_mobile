@@ -83,6 +83,7 @@ class HomeProvider extends GetConnect implements IHomeProvider{
     // TODO: implement getListCartItem
     httpClient.baseUrl =baseUrl;
     httpClient.defaultDecoder = (value){
+      print(value.toString());
        return cartModelFromJson(value);
     };
     return get(getListCartItemUrl,headers: {
