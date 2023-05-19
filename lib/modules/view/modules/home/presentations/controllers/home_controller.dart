@@ -1,6 +1,7 @@
 
 import 'package:final_project_hcmute/core/services/local_storage.dart';
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/province_model.dart';
+import 'package:final_project_hcmute/modules/widget/custom_dialog.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -220,6 +221,37 @@ class HomeController extends GetxController{
   validateSearch(){
     isLocationEditEmpty.value = /*locationEditController.text.isEmpty && */placeSearch.isEmpty;
     isDateRangeEditEmpty.value = startDate == null || endDate == null;
+  }
+
+  addPaymentFromCart() async{
+    showLoadingDialog(Get.context!);
+    try{
+      var result = await homeRepository.addToPayment();
+      Get.back();
+      if(result){
+        totalNumberCartItem.value = 0;
+        Get.snackbar(
+          "Siphoria", "Thêm giao dịch thành công",
+          icon: const Icon(Icons.person, color: Colors.white),
+          backgroundColor: colorPriceRoom,
+          snackPosition: SnackPosition.TOP,
+        );
+        Get.toNamed(Routes.payment);
+      }else{
+        Get.snackbar(
+          "Siphoria", "Thêm giao dịch  thất bại",
+          icon: const Icon(Icons.person, color: Colors.white),
+          backgroundColor: colorRatingStar,
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+    }catch(e){
+      Get.back();
+      SecureStorage secureStorage = SecureStorage();
+      secureStorage.deleteAccessToken();
+      secureStorage.deleteRefreshToken();
+      Get.toNamed(Routes.authentication);
+    }
   }
 
   @override

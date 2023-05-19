@@ -57,7 +57,8 @@ Widget _cartPage(BuildContext context) {
               ),
               ButtonCustom(
                 text: "Tiếp tục",
-                onPress: (_) {
+                onPress: (_) async {
+                  await controller.addPaymentFromCart();
                   Get.toNamed(Routes.payment);
                 },
                 style: TextStyle(

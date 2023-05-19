@@ -17,6 +17,7 @@ abstract class IHomeProvider {
   Future<Response<List<CountryModel>>> getCountryList(String searchText, int currentIndex);
   Future<Response<List<CartModel>>> getListCartItem();
   Future<Response<bool>> deleteCartItem(String idCart);
+  Future<Response<bool>> addToPayment();
 }
 
 class HomeProvider extends GetConnect implements IHomeProvider{
@@ -102,5 +103,16 @@ class HomeProvider extends GetConnect implements IHomeProvider{
   }
   bool resultBoolDeCode(dynamic data){
     return data['data'].toString().toLowerCase()=='true';
+  }
+
+  @override
+  Future<Response<bool>> addToPayment() async {
+    HomeController controller = Get.find<HomeController>();
+    // TODO: implement addToPayment
+    httpClient.baseUrl =baseUrl;
+    httpClient.defaultDecoder = httpClient.defaultDecoder = (value) => resultBoolDeCode(value);
+    return await post(addToPaymentUrl,{},headers: {
+      'Authorization':'Bearer ${controller.accessToken}'
+    });
   }
 }

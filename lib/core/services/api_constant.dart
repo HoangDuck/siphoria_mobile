@@ -11,3 +11,5 @@ const String getListRoomTypeUrl = '/api/rooms/search';
 const String addToCartUrl = '/api/users/add-to-cart';
 const String getListCartItemUrl = '/api/users/carts';
 const String deleteCartItemUrl = '/api/users/carts';
+const String addToPaymentUrl = '/api/users/payments';
+const String getListPaymentUrl = '/api/users/payments';

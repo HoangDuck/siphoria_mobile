@@ -16,4 +16,5 @@ abstract class IHomeRepository {
   Future<List<CountryModel>> getListCountry(String searchText, int currentIndex);
   Future<List<CartModel>> getListCartItem();
   Future<bool> deleteCartItem(String idCart);
+  Future<bool> addToPayment();
 }

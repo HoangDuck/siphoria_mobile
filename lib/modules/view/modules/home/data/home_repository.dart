@@ -88,4 +88,15 @@ class HomeRepository implements IHomeRepository {
       return response.body!;
     }
   }
+
+  @override
+  Future<bool> addToPayment() async {
+    // TODO: implement addToPayment
+    final response = await provider.addToPayment();
+    if (response.status.hasError) {
+      return Future.error(response.statusText!);
+    } else {
+      return response.body!;
+    }
+  }
 }
