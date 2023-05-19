@@ -106,15 +106,17 @@ class MainActivity: FlutterFragmentActivity() {
 //                    tvMessage.setText("message: " + "Get token " + data.getStringExtra("message"))
                     val token = data.getStringExtra("data") //Token response
                     val phoneNumber = data.getStringExtra("phonenumber")
+                    val message = data.getStringExtra("message")
 //                    val env = data.getStringExtra("env")
 //                    if (env == null) {
 //                        env = "app"
 //                    }
                     val env = "app"
+                    println("Token: "+(token).toString())
                     if (token != null && !token.equals("")) {
                         // TODO: send phoneNumber & token to your server side to process payment with MoMo server
                         // IF Momo topup success, continue to process your order
-//                        resultMethod.success(token)
+                        resultMethod.success(message)
                     } else {
                     }
 
@@ -132,7 +134,7 @@ class MainActivity: FlutterFragmentActivity() {
         } else {
         }
 
-        resultMethod.success("requestPayment(value)")
+//        resultMethod.success("requestPayment(value)")
     }
 }
 
