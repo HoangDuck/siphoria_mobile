@@ -30,7 +30,9 @@ class MainActivity: FlutterFragmentActivity() {
             when (call.method) {
                 "openMomo" -> {
                     AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
-                    requestPayment()
+                    var value = call.argument<String>("value")
+                    requestPayment(value!!)
+
                 }
 
             }
@@ -38,10 +40,14 @@ class MainActivity: FlutterFragmentActivity() {
     }
 
     //Get token through MoMo app
-    private fun requestPayment() {
+    private fun requestPayment(payment: String) {
 //        if(environment == 0){
 //            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
 //        }
+//        if(payment == null){
+////            payment = "";
+//        }
+        val paymentArrays = payment.split(";").toTypedArray()
         AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
 //        else if(environment == 1){
 //            AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT);
@@ -56,23 +62,23 @@ class MainActivity: FlutterFragmentActivity() {
 //        //client Required
         eventValue.put("merchantname", merchantName) //Tên đối tác. được đăng ký tại https://business.momo.vn. VD: Google, Apple, Tiki , CGV Cinemas
         eventValue.put("merchantcode", merchantCode) //Mã đối tác, được cung cấp bởi MoMo tại https://business.momo.vn
-        eventValue.put("amount", "20000") //Kiểu integer
-        eventValue.put("orderId", "orderId123456789") //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
+        eventValue.put("amount", paymentArrays[0]) //Kiểu integer
+        eventValue.put("orderId", paymentArrays[1]) //uniqueue id cho Bill order, giá trị duy nhất cho mỗi đơn hàng
         eventValue.put("orderLabel", "Mã đơn hàng") //gán nhãn
 
         //client Optional - bill info
-        eventValue.put("merchantnamelabel", "Dịch vụ") //gán nhãn
+        eventValue.put("merchantnamelabel", "Thanh toán booking của Siphoria") //gán nhãn
         eventValue.put("fee",  "0") //Kiểu integer
-        eventValue.put("description", description) //mô tả đơn hàng - short description
+        eventValue.put("description", paymentArrays[2]) //mô tả đơn hàng - short description
 
         //client extra data
         eventValue.put("requestId", merchantCode + "merchant_billId_" + System.currentTimeMillis())
-        eventValue.put("partnerCode", "MOMOQDD420220927")
+        eventValue.put("partnerCode", merchantCode)
         //Example extra data
         val objExtraData = JSONObject()
         try {
             objExtraData.put("site_code", "008")
-            objExtraData.put("site_name", "CGV Cresent Mall")
+            objExtraData.put("site_name", "Siphoria Booking Hotel")
             objExtraData.put("screen_code", 0)
             objExtraData.put("screen_name", "Special")
             objExtraData.put("movie_name", "Kẻ Trộm Mặt Trăng 3")
@@ -85,13 +91,16 @@ class MainActivity: FlutterFragmentActivity() {
         eventValue.put("language", "vi");
         eventValue.put("extra", "")
         AppMoMoLib.getInstance().requestMoMoCallBack(this, eventValue)
+//        return "";
     }
 
     //Get token callback from MoMo app an submit to server side
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppMoMoLib.getInstance().REQUEST_CODE_MOMO && resultCode == -1) {
+            println((data==null).toString())
             if (data != null) {
+                println((data.getIntExtra("status", -1)).toString())
                 if (data.getIntExtra("status", -1) === 0) {
                     //TOKEN IS AVAILABLE
 //                    tvMessage.setText("message: " + "Get token " + data.getStringExtra("message"))
@@ -105,8 +114,10 @@ class MainActivity: FlutterFragmentActivity() {
                     if (token != null && !token.equals("")) {
                         // TODO: send phoneNumber & token to your server side to process payment with MoMo server
                         // IF Momo topup success, continue to process your order
+//                        resultMethod.success(token)
                     } else {
                     }
+
                 } else if (data.getIntExtra("status", -1) === 1) {
                     //TOKEN FAIL
                     val message = if (data.getStringExtra("message") != null) data.getStringExtra("message") else "Thất bại"
@@ -120,6 +131,8 @@ class MainActivity: FlutterFragmentActivity() {
             }
         } else {
         }
+
+        resultMethod.success("requestPayment(value)")
     }
 }
 
