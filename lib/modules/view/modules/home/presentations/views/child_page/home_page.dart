@@ -34,6 +34,7 @@ Widget _homePage(BuildContext context) {
                           controller.endDate = DateTime.now().add(const Duration(days:1));
                         }
                         controller.locationEditController.text = controller.listProvinces[index].name;
+                        controller.placeSearch.value = controller.listProvinces[index].name;
                         Get.toNamed(Routes.searchHotel);
                       },
                       child: Container(
@@ -122,6 +123,7 @@ Widget _homePage(BuildContext context) {
                           controller.endDate = DateTime.now().add(const Duration(days:1));
                         }
                         controller.locationEditController.text = controller.listResort[index];
+                        controller.placeSearch.value = controller.listResort[index];
                         Get.toNamed(Routes.searchHotel);
                       },
                       child: Container(
