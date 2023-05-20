@@ -10,6 +10,7 @@ class TextFieldCustom extends StatefulWidget {
   TextStyle? hintTextStyle;
   FocusNode? focusNode;
   bool isSecureText;
+  bool isCheckChangeText;
   TextAlignVertical textAlignVertical;
 
   TextFieldCustom(
@@ -22,6 +23,7 @@ class TextFieldCustom extends StatefulWidget {
       this.prefixIcon,
       this.hintTextStyle,
       this.isSecureText = false,
+        this.isCheckChangeText = false,
       this.textAlignVertical = TextAlignVertical.center})
       : super(key: key);
 
@@ -37,7 +39,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
       textAlignVertical: widget.textAlignVertical,
       focusNode: widget.focusNode,
       onChanged: (text){
-        if(widget.callBack != null){
+        if(widget.callBack != null&&widget.isCheckChangeText){
           widget.callBack!(text);
         }
       },

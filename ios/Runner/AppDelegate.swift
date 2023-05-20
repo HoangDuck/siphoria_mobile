@@ -13,7 +13,7 @@ import MomoiOSSwiftSdk
     let controller = window.rootViewController as? FlutterViewController
             let nativeChannel = FlutterMethodChannel(name: "flutter.native/helper", binaryMessenger: controller as! FlutterBinaryMessenger)
             nativeChannel.setMethodCallHandler { (FlutterMethodCall, FlutterResult) in
-                self.result = FlutterResult
+//                 self.result = FlutterResult
                 if("createPaymentMomo" == FlutterMethodCall.method) {
                 let paymentInfo = NSMutableDictionary()
                         paymentInfo["merchantcode"] = "CGV01"
@@ -24,7 +24,7 @@ import MomoiOSSwiftSdk
                         paymentInfo["fee"] = 20000
                         paymentInfo["description"] = "Thanh toán vé xem phim"
                         paymentInfo["extra"] = "{\"key1\":\"value1\",\"key2\":\"value2\"}"
-                        paymentInfo["username"] = payment_userId
+                        paymentInfo["username"] = "payment_userId"
                         paymentInfo["appScheme"] = "momoqdd420220927"
                     self.createPaymentMomo(paymentInfoParam: paymentInfo)
                 } else {

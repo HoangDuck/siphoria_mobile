@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
 import '../../../../constant/app_images.dart';
+import '../../../home/presentations/controllers/home_controller.dart';
 import '../../../search_hotel_module/presentations/views/component/overview_hotel_info.dart';
 import 'component/item_hotel_search_view.dart';
 
@@ -120,7 +121,8 @@ class HotelInfoView extends GetView<HotelInfoController> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Get.offAndToNamed(Routes.home,arguments: true);
+                                    Get.delete<HomeController>();
+                                    Get.offAllNamed(Routes.home,arguments: true);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(Utils.width(5)),

@@ -45,11 +45,14 @@ class HomeController extends GetxController{
   RxDouble totalCostCart = 0.0.obs;
 
   selectedPageIndex(int index){
+
     if(index!=0 && accessToken.isEmpty){
       Get.toNamed(Routes.authentication);
     }else{
       if(index == 3) {
         getUserProfileData();
+      }else if(index==1){
+        _getListCartItem();
       }
       onSelectedTabIndex.value = index;
       pageController.value.animateToPage(index,
@@ -74,7 +77,7 @@ class HomeController extends GetxController{
         totalNumberCartItem.value--;
         listCart.removeWhere((element) => element.id == idCart);
         for(var element in listCart){
-          totalCostCart.value += element.totalPrice;
+          totalCostCart.value -= element.totalPrice;
         }
         listCart.refresh();
         Get.snackbar(
@@ -162,6 +165,7 @@ class HomeController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     _getToken();
+    _checkNavigateToCart();
     initFirebaseMessage();
     initListResort();
     await _getAPIDataTest();
@@ -257,7 +261,6 @@ class HomeController extends GetxController{
   @override
   void onReady() {
     super.onReady();
-    _checkNavigateToCart();
     print("Ready");
   }
 }

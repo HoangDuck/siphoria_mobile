@@ -51,15 +51,15 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: (){
-
-                  },
-                  child: const Icon(
-                    Icons.filter_alt_rounded,
-                    color: colorTextPrice,
-                  ),
-                )
+                // GestureDetector(
+                //   onTap: (){
+                //
+                //   },
+                //   child: const Icon(
+                //     Icons.filter_alt_rounded,
+                //     color: colorTextPrice,
+                //   ),
+                // )
               ],
             ),
           ),

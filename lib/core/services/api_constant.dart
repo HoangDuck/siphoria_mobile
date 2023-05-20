@@ -13,3 +13,4 @@ const String getListCartItemUrl = '/api/users/carts';
 const String deleteCartItemUrl = '/api/users/carts';
 const String addToPaymentUrl = '/api/users/payments';
 const String getListPaymentUrl = '/api/users/payments';
+const String getListPaymentHistoryUrl = '/api/users/payments/history';
