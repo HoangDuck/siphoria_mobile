@@ -152,7 +152,7 @@ class SearchHotelView extends GetView<SearchHotelController> {
                     ),
                   ),
                   Positioned(
-                    top: Utils.height(70),
+                    top: Utils.height(100),
                     left: 0,
                     right: 0,
                     child: Column(
@@ -184,57 +184,57 @@ class SearchHotelView extends GetView<SearchHotelController> {
                       ],
                     ),
                   ),
-                  Positioned(
-                    left: Utils.width(30),
-                    right: Utils.width(30),
-                    bottom: 0,
-                    child: Container(
-                      height: Utils.height(50),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            Utils.width(15),
-                          ),
-                          color: Colors.white
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Expanded(
-                          //   flex: 2,
-                          //   child: TextCustom(
-                          //     "Lọc",
-                          //     textAlign: TextAlign.center,
-                          //     style: const TextStyle(fontWeight: FontWeight.w500),
-                          //     icon: Icons.keyboard_arrow_down,
-                          //   ),
-                          // ),
-                          // const VerticalDivider(),
-                          Expanded(
-                            flex: 2,
-                            child: TextCustom(
-                              "Giá",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500),
-                              icon: Icons.keyboard_arrow_down,
-                            ),
-                          ),
-                          const VerticalDivider(),
-                          Expanded(
-                            flex: 2,
-                            child: TextCustom(
-                              "Sắp xếp",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500),
-                              icon: Icons.keyboard_arrow_down,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   left: Utils.width(30),
+                  //   right: Utils.width(30),
+                  //   bottom: 0,
+                  //   child: Container(
+                  //     height: Utils.height(50),
+                  //     decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(
+                  //           Utils.width(15),
+                  //         ),
+                  //         color: Colors.white
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //         // Expanded(
+                  //         //   flex: 2,
+                  //         //   child: TextCustom(
+                  //         //     "Lọc",
+                  //         //     textAlign: TextAlign.center,
+                  //         //     style: const TextStyle(fontWeight: FontWeight.w500),
+                  //         //     icon: Icons.keyboard_arrow_down,
+                  //         //   ),
+                  //         // ),
+                  //         // const VerticalDivider(),
+                  //         Expanded(
+                  //           flex: 2,
+                  //           child: TextCustom(
+                  //             "Giá",
+                  //             textAlign: TextAlign.center,
+                  //             style: const TextStyle(
+                  //                 fontWeight: FontWeight.w500),
+                  //             icon: Icons.keyboard_arrow_down,
+                  //           ),
+                  //         ),
+                  //         const VerticalDivider(),
+                  //         Expanded(
+                  //           flex: 2,
+                  //           child: TextCustom(
+                  //             "Sắp xếp",
+                  //             textAlign: TextAlign.center,
+                  //             style: const TextStyle(
+                  //                 fontWeight: FontWeight.w500),
+                  //             icon: Icons.keyboard_arrow_down,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

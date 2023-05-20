@@ -110,6 +110,7 @@ Widget _itemMyBooking(PaymentModel paymentData) {
             SizedBox(
               width: Utils.width(7),
             ),
+            Expanded(child:Container()),
             Icon(Icons.calendar_today_outlined,size: Utils.width(16),),
             SizedBox(
               width: Utils.width(5),
@@ -140,6 +141,14 @@ Widget _itemMyBooking(PaymentModel paymentData) {
             SizedBox(
               width: Utils.width(7),
             ),
+
+          ],
+        ),
+        SizedBox(
+          height: Utils.width(7),
+        ),
+        Row(
+          children: [
             Icon(Icons.emoji_people_rounded,size: Utils.width(20),),
             SizedBox(
               width: Utils.width(5),
@@ -167,6 +176,7 @@ Widget _itemMyBooking(PaymentModel paymentData) {
             ),
           ],
         ),
+
         SizedBox(
           height: Utils.width(10),
         ),

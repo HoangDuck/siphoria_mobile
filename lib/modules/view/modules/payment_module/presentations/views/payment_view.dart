@@ -93,7 +93,7 @@ class PaymentView extends GetView<PaymentController>{
                     onPress: (_) async {
                       showLoadingDialog(context);
                       await controller.paymentWithMomo().then((){
-                        Get.back();
+                        // Get.back();/**/
                       });
                     },
                     style: TextStyle(

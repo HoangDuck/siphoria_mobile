@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../../core/services/local_storage.dart';
+import '../../../home/data/home_api_provider.dart';
+import '../../../home/data/home_repository.dart';
+import '../../../home/domain/adapters/repository_adapter.dart';
 
 class AuthenticationController extends GetxController{
   final IAuthenticationRepository authenticationRepository;
@@ -19,6 +22,15 @@ class AuthenticationController extends GetxController{
       SecureStorage storage = SecureStorage();
       await storage.saveAccessToken(token.accessToken);
       await storage.saveRefreshToken(token.refreshToken);
+      // Get.lazyPut<IHomeProvider>(
+      //       () => HomeProvider(),
+      // );
+      // Get.lazyPut<IHomeRepository>(
+      //       () => HomeRepository(provider: Get.find()),
+      // );
+      // Get.lazyPut(
+      //       () => HomeController(homeRepository: Get.find()),
+      // );
       HomeController controller = Get.find<HomeController>();
       controller.accessToken=token.accessToken;
       controller.refreshToken = token.refreshToken;
