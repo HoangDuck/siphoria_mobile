@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../core/services/local_storage.dart';
 import '../../../../../../routers/page_routes.dart';
@@ -12,10 +13,38 @@ class HistoryBookingController extends GetxController{
   HistoryBookingController({required this.historyBookingRepository});
   RxList<PaymentModel> listPayment= <PaymentModel>[].obs;
 
+  final format = DateFormat('yyyy-MM-dd HH:mm:ss.sssZ','en-US');
+
   @override
   void onInit() {
     super.onInit;
     getListPaymentModel();
+  }
+
+  calculateDayRatePackage(DateTime dateTime){
+    return '${dateTime.day} Tháng ${dateTime.month}, ${dateTime.year}';
+  }
+
+  getPaymentStatus(String value){
+    var tempValueStatus = "";
+    switch(value){
+      case "pending":
+        tempValueStatus = "Chờ thanh toán";
+        break;
+      case "paid":
+        tempValueStatus = "Đã thanh toán";
+        break;
+      case "cancel":
+        tempValueStatus  = "Đã huỷ";
+        break;
+      case "refunded":
+        tempValueStatus  = "Đã hoàn tiền";
+        break;
+      case "checked":
+        tempValueStatus = "Đã check in";
+        break;
+    }
+    return tempValueStatus;
   }
 
   getListPaymentModel() async {

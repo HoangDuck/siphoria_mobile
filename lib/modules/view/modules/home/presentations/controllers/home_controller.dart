@@ -5,10 +5,12 @@ import 'package:final_project_hcmute/modules/widget/custom_dialog.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../routers/page_routes.dart';
 import '../../../../constant/app_colors.dart';
 import '../../../../constant/app_images.dart';
+import '../../../payment_module/domain/entities/payment_model.dart';
 import '../../domain/adapters/repository_adapter.dart';
 import '../../domain/entities/cart_item_model.dart';
 
@@ -27,6 +29,7 @@ class HomeController extends GetxController{
   RxList<CartModel> listCart = <CartModel>[].obs;
   RxList<String> listResort=<String>[].obs;
   RxList<String> listHotelCart = <String>[].obs;
+  RxList<PaymentModel> listPayment= <PaymentModel>[].obs;
 
   String accessToken = '';
   String refreshToken = '';
@@ -43,13 +46,20 @@ class HomeController extends GetxController{
   RxInt totalNumberCustomer= 1.obs;
   RxInt totalNumberCustomerChildren = 0.obs;
   RxDouble totalCostCart = 0.0.obs;
+  final format = DateFormat('yyyy-MM-dd HH:mm:ss.sssZ','en-US');
+
+  calculateDayRatePackage(DateTime dateTime){
+    return '${dateTime.day} Tháng ${dateTime.month}, ${dateTime.year}';
+  }
 
   selectedPageIndex(int index){
 
     if(index!=0 && accessToken.isEmpty){
       Get.toNamed(Routes.authentication);
     }else{
-      if(index == 3) {
+      if(index ==2 ){
+        getListPaymentModel();
+      }else if(index == 3) {
         getUserProfileData();
       }else if(index==1){
         _getListCartItem();
@@ -112,6 +122,7 @@ class HomeController extends GetxController{
 
   _getListCartItem() async {
     listCart.clear();
+    totalCostCart.value = 0;
     try{
       var listCartModel = await homeRepository.getListCartItem();
       if(listCartModel.isNotEmpty){
@@ -255,6 +266,29 @@ class HomeController extends GetxController{
       secureStorage.deleteAccessToken();
       secureStorage.deleteRefreshToken();
       Get.toNamed(Routes.authentication);
+    }
+  }
+
+  getListPaymentModel() async {
+    listPayment.clear();
+    try{
+      var listPaymentModel = await homeRepository.getListPayment();
+      if(listPaymentModel.isNotEmpty){
+        listPayment.addAll(listPaymentModel);
+        listPayment.refresh();
+        // for (var element in listPaymentModel) {
+        //   listHotelPayment.add('${element.hotel.id}#${element.hotel.name}');
+        // }
+        // var tempNewHotelList = listHotelPayment.toSet().toList();
+        // listHotelPayment.clear();
+        // listHotelPayment.addAll(tempNewHotelList);
+        // listHotelPayment.refresh();
+      }
+    }catch(e){
+      SecureStorage secureStorage = SecureStorage();
+      secureStorage.deleteAccessToken();
+      secureStorage.deleteRefreshToken();
+      Get.offAndToNamed(Routes.authentication);
     }
   }
 

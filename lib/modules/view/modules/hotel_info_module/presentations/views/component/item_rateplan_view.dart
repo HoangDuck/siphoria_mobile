@@ -8,10 +8,12 @@ import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/button_custom.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
+import '../../../../home/presentations/controllers/home_controller.dart';
 import '../../controllers/hotel_info_controller.dart';
 
 Widget itemRateplanView(BuildContext context,RoomType data,RatePlan dataRatePlan){
   HotelInfoController controller = Get.find<HotelInfoController>();
+  HomeController homeController = Get.find<HomeController>();
   calculateTotalPriceItemRatePlan(controller, data, dataRatePlan);
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -93,7 +95,8 @@ Widget itemRateplanView(BuildContext context,RoomType data,RatePlan dataRatePlan
               child: ButtonCustom(
                 text: 'Đặt ngay',
                 alignment: TextAlign.center,
-                onPress: (text) {
+                onPress: (text) async {
+                  await homeController.addPaymentFromCart();
                   Get.toNamed(Routes.payment);
                 },
                 style: TextStyle(

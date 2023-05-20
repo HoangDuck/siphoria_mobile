@@ -6,6 +6,7 @@ import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/h
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/hotel_model.dart';
 
 import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/province_model.dart';
+import 'package:final_project_hcmute/modules/view/modules/payment_module/domain/entities/payment_model.dart';
 import 'package:final_project_hcmute/modules/view/modules/profile_module/domain/entities/user_profile_model.dart';
 
 import '../domain/adapters/repository_adapter.dart';
@@ -93,6 +94,17 @@ class HomeRepository implements IHomeRepository {
   Future<bool> addToPayment() async {
     // TODO: implement addToPayment
     final response = await provider.addToPayment();
+    if (response.status.hasError) {
+      return Future.error(response.statusText!);
+    } else {
+      return response.body!;
+    }
+  }
+
+  @override
+  Future<List<PaymentModel>> getListPayment() async {
+    // TODO: implement getListPayment
+    final response = await provider.getListPaymentMobile();
     if (response.status.hasError) {
       return Future.error(response.statusText!);
     } else {

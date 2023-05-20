@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/utils/utils.dart';
 import '../../../../../widget/text_custom.dart';
 import '../../../../constant/app_colors.dart';
+import '../../../payment_module/domain/entities/payment_model.dart';
 
 class HistoryBookingView extends GetView<HistoryBookingController> {
+  @override
+  HistoryBookingController controller = Get.find<HistoryBookingController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +69,11 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
           Expanded(
             child: Container(
             margin: EdgeInsets.all(Utils.width(10)),
-            child: ListView.builder(
-                itemCount: 5,
+            child:Obx(()=>ListView.builder(
+                itemCount: controller.listPayment.length,
                 itemBuilder: (context, index) {
-                  return _itemHistoryBookingView();
-                }),
+                  return _itemHistoryBookingView(controller.listPayment[index]);
+                })),
           )
           ),
         ],
@@ -78,10 +81,10 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
     );
   }
 
-  Widget _itemHistoryBookingView(){
+  Widget _itemHistoryBookingView(PaymentModel paymentData){
     return GestureDetector(
       onTap: (){
-        Get.toNamed(Routes.bookingDetail);
+        Get.toNamed(Routes.bookingDetail,arguments: paymentData);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -97,7 +100,7 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(Utils.width(10)),
               child: Image.network(
-                icHoChiMinhCity,
+                paymentData.hotel.hotelPhotos.split(";").first,
                 width: Utils.width(75),
                 height: Utils.width(75),
                 fit: BoxFit.cover,
@@ -110,7 +113,10 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextCustom(
-                    "03 Thg 03, 2023",
+                    controller
+                        .calculateDayRatePackage(controller.format
+                        .parse(paymentData.startAt.toString()))
+                        .toString(),
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: Utils.width(19),
@@ -118,14 +124,14 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
                     ),
                   ),
                   TextCustom(
-                    "Muine Bay Resort",
+                    paymentData.hotel.name,
                     style: TextStyle(
                         fontSize: Utils.width(17),
                         color: colorTextPrice
                     ),
                   ),
                   TextCustom(
-                    "Room Type: Standard",
+                    paymentData.roomType.name,
                     style: TextStyle(
                         fontSize: Utils.width(13),
                         color: colorTextPrice
@@ -134,7 +140,7 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
                   Container(
                     margin: EdgeInsets.symmetric(vertical: Utils.height(10)),
                     child: TextCustom(
-                      "Đã đặt",
+                      controller.getPaymentStatus(paymentData.status),
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: Utils.width(19),
@@ -143,7 +149,10 @@ class HistoryBookingView extends GetView<HistoryBookingController> {
                     ),
                   ),
                   TextCustom(
-                    "12 Thg 1, 2023, 4:29 am",
+                    controller
+                        .calculateDayRatePackage(controller.format
+                            .parse(paymentData.createdAt.toString()))
+                        .toString(),
                     style: TextStyle(
                         fontSize: Utils.width(17),
                         color: colorTextPrice

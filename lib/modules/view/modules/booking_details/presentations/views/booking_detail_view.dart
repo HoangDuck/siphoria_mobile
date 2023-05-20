@@ -8,8 +8,13 @@ import '../../../../../../core/utils/utils.dart';
 import '../../../../../widget/button_custom.dart';
 import '../../../../../widget/text_custom.dart';
 import '../../../../constant/app_colors.dart';
+import '../../../payment_module/domain/entities/payment_model.dart';
 
 class BookingDetailView extends GetView<BookingDetailController>{
+  @override
+  BookingDetailController controller = Get.find<BookingDetailController>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +33,21 @@ class BookingDetailView extends GetView<BookingDetailController>{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Cam Ranh Rivera Beach Resort",
+                    controller.paymentData.hotel.name,
                     style: TextStyle(
                         fontSize: Utils.width(7)),
                   ),
                   Text(
-                    "1 Delux Room With Pool View",
+                    controller.paymentData.roomType.name,
                     style: TextStyle(
                         fontSize: Utils.width(15), fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "03 - 06 Thg 5, 2023 | 2 khách",
+                    "${controller.calculateDayRatePackage(controller.format
+                        .parse(controller.paymentData.startAt.toString()))
+                        .toString()} - ${controller.calculateDayRatePackage(controller.format
+                        .parse(controller.paymentData.endAt.toString()))
+                        .toString()} | ${controller.paymentData.paymentDetails.first.adultNum} khách",
                     style: TextStyle(
                       fontSize: Utils.width(7),
                     ),
@@ -101,21 +110,22 @@ class BookingDetailView extends GetView<BookingDetailController>{
                   ],
                 ),
               ),
-              SizedBox(
-                // margin: EdgeInsets.symmetric(horizontal: Utils.width(15)),
-                height: Utils.width(46),
-                width: MediaQuery.of(context).size.width,
-                child: ButtonCustom(
-                  text: 'Hủy',
-                  onPress: (text) {},
-                  style: TextStyle(
-                      fontSize: Utils.width(20),
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                  color: colorTitleAmber,
-                  borderColor: Colors.transparent,
+              if(controller.paymentData.status=="paid")
+                SizedBox(
+                  // margin: EdgeInsets.symmetric(horizontal: Utils.width(15)),
+                  height: Utils.width(46),
+                  width: MediaQuery.of(context).size.width,
+                  child: ButtonCustom(
+                    text: 'Hủy',
+                    onPress: (text) {},
+                    style: TextStyle(
+                        fontSize: Utils.width(20),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                    color: colorTitleAmber,
+                    borderColor: Colors.transparent,
+                  ),
                 ),
-              ),
               const Divider(),
               TextCustom(
                 "Thông tin liên hệ",
@@ -140,7 +150,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                         SizedBox(width: Utils.width(10),),
                         Expanded(
                           child: TextCustom(
-                            "Khu phố 14, Bãi sau Mũi Né, Mũi Né, Phan Thiết, Việt Nam",
+                            controller.paymentData.hotel.name,
                             style: TextStyle(
                               color: colorTextPrice,
                               fontWeight: FontWeight.w500,
@@ -163,11 +173,11 @@ class BookingDetailView extends GetView<BookingDetailController>{
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.phone_iphone_rounded),
+                        const Icon(Icons.location_on_rounded),
                         SizedBox(width: Utils.width(10),),
                         Expanded(
                           child: TextCustom(
-                            "+84942768316",
+                            controller.paymentData.hotel.rawAddress,
                             style: TextStyle(
                               color: colorTextPrice,
                               fontWeight: FontWeight.w500,
@@ -190,11 +200,11 @@ class BookingDetailView extends GetView<BookingDetailController>{
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.email_rounded),
+                        const Icon(Icons.stars),
                         SizedBox(width: Utils.width(10),),
                         Expanded(
                           child: TextCustom(
-                            "hoanghuuduc22@gmail.com",
+                            controller.paymentData.hotel.rating.toString(),
                             style: TextStyle(
                               color: colorTextPrice,
                               fontWeight: FontWeight.w500,
@@ -273,7 +283,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           TextCustom(
-                            "Giá (3 đêm)",
+                            "Giá (${controller.paymentData.paymentDetails.length} đêm)",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: Colors.black,
@@ -283,7 +293,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                           ),
                           Expanded(child: Container(),),
                           TextCustom(
-                            "5.000.000 VND",
+                            "${controller.paymentData.totalPrice} VND",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: Colors.black,
@@ -311,7 +321,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                           ),
                           Expanded(child: Container(),),
                           TextCustom(
-                            "200.000 VND",
+                            "0 VND",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: Colors.black,
@@ -339,7 +349,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                           ),
                           Expanded(child: Container(),),
                           TextCustom(
-                            "5.350.000 VND",
+                            "${controller.paymentData.totalPrice} VND",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: Colors.black,
@@ -365,11 +375,11 @@ class BookingDetailView extends GetView<BookingDetailController>{
                 ),
               ),
               ListView.builder(
-                  itemCount: 3,
+                  itemCount: controller.paymentData.paymentDetails.length,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return _itemRoomNight(context);
+                    return _itemRoomNight(context,controller.paymentData.paymentDetails[index]);
                   }),
 
             ],
@@ -379,7 +389,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
     );
   }
 
-  Widget _itemRoomNight(BuildContext context){
+  Widget _itemRoomNight(BuildContext context,PaymentDetail paymentDetailData){
     return Container(
       margin: EdgeInsets.symmetric(vertical: Utils.width(10)),
       decoration: BoxDecoration(
@@ -400,7 +410,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
           ClipRRect(
             borderRadius: BorderRadius.circular(Utils.width(5)),
             child: Image.network(
-              icImageHotelIntro,
+              controller.paymentData.roomType.photos.split(";").first,
               height: Utils.height(160),
               width: MediaQuery.of(context).size.width,
               scale: 1.5,
@@ -426,7 +436,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                 ),
                 Expanded(child: Container(),),
                 TextCustom(
-                  "1 Delux Room With Pool View",
+                  controller.paymentData.roomType.name,
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     color: Colors.black,
@@ -455,7 +465,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                 ),
                 Expanded(child: Container(),),
                 TextCustom(
-                  "2 Người lớn",
+                  "${paymentDetailData.adultNum} Người lớn",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.black,
@@ -484,7 +494,9 @@ class BookingDetailView extends GetView<BookingDetailController>{
                 ),
                 Expanded(child: Container(),),
                 TextCustom(
-                  "03 Thg 04, 2023",
+                  controller.calculateDayRatePackage(controller.format
+                      .parse(paymentDetailData.dayOff.toString()))
+                      .toString(),
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.black,
@@ -513,7 +525,7 @@ class BookingDetailView extends GetView<BookingDetailController>{
                 ),
                 Expanded(child: Container(),),
                 TextCustom(
-                  "1.300.000 VND",
+                  "${paymentDetailData.price} VND",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     color: Colors.black,

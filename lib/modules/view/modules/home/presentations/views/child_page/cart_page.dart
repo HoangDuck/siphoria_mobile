@@ -96,41 +96,48 @@ Widget _listItemCart(BuildContext context){
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, indexHotel) {
-          return Container(
-            margin: EdgeInsets.symmetric(vertical: Utils.width(5)),
-            decoration: BoxDecoration(
-                color: colorCartItemBackground,
-                borderRadius: BorderRadius.circular(Utils.width(5))
-            ),
-            child: Theme(
-              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-              child: ExpansionTile(
-                initiallyExpanded:true,
-                maintainState: true,
-                // tilePadding: EdgeInsets.only(bottom: 0),
-                title: TextCustom(
-                  controller.listHotelCart[indexHotel].toString().split("#").last,
-                  style: TextStyle(
-                    fontSize: Utils.width(15),
-                    fontWeight: FontWeight.bold,
-                    color: colorTextPrice,
-                  ),
-                ),
-                children: [
-                  Container(
-                      margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
-                      child: const Divider(
-                        color: Colors.black26,
-                      ),
+          return Visibility(
+            visible: controller.listCart
+                .where((p0) =>
+            p0.hotelId ==
+                controller.listHotelCart[indexHotel].toString().split("#").first,)
+                .toList().isNotEmpty,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: Utils.width(5)),
+              decoration: BoxDecoration(
+                  color: colorCartItemBackground,
+                  borderRadius: BorderRadius.circular(Utils.width(5))
+              ),
+              child: Theme(
+                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                child: ExpansionTile(
+                  initiallyExpanded:true,
+                  maintainState: true,
+                  // tilePadding: EdgeInsets.only(bottom: 0),
+                  title: TextCustom(
+                    controller.listHotelCart[indexHotel].toString().split("#").last,
+                    style: TextStyle(
+                      fontSize: Utils.width(15),
+                      fontWeight: FontWeight.bold,
+                      color: colorTextPrice,
                     ),
-                    listCartItem(
-                        context,
-                        controller.listCart
-                            .where((p0) =>
-                                p0.hotelId ==
-                                    controller.listHotelCart[indexHotel].toString().split("#").first,)
-                            .toList())
-                  ],
+                  ),
+                  children: [
+                    Container(
+                        margin: EdgeInsets.symmetric(horizontal: Utils.width(10)),
+                        child: const Divider(
+                          color: Colors.black26,
+                        ),
+                      ),
+                      listCartItem(
+                          context,
+                          controller.listCart
+                              .where((p0) =>
+                                  p0.hotelId ==
+                                      controller.listHotelCart[indexHotel].toString().split("#").first,)
+                              .toList())
+                    ],
+                ),
               ),
             ),
           );

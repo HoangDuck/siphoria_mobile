@@ -2,6 +2,7 @@ import 'package:final_project_hcmute/modules/view/modules/home/domain/entities/c
 import 'package:get/get.dart';
 
 import '../../../../../core/services/api_constant.dart';
+import '../../payment_module/domain/entities/payment_model.dart';
 import '../../profile_module/domain/entities/user_profile_model.dart';
 import '../domain/entities/cart_item_model.dart';
 import '../domain/entities/hotel_category_model.dart';
@@ -18,6 +19,7 @@ abstract class IHomeProvider {
   Future<Response<List<CartModel>>> getListCartItem();
   Future<Response<bool>> deleteCartItem(String idCart);
   Future<Response<bool>> addToPayment();
+  Future<Response<List<PaymentModel>>> getListPaymentMobile();
 }
 
 class HomeProvider extends GetConnect implements IHomeProvider{
@@ -112,6 +114,20 @@ class HomeProvider extends GetConnect implements IHomeProvider{
     httpClient.baseUrl =baseUrl;
     httpClient.defaultDecoder = httpClient.defaultDecoder = (value) => resultBoolDeCode(value);
     return await post(addToPaymentUrl,{},headers: {
+      'Authorization':'Bearer ${controller.accessToken}'
+    });
+  }
+
+  @override
+  Future<Response<List<PaymentModel>>> getListPaymentMobile() {
+    // TODO: implement getListPaymentMobile
+    HomeController controller = Get.find<HomeController>();
+    // TODO: implement getListPaymentMobile
+    httpClient.baseUrl =baseUrl;
+    httpClient.defaultDecoder = (value){
+      return paymentModelFromJson(value);
+    };
+    return get(getListPaymentHistoryUrl,headers: {
       'Authorization':'Bearer ${controller.accessToken}'
     });
   }

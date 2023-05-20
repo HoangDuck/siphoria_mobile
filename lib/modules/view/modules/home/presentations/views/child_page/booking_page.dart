@@ -5,21 +5,23 @@ import 'package:get/get.dart';
 import '../../../../../../../routers/page_routes.dart';
 import '../../../../../../widget/text_custom.dart';
 import '../../../../../constant/app_colors.dart';
+import '../../../../payment_module/domain/entities/payment_model.dart';
 import '../../controllers/home_controller.dart';
 
 Widget myBooking(BuildContext context) {
   HomeController controller = Get.find<HomeController>();
   return Container(
     margin: EdgeInsets.all(Utils.width(10)),
-    child: ListView.builder(
-        itemCount: 2,
+    child: Obx(()=>ListView.builder(
+        itemCount: controller.listPayment.length,
         itemBuilder: (context, index) {
-          return _itemMyBooking();
-        }),
+          return _itemMyBooking(controller.listPayment[index]);
+        })),
   );
 }
 
-Widget _itemMyBooking() {
+Widget _itemMyBooking(PaymentModel paymentData) {
+  HomeController controller = Get.find<HomeController>();
   return Container(
     margin: EdgeInsets.all(Utils.width(5)),
     padding: EdgeInsets.all(Utils.width(15)),
@@ -39,7 +41,7 @@ Widget _itemMyBooking() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextCustom(
-          "The Shine 2 Hotel & Apartment",
+          paymentData.hotel.name,
           style: TextStyle(
             fontSize: Utils.width(16),
             fontWeight: FontWeight.bold,
@@ -50,7 +52,7 @@ Widget _itemMyBooking() {
           height: Utils.width(5),
         ),
         TextCustom(
-          "Khu phố 14, Bãi sau Mũi Né, Phan Thiết, Việt Nam",
+          paymentData.hotel.rawAddress,
           style: TextStyle(
             fontSize: Utils.width(14),
             color: colorTextPrice,
@@ -64,7 +66,7 @@ Widget _itemMyBooking() {
           height: Utils.width(5),
         ),
         TextCustom(
-          "1 Delux Room with pool view",
+          paymentData.roomType.name,
           style: TextStyle(
             fontSize: Utils.width(13),
             fontWeight: FontWeight.bold,
@@ -94,7 +96,9 @@ Widget _itemMyBooking() {
                       fontSize: Utils.width(10)),
                 ),
                 Text(
-                  "03 Thg 04, 2023",
+                  controller.calculateDayRatePackage(controller.format
+                      .parse(paymentData.startAt.toString()))
+                      .toString(),
                   style: TextStyle(
                     color: colorTextPrice,
                     fontWeight: FontWeight.w500,
@@ -122,7 +126,9 @@ Widget _itemMyBooking() {
                       fontSize: Utils.width(10)),
                 ),
                 Text(
-                  "06 Thg 04, 2023",
+                  controller.calculateDayRatePackage(controller.format
+                      .parse(paymentData.endAt.toString()))
+                      .toString(),
                   style: TextStyle(
                     color: colorTextPrice,
                     fontWeight: FontWeight.w500,
@@ -150,7 +156,7 @@ Widget _itemMyBooking() {
                       fontSize: Utils.width(10)),
                 ),
                 Text(
-                  "2 Khách",
+                  "${paymentData.paymentDetails.first.adultNum} Khách",
                   style: TextStyle(
                     color: colorTextPrice,
                     fontWeight: FontWeight.w500,
@@ -170,7 +176,7 @@ Widget _itemMyBooking() {
             TextCustom(
               "Xem chi tiết",
               callBack: (text){
-                Get.toNamed(Routes.bookingDetail);
+                Get.toNamed(Routes.bookingDetail,arguments: paymentData);
               },
               textAlign: TextAlign.end,
               style: TextStyle(

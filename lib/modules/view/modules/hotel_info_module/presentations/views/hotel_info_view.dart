@@ -20,6 +20,8 @@ class HotelInfoView extends GetView<HotelInfoController> {
 
   HotelInfoView({super.key});
 
+  HomeController homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -121,8 +123,11 @@ class HotelInfoView extends GetView<HotelInfoController> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Get.delete<HomeController>();
-                                    Get.offAllNamed(Routes.home,arguments: true);
+                                    // // Get.delete<HomeController>();
+                                    // Get.offAndToNamed(Routes.home,arguments: true);
+                                    homeController.selectedPageIndex(1);
+                                    Get.back();
+                                    Get.back();
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(Utils.width(5)),
