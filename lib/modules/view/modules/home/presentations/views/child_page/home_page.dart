@@ -27,63 +27,73 @@ Widget _homePage(BuildContext context) {
                   itemCount: controller.listProvinces.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.all(Utils.width(10)),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            Utils.width(30),
-                          ),
-                          color: Colors.white),
-                      child: Stack(
-                        children: [
-                          Container(
-                              height: Utils.width(200),
-                              width: Utils.width(150),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(Utils.width(30)),
-                                  color: Colors.white),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  icHcmCity,
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
-                          Positioned(
-                            top: 0,
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(Utils.width(15)),
-                              child: Container(
+                    return GestureDetector(
+                      onTap:(){
+                        if (!(controller.isDateRangeEditEmpty.value)) {
+                          controller.startDate = DateTime.now();
+                          controller.endDate = DateTime.now().add(const Duration(days:1));
+                        }
+                        controller.locationEditController.text = controller.listProvinces[index].name;
+                        Get.toNamed(Routes.searchHotel);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(Utils.width(10)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Utils.width(30),
+                            ),
+                            color: Colors.white),
+                        child: Stack(
+                          children: [
+                            Container(
+                                height: Utils.width(200),
+                                width: Utils.width(150),
                                 decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(Utils.width(30)),
-                                ),
+                                    borderRadius:
+                                        BorderRadius.circular(Utils.width(30)),
+                                    color: Colors.white),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.network(
+                                    icHcmCity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )),
+                            Positioned(
+                              top: 0,
+                              bottom: 0,
+                              right: 0,
+                              left: 0,
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(Utils.width(15)),
                                 child: Container(
-                                  color: Colors.black.withOpacity(0.2),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(Utils.width(30)),
+                                  ),
+                                  child: Container(
+                                    color: Colors.black.withOpacity(0.2),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Positioned.fill(
-                            bottom: Utils.width(10),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                controller.listProvinces[index].name,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                            Positioned.fill(
+                              bottom: Utils.width(10),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                  controller.listProvinces[index].name,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -105,56 +115,66 @@ Widget _homePage(BuildContext context) {
                   itemCount: controller.listResort.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.all(Utils.width(10)),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            Utils.width(30),
-                          ),
-                          color: Colors.white),
-                      child: Stack(
-                        children: [
-                          Container(
-                              height: Utils.width(200),
-                              width: Utils.width(150),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(Utils.width(30)),
-                                  color: Colors.white),
+                    return GestureDetector(
+                      onTap:(){
+                        if (!(controller.isDateRangeEditEmpty.value)) {
+                          controller.startDate = DateTime.now();
+                          controller.endDate = DateTime.now().add(const Duration(days:1));
+                        }
+                        controller.locationEditController.text = controller.listResort[index];
+                        Get.toNamed(Routes.searchHotel);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(Utils.width(10)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Utils.width(30),
+                            ),
+                            color: Colors.white),
+                        child: Stack(
+                          children: [
+                            Container(
+                                height: Utils.width(200),
+                                width: Utils.width(150),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(Utils.width(30)),
+                                    color: Colors.white),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.network(
+                                    icResort,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )),
+                            Positioned(
+                              top: 0,
+                              bottom: 0,
+                              right: 0,
+                              left: 0,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Image.network(
-                                  icResort,
-                                  fit: BoxFit.cover,
+                                borderRadius:
+                                    BorderRadius.circular(Utils.width(15)),
+                                child: Container(
+                                  color: Colors.black.withOpacity(0.2),
                                 ),
-                              )),
-                          Positioned(
-                            top: 0,
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(Utils.width(15)),
-                              child: Container(
-                                color: Colors.black.withOpacity(0.2),
                               ),
                             ),
-                          ),
-                          Positioned.fill(
-                            bottom: Utils.width(10),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                controller.listResort[index],
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                            Positioned.fill(
+                              bottom: Utils.width(10),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                  controller.listResort[index],
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },

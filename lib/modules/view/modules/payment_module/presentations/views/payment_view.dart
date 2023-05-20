@@ -74,13 +74,13 @@ class PaymentView extends GetView<PaymentController>{
                                 fontWeight: FontWeight.bold,
                                 fontSize: Utils.height(17)),
                           )),
-                      TextCustom(
+                      Obx(()=>TextCustom(
                         "${controller.totalCostPayment.value} VND",
                         style: TextStyle(
                             color: colorTitleAmber,
                             fontWeight: FontWeight.bold,
                             fontSize: Utils.height(25)),
-                      )
+                      ))
                     ],
                   ),
                   Expanded(
