@@ -1,0 +1,22 @@
+on:
+  push:
+    branches:
+      - test_ci_server
+name: Build and release test ci server
+
+jobs:
+  set-up:
+    name: Set up
+    runs-on: [self-hosted, macOS]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install flutter version
+        run: fvm install
+      - name: Use flutter version by fvm
+        run: fvm use
+      - name: Install dependencies
+        run: fvm flutter pub get
+      - name: Install pod file
+        run: |
+          cd ios
+          pod install
